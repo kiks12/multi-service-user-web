@@ -1,7 +1,8 @@
 
+
 /*
 
-Multi Service Platform (User Web) - Login Page
+Multi Service Platform (User Web) - Register Page
 Created: Feb. 07, 2022
 Last Updated: Feb. 07, 2022
 Author: Tolentino, Francis James S.
@@ -9,42 +10,40 @@ Author: Tolentino, Francis James S.
 */
 
 
+
 import React from 'react';
 
 
+
 import type { NextPage } from 'next';
+
 
 
 import Link from 'next/link';
 
 
 
-const Login : NextPage = () => {
+const Register : NextPage = () => {
 
 
     return (
         <main className='login-register-main-container'>
-
+            
 
             <div className='login-register-left-container'>
                 <h1>Logo</h1>
             </div>
 
 
+
             <div className='login-register-right-container'>
 
                 <div>
-                    <h1>Welcome!</h1>
-                    <p 
-                        className='secondary-purple-text'
-                        style={{
-                            letterSpacing: '0.06em',
-                        }}
-                    >
-                        Sign in to continue
-                    </p>
+                    <h1>Hello!</h1>
+                    <p>Create an Account</p>
                 </div>
-           
+
+                
 
                 <form className='login-register-form'>
 
@@ -54,6 +53,20 @@ const Login : NextPage = () => {
                         }}
                     >
                         <div>
+                            <label>Username</label>
+                            <input 
+                                name='username'
+                                type='text'
+                                placeholder='Username'
+                                className='form-control'
+                            />
+                        </div>
+
+                        <div
+                            style={{
+                                margin: '1em 0 0 0'
+                            }}
+                        >
                             <label>Email</label>
                             <input 
                                 name='email'
@@ -63,8 +76,7 @@ const Login : NextPage = () => {
                             />
                         </div>
 
-
-                        <div 
+                        <div
                             style={{
                                 margin: '1em 0 0 0'
                             }}
@@ -73,20 +85,21 @@ const Login : NextPage = () => {
                             <input 
                                 name='password'
                                 type='password'
-                                placeholder='Enter your password'
-                                className='form-control' 
+                                placeholder='Enter a strong Password'
+                                className='form-control'
                             />
                         </div>
                     </div>
 
+
                     <div>
-                        <button 
+                        <button
                             className='main-button'
                             style={{
-                                margin: '0 0 3em 0'
+                                margin: '3em 0 3em 0'
                             }}
                         >
-                            Login
+                            Sign Up
                         </button>
                     </div>
 
@@ -95,49 +108,49 @@ const Login : NextPage = () => {
 
 
                 <div className='social-media-sign-in-sign-up-container'>
-                    <div>
-                        <p className='secondary-purple-text'>Social Media Sign In</p>
-                    </div>
-                    
+
+                    <p className='secondary-purple-text'>Social Media Sign Up</p>
 
                     <div className='google-facebook-buttons-container'>
-                        <button 
+                        <button
                             className='google-button'
                         >
-                            Sign in with Google
+                            Sign Up with Google
                         </button>
-                        <button 
+                        <button
                             className='facebook-button'
-                            style={{margin: '0.5em 0 0 0'}}
+                            style={{
+                                margin: '0.5em 0 0 0'
+                            }}
                         >
-                            Sign in with Facebook
+                            Sign Up with Facebook
                         </button>
                     </div>
 
-                    
+
                     <div
                         style={{
                             display: 'flex'
                         }}
                     >
                         <p 
-                            className='secondary-purple-text' 
+                            className='secondary-purple-text'
                             style={{
                                 margin: '0 0.4em 0 0'
                             }}
                         >
-                            Don't Have an Account?
+                            Already have an Account?
                         </p>
-                        <Link href="/register" passHref={true}>
-                            <p className='main-purple-link'>Sign Up</p>
+                        <Link href="/login" passHref={true}>
+                            <p className='main-purple-link'>Sign In</p>
                         </Link>
                     </div>
+
                 </div>
 
 
 
             </div>
-
 
 
         </main>
@@ -146,4 +159,4 @@ const Login : NextPage = () => {
 
 
 
-export default Login;
+export default Register;
