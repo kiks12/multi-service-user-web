@@ -23,13 +23,13 @@ const MainGrid : React.FC<MainGridProps> = ({ children, contentSection, leftNavb
 
     return (
         <main className='main-grid'>
-            <div className='left-navbar'>
+            <div className='left-navbar-container'>
                 {leftNavbar}
             </div>
-            <div className='top-navbar'>
+            <div className='top-navbar-container'>
                 {topNavbar}
             </div>
-            <div className='content-section'>
+            <div className='content-section-container'>
                 {contentSection}
             </div>
         </main>

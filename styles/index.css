@@ -8,6 +8,7 @@
     --googleRed: #BD4B44;
     --facebookBlue: #2C71D9;
     --white: #ffffff;
+    --gray: #DBDBE2;
 }
 
 
@@ -98,33 +99,67 @@ grid template
 
 .main-grid {
     display: grid;
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 18% 82%;
     grid-template-rows: 10% 80%;
     height: 100vh;
     width: 100vw;
 }
 
 
-.left-navbar{
+.left-navbar-container{
     grid-row-start: 1;
     grid-row-end: 3;
 }
 
 
 
-.top-navbar{
+.top-navbar-container{
     grid-column-start: 2;
     border-bottom: 0.3px solid var(--secondaryPurple);
 }
 
 
-.content-section {
+.content-section-container{
     grid-row-start: 2;
     grid-column-start: 2;
 }
 
 
 /*  LAYOUT  */
+
+
+
+
+/*  Navigation Bars  */
+
+
+.left-navbar {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.left-navbar-li {
+    padding: 0.6em 0.6em 0.6em 2em;
+    cursor: pointer;
+}
+
+
+.left-navbar-li-active {
+    padding: 0.6em 0.6em 0.6em 2em;
+    background-color: var(--gray);
+    cursor: pointer;
+}
+
+
+.left-navbar-li:hover{
+    background-color: var(--gray);
+}
+
+
+/*  Navigation Bars  */
+
+
 
 
 
