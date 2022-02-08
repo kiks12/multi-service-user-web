@@ -3,7 +3,7 @@
 
 Multi Service Platform (User Web) - Login Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 07, 2022
+Last Updated: Feb. 08, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -70,12 +70,31 @@ const Login : NextPage = () => {
                             }}
                         >
                             <label>Password</label>
-                            <input 
-                                name='password'
-                                type='password'
-                                placeholder='Enter your password'
-                                className='form-control' 
-                            />
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <input 
+                                    name='password'
+                                    type='password'
+                                    placeholder='Enter your password'
+                                    className='form-control'
+                                />
+                                <div
+                                    style={{
+                                        height: '100%',
+                                        padding: '0.2em',
+                                        border: '0.3px solid var(--secondaryPurple)',
+                                        backgroundColor: 'var(--secondaryPurple)',
+                                        color: 'var(--white)',
+                                        cursor: 'pointer'
+                                    }}
+                                >
+                                    <small>see</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
