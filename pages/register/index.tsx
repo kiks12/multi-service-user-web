@@ -23,12 +23,20 @@ import Link from 'next/link';
 
 
 
+import Router from '../../components/router';
+
+
+
 const Register : NextPage = () => {
 
 
     const [username, setUsername] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
+
+
+    const router = Router();
 
 
 
@@ -50,7 +58,13 @@ const Register : NextPage = () => {
 
         const jsonRes = await res.json();
 
-        console.log(jsonRes);
+
+        setMessage(jsonRes.msg);
+
+
+        if(jsonRes.status === 100){
+            router.push('/login');
+        }
     }
 
 
@@ -62,6 +76,9 @@ const Register : NextPage = () => {
 
             <div className='login-register-left-container'>
                 <h1>Logo</h1>
+                <div>
+                    {message}
+                </div>
             </div>
 
 
