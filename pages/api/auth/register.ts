@@ -1,11 +1,22 @@
 
+/*
+
+Multi Service Platform - Registration API
+Created: Feb. 08, 2022
+Last Updated: Feb. 08, 2022
+Author: Tolentino, Francis James S.
+
+*/
+
+
 import type { NextApiRequest, NextApiResponse } from "next";
 
 
-// import jwt from 'jsonwebtoken';
+import prisma from "../../../prisma/prisma";
 
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+
     if (!req.body){
         res.statusCode = 400;
         res.send("There seems to be a problem");
@@ -16,12 +27,58 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     }
 
 
-    const { username, email, password } = req.body;
+
+    const { username, email, password, type } = req.body;
+
+
+    const existingUser = await prisma.users.findFirst({
+        where: {
+            username: username
+        }
+    });
+
+
+    if (existingUser) {
+        res.json({
+            msg: 'Username already used!',
+            status: 500
+        });
+    }
+
+
+
+    await prisma.users.create({
+        data: {
+            username: username,
+            email: email,
+            password: password,
+            address: '',
+            contact: '',
+            type: type,
+        }
+    })
+
+
+    const createdUser = await prisma.users.findFirst({
+        where: {
+            username: username
+        }
+    })
 
     
+    if (!createdUser) {
+        res.json({
+            msg: 'There seems to be a problem',
+            status: 500
+        });
+    }
 
 
-    res.send("hello register");
+
+    res.json({
+        msg: 'User Successfully Created',
+        status: 100
+    });
 }
 
 
