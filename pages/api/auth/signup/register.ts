@@ -12,7 +12,7 @@ Author: Tolentino, Francis James S.
 import type { NextApiRequest, NextApiResponse } from "next";
 
 
-import prisma from "../../../prisma/prisma";
+import prisma from "../../../../prisma/prisma";
 
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

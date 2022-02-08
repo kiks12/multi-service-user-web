@@ -9,7 +9,7 @@ Author: Tolentino, Francis James S.
 */
 
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 import type { NextPage } from 'next';
@@ -18,8 +18,37 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 
 
+import { signIn, useSession } from 'next-auth/react';
+
+
 
 const Login : NextPage = () => {
+
+
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+
+
+    const {data: session, status} = useSession();
+
+
+    const submitLoginForm = async (e: any) => {
+        e.preventDefault();
+
+        const login = await signIn('credentials', {
+            redirect: false,
+            email: email,
+            password: password
+        })
+
+        console.log(login);
+        console.log('status: ', status, ' data: ', session);
+    }
+
+    useEffect(() => {
+        console.log('status: ', status, ' data: ', session);
+    }, []);
+
 
 
     return (
@@ -46,7 +75,10 @@ const Login : NextPage = () => {
                 </div>
            
 
-                <form className='login-register-form'>
+                <form 
+                    className='login-register-form'
+                    onSubmit={submitLoginForm}
+                >
 
                     <div
                         style={{
@@ -60,6 +92,8 @@ const Login : NextPage = () => {
                                 type='email'
                                 placeholder='example@gmail.com'
                                 className='form-control'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
 
@@ -81,6 +115,8 @@ const Login : NextPage = () => {
                                     type='password'
                                     placeholder='Enter your password'
                                     className='form-control'
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                 />
                                 <div
                                     style={{
@@ -104,6 +140,8 @@ const Login : NextPage = () => {
                             style={{
                                 margin: '0 0 3em 0'
                             }}
+                            type='submit'
+                            onSubmit={submitLoginForm}
                         >
                             Login
                         </button>

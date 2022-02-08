@@ -43,7 +43,7 @@ const Register : NextPage = () => {
     const submitRegistrationForm = async (e: any) => {
         e.preventDefault();
 
-        const res = await fetch('/api/auth/register/', {
+        const res = await fetch('/api/auth/signup/register/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
