@@ -81,7 +81,7 @@ const Login : NextPage = () => {
 
                     <div>
                         <button 
-                            className='main-button'
+                            className='button main-button'
                             style={{
                                 margin: '0 0 3em 0'
                             }}
@@ -102,12 +102,12 @@ const Login : NextPage = () => {
 
                     <div className='google-facebook-buttons-container'>
                         <button 
-                            className='google-button'
+                            className='button google-button'
                         >
                             Sign in with Google
                         </button>
                         <button 
-                            className='facebook-button'
+                            className='button facebook-button'
                             style={{margin: '0.5em 0 0 0'}}
                         >
                             Sign in with Facebook
@@ -126,7 +126,7 @@ const Login : NextPage = () => {
                                 margin: '0 0.4em 0 0'
                             }}
                         >
-                            Don't Have an Account?
+                            {"Don't Have an Account?"}
                         </p>
                         <Link href="/register" passHref={true}>
                             <p className='main-purple-link'>Sign Up</p>

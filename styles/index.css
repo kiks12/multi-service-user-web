@@ -52,7 +52,7 @@ grid template
 
 /* right part of the main container grid */
 .login-register-right-container {
-    padding: 2em 4em;
+    padding: 1em 4em;
     width: 100%;
     height: 100%;
     display: flex;
@@ -98,14 +98,18 @@ grid template
 
 .form-control {
     width: 100%;
-    padding: 0.6em;
+    padding: 0.4em;
     border: 0.3px solid var(--secondaryPurple);
 }
 
 
-.main-button {
+.button {
     width: 100%;
-    padding: 0.6em;
+    padding: 0.4em;
+}
+
+
+.main-button {
     background-color: var(--mainPurple);
     border: 0.3px solid var(--mainPurple);
     color: var(--white);
@@ -114,8 +118,6 @@ grid template
 
 
 .google-button {
-    width: 100%;
-    padding: 0.6em;
     background-color: var(--white);
     border: 1px solid var(--googleRed);
     color: var(--googleRed);
@@ -124,8 +126,6 @@ grid template
 
 
 .facebook-button {
-    width: 100%;
-    padding: 0.6em;
     background-color: var(--white);
     border: 1px solid var(--facebookBlue);
     color: var(--facebookBlue);

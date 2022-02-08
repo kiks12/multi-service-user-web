@@ -94,7 +94,7 @@ const Register : NextPage = () => {
 
                     <div>
                         <button
-                            className='main-button'
+                            className='button main-button'
                             style={{
                                 margin: '3em 0 3em 0'
                             }}
@@ -113,12 +113,12 @@ const Register : NextPage = () => {
 
                     <div className='google-facebook-buttons-container'>
                         <button
-                            className='google-button'
+                            className='button google-button'
                         >
                             Sign Up with Google
                         </button>
                         <button
-                            className='facebook-button'
+                            className='button facebook-button'
                             style={{
                                 margin: '0.5em 0 0 0'
                             }}
