@@ -23,7 +23,7 @@ import Link from 'next/link';
 
 
 
-import Router from '../../components/router';
+import Router from '../../src/components/router';
 
 
 

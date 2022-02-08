@@ -3,13 +3,13 @@
 
 Multi Service Platform - Home Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 08, 2022
+Last Updated: Feb. 09, 2022
 Author: Tolentino, Francis James S.
 
 */
 
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
 
 
@@ -21,23 +21,25 @@ import { useSession } from 'next-auth/react';
 
 
 
-import Router from '../components/router';
+import Router from '../src/components/router';
+import MainGrid from '../src/components/layout/MainGrid';
+import LeftNavbar from '../src/components/NavigationBars/LeftNavbar';
+import TopNavbar from '../src/components/NavigationBars/TopNavbar';
+import ContentSection from '../src/components/ContentSection/ContentSection';
 
 
 
 const Home: NextPage = () => { 
 
-    const {data: session, status} = useSession();
+    const { status } = useSession();
     const router = Router();
 
 
-    useEffect(() => {
-        if (status === 'unauthenticated') {
-            router.push('/login');
-        }
-
-        console.log('status: ', status)
-    }, [status]);
+    // useEffect(() => {
+    //     if (status === 'unauthenticated') {
+    //         router.push('/login');
+    //     }
+    // }, [status]);
     
 
     if (status === 'loading') {
@@ -46,9 +48,13 @@ const Home: NextPage = () => {
 
 
     return (
-        <div>
-            <p>Hello</p>
-        </div>
+        <>
+            <MainGrid 
+                leftNavbar={<LeftNavbar />}
+                topNavbar={<TopNavbar />}
+                contentSection={<ContentSection />}
+            />
+        </>
     )
 }
 

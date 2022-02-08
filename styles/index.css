@@ -93,6 +93,41 @@ grid template
 
 
 
+/*  LAYOUT  */
+
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 10% 80%;
+    height: 100vh;
+    width: 100vw;
+}
+
+
+.left-navbar{
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+
+
+.top-navbar{
+    grid-column-start: 2;
+    border-bottom: 0.3px solid var(--secondaryPurple);
+}
+
+
+.content-section {
+    grid-row-start: 2;
+    grid-column-start: 2;
+}
+
+
+/*  LAYOUT  */
+
+
+
 /* Utilities */
 
 
