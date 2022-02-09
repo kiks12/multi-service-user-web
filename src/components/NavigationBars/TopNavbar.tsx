@@ -15,8 +15,39 @@ import React from 'react';
 
 
 const TopNavbar : React.FC = () => {
+
     return (
-        <div>
+        <div className='top-navbar'>
+
+            <div className='top-navbar-search-form-container'>
+                <form className='top-navbar-search-form'>
+                    <input 
+                        type='text'
+                        placeholder='Search for Services'
+                        className='form-control'
+                    />
+                    <div 
+                        style={{
+                            width: '20%'
+                        }}
+                    >
+                        <button
+                            type='submit'
+                            className='button gray-button'
+                            >
+                            Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+
+            <div>
+                <ul>
+                    <li>Messages</li>
+                    <li>Account</li>
+                </ul>
+            </div>
 
         </div>
     )
