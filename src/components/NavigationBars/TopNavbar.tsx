@@ -14,7 +14,11 @@ Author: Tolentino, Francis James S.
 import React from 'react';
 
 
-import { signOut } from 'next-auth/react';
+// import { signOut } from 'next-auth/react';
+
+
+import { auth } from '../../../scripts/firebase';
+import { signOut } from 'firebase/auth';
 
 
 
@@ -51,7 +55,7 @@ const TopNavbar : React.FC = () => {
                     <li className='top-navbar-li'>Messages</li>
                     <li 
                         className='top-navbar-li'
-                        onClick={() => signOut()}
+                        onClick={() => signOut(auth)}
                     >
                         Account
                     </li>

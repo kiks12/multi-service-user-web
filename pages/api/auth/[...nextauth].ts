@@ -1,4 +1,13 @@
 
+/*
+
+Multi Service Platform - Next Auth Configuration
+Created: Feb. 08, 2022
+Last Updated: Feb. 09, 2022
+Author: Tolentino, Francis James S.
+
+*/
+
 
 
 import NextAuth from "next-auth/next";
@@ -10,16 +19,22 @@ import GoogleProvider from "next-auth/providers/google";
 
 
 export default NextAuth({
+
+
     session: {
         strategy: 'jwt',
         maxAge: 60 * 60 * 24 * 15
     },
+
+
     providers: [
         GoogleProvider({
             clientId: '917044662078-ogpm52qrmdnhkkbc2tv249ugofo3ddh1.apps.googleusercontent.com',
             clientSecret: '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'
         })
     ],
+
+
     callbacks: {
         jwt: ({token, user}) => {
             if (user){
@@ -44,6 +59,9 @@ export default NextAuth({
 
             session.status = json.status;
             session.msg = json.msg;
+
+
+            console.log(json);
             
 
             if (token) {
@@ -53,8 +71,19 @@ export default NextAuth({
             return session;
         }
     },
+
+
+    pages: {
+        signIn: '/login'
+    },
+
+
     secret: "MultiServicePlatformSecret",
+
+
     jwt: {
         secret: "MultiServicePlatformSecret",
     },
+
+
 })

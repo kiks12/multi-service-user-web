@@ -4,7 +4,7 @@
 
 Multi Service Platform (User Web) - Register Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 08, 2022
+Last Updated: Feb. 09, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -24,6 +24,7 @@ import Link from 'next/link';
 
 
 import Router from '../../src/components/router';
+import { signIn } from 'next-auth/react';
 
 
 
@@ -177,6 +178,7 @@ const Register : NextPage = () => {
                     <div className='google-facebook-buttons-container'>
                         <button
                             className='button google-button'
+                            onClick={() => signIn('google', {type: 'google', request: 'register'})}
                         >
                             Sign Up with Google
                         </button>

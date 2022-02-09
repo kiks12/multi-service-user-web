@@ -3,20 +3,24 @@
 
 Multi Service Platform - Registration API
 Created: Feb. 08, 2022
-Last Updated: Feb. 08, 2022
+Last Updated: Feb. 09, 2022
 Author: Tolentino, Francis James S.
 
 */
 
 
+
 import type { NextApiRequest, NextApiResponse } from "next";
+
 
 
 import prisma from "../../../../prisma/prisma";
 
 
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
+    
     if (!req.body){
         res.statusCode = 400;
         res.send("There seems to be a problem");
@@ -36,6 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             username: username
         }
     });
+
 
 
     if (existingUser) {

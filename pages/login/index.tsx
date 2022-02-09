@@ -9,15 +9,11 @@ Author: Tolentino, Francis James S.
 */
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 
-import type { 
-    GetServerSideProps, 
-    GetServerSidePropsContext,
-    InferGetServerSidePropsType,
-    NextPage } from 'next';
+import type { NextPage } from 'next';
 
 
 
@@ -25,36 +21,40 @@ import Link from 'next/link';
 
 
 
-import { getSession, signIn, useSession } from 'next-auth/react';
+
+import { signInWithRedirect } from 'firebase/auth';
+import { auth, GoogleProvider } from '../../scripts/firebase';
 
 
 
-const Login : NextPage = ({ msg }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Login : NextPage = () => {
 
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
 
-    const [error] = useState<string>(msg);
+    // const router = Router();
 
 
-    const {data: session, status} = useSession();
+    // const [error] = useState<string>(msg);
 
 
-    const submitLoginForm = async (e: any) => {
-        e.preventDefault();
+    // const {data: session, status} = useSession();
 
-        const login = await signIn('credentials', {
-            redirect: false,
-            email: email,
-            password: password
-        })
 
-        console.log(login);
-        console.log('status: ', status, ' data: ', session);
-    }
+    // const submitLoginForm = async (e: any) => {
+    //     e.preventDefault();
 
+    //     const login = await signIn('credentials', {
+    //         redirect: false,
+    //         email: email,
+    //         password: password
+    //     })
+
+    //     console.log(login);
+    //     console.log('status: ', status, ' data: ', session);
+    // }
 
 
     return (
@@ -63,7 +63,7 @@ const Login : NextPage = ({ msg }: InferGetServerSidePropsType<typeof getServerS
 
             <div className='login-register-left-container'>
                 <h1>Logo</h1>
-                <p>{error}</p>
+                {/* <p>{error}</p> */}
             </div>
 
 
@@ -84,7 +84,7 @@ const Login : NextPage = ({ msg }: InferGetServerSidePropsType<typeof getServerS
 
                 <form 
                     className='login-register-form'
-                    onSubmit={submitLoginForm}
+                    // onSubmit={submitLoginForm}
                 >
 
                     <div
@@ -148,7 +148,7 @@ const Login : NextPage = ({ msg }: InferGetServerSidePropsType<typeof getServerS
                                 margin: '0 0 3em 0'
                             }}
                             type='submit'
-                            onSubmit={submitLoginForm}
+                            // onSubmit={submitLoginForm}
                         >
                             Login
                         </button>
@@ -167,8 +167,8 @@ const Login : NextPage = ({ msg }: InferGetServerSidePropsType<typeof getServerS
                     <div className='google-facebook-buttons-container'>
                         <button 
                             className='button google-button'
-                            onClick={() => {
-                                signIn('google');
+                            onClick={async () => {
+                                signInWithRedirect(auth, GoogleProvider);
                             }}
                         >
                             Sign in with Google
@@ -209,29 +209,6 @@ const Login : NextPage = ({ msg }: InferGetServerSidePropsType<typeof getServerS
 
         </main>
     )
-}
-
-
-
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const session = await getSession(ctx);
-
-    if (session?.status === 100) {
-        return {
-            props: {
-                redirect: {
-                    permanent: false,
-                    destination: '/'
-                }
-            }
-        }
-    }
-
-    return {
-        props: {
-            msg: session?.msg
-        }
-    }
 }
 
 
