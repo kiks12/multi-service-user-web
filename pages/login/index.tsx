@@ -33,29 +33,7 @@ const Login : NextPage = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-
-    // const router = Router();
-
-
-    // const [error] = useState<string>(msg);
-
-
-    // const {data: session, status} = useSession();
-
-
-    // const submitLoginForm = async (e: any) => {
-    //     e.preventDefault();
-
-    //     const login = await signIn('credentials', {
-    //         redirect: false,
-    //         email: email,
-    //         password: password
-    //     })
-
-    //     console.log(login);
-    //     console.log('status: ', status, ' data: ', session);
-    // }
-
+    
 
     return (
         <main className='login-register-main-container'>

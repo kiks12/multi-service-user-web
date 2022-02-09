@@ -15,6 +15,7 @@ import React, { useEffect, useState } from 'react';
 
 
 import { auth } from '../../../scripts/firebase';
+import { useAuthentication } from '../../custom-hooks/useAuthentication';
 
 
 
@@ -25,6 +26,7 @@ import Router from '../router';
 const AuthChangeLoading : React.FC = ({children}) => {
 
     const [loading, setLoading] = useState<boolean>(true);
+    const {setSession} = useAuthentication();
 
     const router = Router();
 
@@ -32,16 +34,36 @@ const AuthChangeLoading : React.FC = ({children}) => {
     useEffect(() => {
         auth.onAuthStateChanged(async (user) => {
             if (user) {
+                const res = await fetch('http://localhost:3000/api/auth/signin/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({email: user.email})
+                })
+
+                const json = await res.json();
+
+
+                if (typeof setSession === 'function'){
+                    setSession(json.user);
+                }
+
                 await router.push('/');
             }
+
+            
             if (!user) {
                 await router.push('/login');
             }
+
+
             setLoading(false)
         })
     }, []);
 
 
+    
     if (loading) {
         return <p>Loading....</p>
     }

@@ -1,9 +1,15 @@
 
 
+
 import { NextApiRequest, NextApiResponse } from "next";
 
 
+
 import prisma from "../../../../prisma/prisma";
+
+
+
+import type { User } from "../../../../types";
 
 
 
@@ -30,16 +36,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             return;
         }
 
-        if (findUser?.password !== password) {
-            res.json({
-                msg: 'Password Incorrect',
-                status: 500
-            })
-            return;
+
+        const foundUser : User = {
+            email: findUser.email,
+            id: findUser.userId,
+            image: findUser.image,
+            username: findUser.username,
         }
 
+        // if (findUser?.password !== password) {
+        //     res.json({
+        //         msg: 'Password Incorrect',
+        //         status: 500
+        //     })
+        //     return;
+        // }
+
         res.json({
-            user: findUser,
+            user: foundUser,
             status: 100
         })
     } catch (e) {
