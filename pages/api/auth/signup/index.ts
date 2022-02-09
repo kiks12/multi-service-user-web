@@ -3,7 +3,7 @@
 
 Multi Service Platform - Registration API
 Created: Feb. 08, 2022
-Last Updated: Feb. 09, 2022
+Last Updated: Feb. 10, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -25,6 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         res.statusCode = 400;
         res.send("There seems to be a problem");
     }
+
     
     if (req.method !== 'POST'){
         res.send("Method Error: only POST method is allowed");
@@ -32,12 +33,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 
 
-    const { username, email, password, type } = req.body;
+    const { email, image } = req.body;
 
 
     const existingUser = await prisma.users.findFirst({
         where: {
-            username: username
+            email: email
         }
     });
 
@@ -45,7 +46,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (existingUser) {
         res.json({
-            msg: 'Username already used!',
+            msg: 'This Email is already used!',
             status: 500
         });
     }
@@ -54,23 +55,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     await prisma.users.create({
         data: {
-            username: username,
+            username: '',
             email: email,
-            password: password,
+            password: '',
             address: '',
             contact: '',
-            type: type,
+            image: image,
+            firstLogin: true
         }
     })
+
 
 
     const createdUser = await prisma.users.findFirst({
         where: {
-            username: username
+            email: email
         }
     })
 
     
+
     if (!createdUser) {
         res.json({
             msg: 'There seems to be a problem',
