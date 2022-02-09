@@ -33,7 +33,7 @@ const Login : NextPage = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    
+
 
     return (
         <main className='login-register-main-container'>
@@ -60,7 +60,7 @@ const Login : NextPage = () => {
                 </div>
            
 
-                <form 
+                {/* <form 
                     className='login-register-form'
                     // onSubmit={submitLoginForm}
                 >
@@ -132,7 +132,7 @@ const Login : NextPage = () => {
                         </button>
                     </div>
 
-                </form>
+                </form> */}
 
 
 
