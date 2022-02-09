@@ -16,6 +16,7 @@ import React from 'react';
 
 
 import useClickOutsideElement from '../../custom-hooks/useClickOutsideElement';
+import { useAuthentication } from '../../custom-hooks/useAuthentication';
 
 
 
@@ -33,6 +34,9 @@ interface Props {
 const TopNavbarPopUp: React.FC<Props> = ({ setShowPopup }) => {
 
 
+    const { clearSession } = useAuthentication();
+
+
     const popupRef = useClickOutsideElement(() => {
         setShowPopup(false);
     })
@@ -46,7 +50,10 @@ const TopNavbarPopUp: React.FC<Props> = ({ setShowPopup }) => {
                 <li className='top-navbar-popup-li'>Help and Support</li>
                 <li 
                     className='top-navbar-popup-li'
-                    onClick={() => signOut(auth)}
+                    onClick={() => {
+                        clearSession();
+                        signOut(auth);
+                    }}
                 >
                     Logout
                 </li>

@@ -11,7 +11,7 @@ Author: Tolentino, Francis James S.
 
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 
@@ -27,6 +27,10 @@ import Router from '../../src/components/router';
 
 
 
+import { useSignLogic } from '../../src/custom-hooks/useSignLogic';
+
+
+
 const Register : NextPage = () => {
 
 
@@ -39,34 +43,42 @@ const Register : NextPage = () => {
     const router = Router();
 
 
-
-    const submitRegistrationForm = async (e: any) => {
-        e.preventDefault();
-
-        const res = await fetch('/api/auth/signup/register/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username,
-                email,
-                password,
-                type: 'default'
-            })
-        });
-
-        const jsonRes = await res.json();
+    const { setType } = useSignLogic();
 
 
-        setMessage(jsonRes.msg);
+
+    // const submitRegistrationForm = async (e: any) => {
+    //     e.preventDefault();
+
+    //     const res = await fetch('/api/auth/signup/register/', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             username,
+    //             email,
+    //             password,
+    //             type: 'default'
+    //         })
+    //     });
+
+    //     const jsonRes = await res.json();
 
 
-        if(jsonRes.status === 100){
-            router.push('/login');
-        }
-    }
+    //     setMessage(jsonRes.msg);
 
+
+    //     if(jsonRes.status === 100){
+    //         router.push('/login');
+    //     }
+    // }
+
+
+
+    useEffect(() => {
+        if (typeof setType === 'function') setType('Register');
+    }, []);
 
 
 
@@ -94,7 +106,7 @@ const Register : NextPage = () => {
 
                 <form  
                     className='login-register-form'
-                    onSubmit={submitRegistrationForm}
+                    // onSubmit={submitRegistrationForm}
                 >
 
                     <div

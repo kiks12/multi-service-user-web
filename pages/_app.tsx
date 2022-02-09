@@ -19,6 +19,7 @@ import type { AppProps } from 'next/app';
 
 
 import { AuthProvider } from '../src/custom-hooks/useAuthentication';
+import { SignLogicProvider } from '../src/custom-hooks/useSignLogic';
 
 
 
@@ -30,9 +31,11 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) =>
     
     return (
         <AuthProvider>
-            <AuthChangeLoading>
-                <Component {...pageProps} />
-            </AuthChangeLoading>
+            <SignLogicProvider>
+                <AuthChangeLoading>
+                    <Component {...pageProps} />
+                </AuthChangeLoading>
+            </SignLogicProvider>
         </AuthProvider>
     )
 }

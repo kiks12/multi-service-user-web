@@ -1,4 +1,12 @@
 
+/*
+
+Multi Service Platform - custom hook to handle user information
+Created: Feb. 09, 2022
+Last Updated: Feb. 09, 2022
+Author: Tolentino, Francis James S.
+
+*/
 
 
 import { createContext, useContext, useState } from "react";
@@ -14,6 +22,8 @@ interface AuthenticationProps {
     session: User | null;
     setSession: React.Dispatch<React.SetStateAction<User | null>> | null;
     clearSession: () => void;
+    error: string;
+    setError: React.Dispatch<React.SetStateAction<string>> | null;
 }
 
 
@@ -23,6 +33,8 @@ const authContext = createContext<AuthenticationProps>({
     session: null,
     setSession: null,
     clearSession: () => {},
+    error: '',
+    setError: null
 });
 
 
@@ -38,7 +50,7 @@ export const AuthProvider: React.FC = ({children}) => {
 
 
     return (
-        <authContext.Provider value={{loading, session, setSession, clearSession}}>
+        <authContext.Provider value={{loading, session, setSession, clearSession, error, setError}}>
             {children}
         </authContext.Provider>
     )

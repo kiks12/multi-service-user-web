@@ -9,7 +9,7 @@ Author: Tolentino, Francis James S.
 */
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 
@@ -26,11 +26,26 @@ import { auth, GoogleProvider } from '../../scripts/firebase';
 
 
 
+import { useAuthentication } from '../../src/custom-hooks/useAuthentication';
+import { useSignLogic } from '../../src/custom-hooks/useSignLogic';
+
+
+
 const Login : NextPage = () => {
 
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+
+
+    const {error} = useAuthentication();
+    const {setType} = useSignLogic();
+
+
+
+    useEffect(() => {
+        if (typeof setType === 'function') setType('Login');
+    }, []);
 
 
 
@@ -40,7 +55,7 @@ const Login : NextPage = () => {
 
             <div className='login-register-left-container'>
                 <h1>Logo</h1>
-                {/* <p>{error}</p> */}
+                <p>{error}</p>
             </div>
 
 
@@ -61,7 +76,6 @@ const Login : NextPage = () => {
 
                 <form 
                     className='login-register-form'
-                    // onSubmit={submitLoginForm}
                 >
 
                     <div
@@ -125,7 +139,6 @@ const Login : NextPage = () => {
                                 margin: '0 0 3em 0'
                             }}
                             type='submit'
-                            // onSubmit={submitLoginForm}
                         >
                             Login
                         </button>
@@ -144,7 +157,7 @@ const Login : NextPage = () => {
                     <div className='google-facebook-buttons-container'>
                         <button 
                             className='button google-button'
-                            onClick={async () => {
+                            onClick={() => {
                                 signInWithRedirect(auth, GoogleProvider);
                             }}
                         >
