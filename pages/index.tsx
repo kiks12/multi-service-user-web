@@ -18,27 +18,11 @@ import type { NextPage } from 'next'
 
 
 
-import Router from '../src/components/router';
 import Layout from '../src/components/layout/Layout';
 
 
 
-import { useAuthentication } from '../src/custom-hooks/useAuthentication';
-
-
-
 const Home: NextPage = () => { 
-
-    const router = Router();
-
-    const {session} = useAuthentication();
-
-
-    useEffect(() => {
-        console.log(session);
-    }, []);
-
-
 
     return (
         <>
