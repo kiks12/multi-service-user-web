@@ -10,6 +10,7 @@ Author: Tolentino, Francis James S.
 */
 
 
+
 import React, { useEffect, useState } from 'react';
 
 
@@ -25,16 +26,21 @@ import Router from '../router';
 
 const AuthChangeLoading : React.FC = ({children}) => {
 
+
     const [loading, setLoading] = useState<boolean>(true);
     const {setSession} = useAuthentication();
 
+    
     const router = Router();
 
 
+
     useEffect(() => {
+
+
         auth.onAuthStateChanged(async (user) => {
             if (user) {
-                const res = await fetch('http://localhost:3000/api/auth/signin/', {
+                const res = await fetch(`${process.env.SITE_URL}/api/auth/signin/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -53,13 +59,15 @@ const AuthChangeLoading : React.FC = ({children}) => {
             }
 
             
-            if (!user) {
+            if (!user && router.pathname !== '/register') {
                 await router.push('/login');
             }
 
 
             setLoading(false)
         })
+
+        
     }, []);
 
 

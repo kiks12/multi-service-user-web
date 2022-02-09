@@ -14,10 +14,6 @@ import React from 'react';
 
 
 
-import useAuthenticated from '../../custom-hooks/useAuthenticated';
-
-
-
 import ContentSection from '../ContentSection/ContentSection';
 import LeftNavbar from '../NavigationBars/LeftNavbar';
 import TopNavbar from '../NavigationBars/TopNavbar';
@@ -25,10 +21,8 @@ import MainGrid from './MainGrid';
 
 
 
-
 const Layout: React.FC = () => {
 
-    // useAuthenticated();
 
     return (
         <MainGrid 

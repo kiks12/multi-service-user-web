@@ -9,7 +9,7 @@ Author: Tolentino, Francis James S.
 */
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 
 
@@ -18,7 +18,6 @@ import type { NextPage } from 'next';
 
 
 import Link from 'next/link';
-
 
 
 
@@ -60,7 +59,7 @@ const Login : NextPage = () => {
                 </div>
            
 
-                {/* <form 
+                <form 
                     className='login-register-form'
                     // onSubmit={submitLoginForm}
                 >
@@ -132,7 +131,7 @@ const Login : NextPage = () => {
                         </button>
                     </div>
 
-                </form> */}
+                </form>
 
 
 

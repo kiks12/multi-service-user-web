@@ -24,7 +24,6 @@ import Link from 'next/link';
 
 
 import Router from '../../src/components/router';
-import { signIn } from 'next-auth/react';
 
 
 
@@ -178,7 +177,6 @@ const Register : NextPage = () => {
                     <div className='google-facebook-buttons-container'>
                         <button
                             className='button google-button'
-                            onClick={() => signIn('google', {type: 'google', request: 'register'})}
                         >
                             Sign Up with Google
                         </button>
