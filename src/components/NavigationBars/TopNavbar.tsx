@@ -10,7 +10,11 @@ Author: Tolentino, Francis James S.
 */
 
 
+
 import React from 'react';
+
+
+import { signOut } from 'next-auth/react';
 
 
 
@@ -45,13 +49,19 @@ const TopNavbar : React.FC = () => {
             <div className='top-navbar-ul-container'>
                 <ul className='top-navbar-ul'>
                     <li className='top-navbar-li'>Messages</li>
-                    <li className='top-navbar-li'>Account</li>
+                    <li 
+                        className='top-navbar-li'
+                        onClick={() => signOut()}
+                    >
+                        Account
+                    </li>
                 </ul>
             </div>
 
         </div>
     )
 }
+
 
 
 export default TopNavbar;

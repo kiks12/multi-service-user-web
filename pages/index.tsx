@@ -9,15 +9,16 @@ Author: Tolentino, Francis James S.
 */
 
 
+
 import React from 'react';
 
 
 
-import type { NextPage } from 'next'
+import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next'
 
 
 
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 
 
 
@@ -50,6 +51,22 @@ const Home: NextPage = () => {
         </>
     )
 }
+
+
+
+export const getServerSideProps : GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+
+    const session = await getSession(ctx);
+
+    console.log('session: ', session)
+
+    return {
+        props: {
+
+        }
+    }
+}
+
 
 
 export default Home;

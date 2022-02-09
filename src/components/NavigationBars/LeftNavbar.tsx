@@ -58,7 +58,7 @@ const LeftNavbar : React.FC = () => {
                         <li className={activePage === 'Explore' ? ACTIVE_PAGE : INACTIVE_PAGE}>Explore</li>
                     </Link>
                     <Link href='/bookings' passHref={true}>
-                        <li className='left-navbar-li'>Bookings</li>
+                        <li className={activePage === 'Bookings' ? ACTIVE_PAGE : INACTIVE_PAGE}>Bookings</li>
                     </Link>
                 </ul>
             </div>
@@ -94,7 +94,7 @@ const LeftNavbar : React.FC = () => {
                 </div>
 
                 <ul>
-                    <li className='left-navbar-li'>Business A</li>
+                    {/* <li className='left-navbar-li'>Business A</li> */}
                 </ul>
             </div>
 

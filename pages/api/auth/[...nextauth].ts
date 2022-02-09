@@ -4,11 +4,8 @@
 import NextAuth from "next-auth/next";
 
 
-import CredentialsProvider from "next-auth/providers/credentials";
 
-
-
-import prisma from "../../../prisma/prisma";
+import GoogleProvider from "next-auth/providers/google";
 
 
 
@@ -18,19 +15,10 @@ export default NextAuth({
         maxAge: 60 * 60 * 24 * 15
     },
     providers: [
-        CredentialsProvider({
-            name: 'Credentials',
-            credentials: {
-                Email: { label: "Email", type: "email", placeholder: "example@gmail.com" },
-                Password: {  label: "Password", type: "password" }
-            },
-            authorize: async (credentials) => {
-                console.log('Credentials: ', credentials);
-
-
-                return null
-            }
-        }),
+        GoogleProvider({
+            clientId: '917044662078-ogpm52qrmdnhkkbc2tv249ugofo3ddh1.apps.googleusercontent.com',
+            clientSecret: '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'
+        })
     ],
     callbacks: {
         jwt: ({token, user}) => {
@@ -40,7 +28,24 @@ export default NextAuth({
 
             return token;
         },
-        session: ({session, token}) => {
+        session: async ({ session, token }) => {
+
+            const { email } = session;
+
+            const res = await fetch('http://localhost:3000/api/auth/signin/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({email})
+            })
+
+            const json = await res.json();
+
+            session.status = json.status;
+            session.msg = json.msg;
+            
+
             if (token) {
                 session.id = token.id;
             }

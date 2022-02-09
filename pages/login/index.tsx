@@ -3,30 +3,40 @@
 
 Multi Service Platform (User Web) - Login Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 08, 2022
+Last Updated: Feb. 09, 2022
 Author: Tolentino, Francis James S.
 
 */
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 
-import type { NextPage } from 'next';
+
+import type { 
+    GetServerSideProps, 
+    GetServerSidePropsContext,
+    InferGetServerSidePropsType,
+    NextPage } from 'next';
+
 
 
 import Link from 'next/link';
 
 
-import { signIn, useSession } from 'next-auth/react';
+
+import { getSession, signIn, useSession } from 'next-auth/react';
 
 
 
-const Login : NextPage = () => {
+const Login : NextPage = ({ msg }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+
+
+    const [error] = useState<string>(msg);
 
 
     const {data: session, status} = useSession();
@@ -45,10 +55,6 @@ const Login : NextPage = () => {
         console.log('status: ', status, ' data: ', session);
     }
 
-    useEffect(() => {
-        console.log('status: ', status, ' data: ', session);
-    }, []);
-
 
 
     return (
@@ -57,6 +63,7 @@ const Login : NextPage = () => {
 
             <div className='login-register-left-container'>
                 <h1>Logo</h1>
+                <p>{error}</p>
             </div>
 
 
@@ -160,6 +167,9 @@ const Login : NextPage = () => {
                     <div className='google-facebook-buttons-container'>
                         <button 
                             className='button google-button'
+                            onClick={() => {
+                                signIn('google');
+                            }}
                         >
                             Sign in with Google
                         </button>
@@ -199,6 +209,29 @@ const Login : NextPage = () => {
 
         </main>
     )
+}
+
+
+
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    const session = await getSession(ctx);
+
+    if (session?.status === 100) {
+        return {
+            props: {
+                redirect: {
+                    permanent: false,
+                    destination: '/'
+                }
+            }
+        }
+    }
+
+    return {
+        props: {
+            msg: session?.msg
+        }
+    }
 }
 
 

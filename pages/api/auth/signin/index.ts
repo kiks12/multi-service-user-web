@@ -27,6 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 msg: 'User Not Found',
                 status: 500
             })
+            return;
         }
 
         if (findUser?.password !== password) {
@@ -34,6 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 msg: 'Password Incorrect',
                 status: 500
             })
+            return;
         }
 
         res.json({
