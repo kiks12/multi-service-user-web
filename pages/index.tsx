@@ -22,10 +22,7 @@ import { useSession } from 'next-auth/react';
 
 
 import Router from '../src/components/router';
-import MainGrid from '../src/components/layout/MainGrid';
-import LeftNavbar from '../src/components/NavigationBars/LeftNavbar';
-import TopNavbar from '../src/components/NavigationBars/TopNavbar';
-import ContentSection from '../src/components/ContentSection/ContentSection';
+import Layout from '../src/components/layout/Layout';
 
 
 
@@ -49,11 +46,7 @@ const Home: NextPage = () => {
 
     return (
         <>
-            <MainGrid 
-                leftNavbar={<LeftNavbar />}
-                topNavbar={<TopNavbar />}
-                contentSection={<ContentSection />}
-            />
+            <Layout />
         </>
     )
 }
