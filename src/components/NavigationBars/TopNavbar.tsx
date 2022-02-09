@@ -11,18 +11,27 @@ Author: Tolentino, Francis James S.
 
 
 
-import React from 'react';
+import React, { useState } from 'react';
 
 
-// import { signOut } from 'next-auth/react';
+
+import { useAuthentication } from '../../custom-hooks/useAuthentication';
+import useClickOutsideElement from '../../custom-hooks/useClickOutsideElement';
 
 
-import { auth } from '../../../scripts/firebase';
-import { signOut } from 'firebase/auth';
+
+import TopNavbarPopUp from './TopNavbarPopUp';
 
 
 
 const TopNavbar : React.FC = () => {
+
+    // const {session} = useAuthentication();
+    const [showPopup, setShowPopup] = useState<boolean>(false);
+
+
+    const popupRef = useClickOutsideElement(() => setShowPopup(false));
+
 
     return (
         <div className='top-navbar'>
@@ -55,9 +64,18 @@ const TopNavbar : React.FC = () => {
                     <li className='top-navbar-li'>Messages</li>
                     <li 
                         className='top-navbar-li'
-                        onClick={() => signOut(auth)}
                     >
-                        Account
+                        <div
+                            style={{
+                                position: 'relative'
+                            }}
+                            onClick={() => {
+                                setShowPopup(true);
+                            }}
+                        >
+                            Account
+                            {showPopup && <TopNavbarPopUp setShowPopup={setShowPopup} />}
+                        </div>
                     </li>
                 </ul>
             </div>

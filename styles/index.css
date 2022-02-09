@@ -202,6 +202,30 @@ grid template
 }
 
 
+.top-navbar-popup {
+    position: absolute;
+    right: 1em;
+    background-color: var(--white);
+    border: 1px solid var(--gray);
+    width: 14vw;
+}
+
+
+.top-navbar-popup-ul {
+    list-style: none;
+}
+
+
+.top-navbar-popup-li {
+    padding: 0.4em 1em;
+}
+
+
+.top-navbar-popup-li:hover {
+    background-color: var(--gray);
+}
+
+
 /*  Navigation Bars  */
 
 
