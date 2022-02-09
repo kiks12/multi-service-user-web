@@ -18,7 +18,6 @@ import type { AppProps } from 'next/app';
 
 
 
-import { SessionProvider } from 'next-auth/react';
 import { AuthProvider } from '../src/custom-hooks/useAuthentication';
 
 
@@ -30,13 +29,11 @@ import AuthChangeLoading from '../src/components/AuthChange/AuthChangeLoading';
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
     
     return (
-        <SessionProvider session={session}>
-            <AuthProvider>
-                <AuthChangeLoading>
-                    <Component {...pageProps} />
-                </AuthChangeLoading>
-            </AuthProvider>
-        </SessionProvider>
+        <AuthProvider>
+            <AuthChangeLoading>
+                <Component {...pageProps} />
+            </AuthChangeLoading>
+        </AuthProvider>
     )
 }
 
