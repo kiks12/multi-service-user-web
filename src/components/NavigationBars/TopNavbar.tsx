@@ -42,10 +42,10 @@ const TopNavbar : React.FC = () => {
             </div>
 
 
-            <div>
-                <ul>
-                    <li>Messages</li>
-                    <li>Account</li>
+            <div className='top-navbar-ul-container'>
+                <ul className='top-navbar-ul'>
+                    <li className='top-navbar-li'>Messages</li>
+                    <li className='top-navbar-li'>Account</li>
                 </ul>
             </div>
 
