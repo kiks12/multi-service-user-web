@@ -9,7 +9,7 @@ Author: Tolentino, Francis James S.
 */
 
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 
 
@@ -26,14 +26,22 @@ import Router from "../components/router";
 
 
 
+interface Message {
+    msg: string;
+    status: 100 | 500 | 0;
+}
+
+
+
 interface AuthenticationProps {
     loading: boolean;
     session: User | null;
     setSession: React.Dispatch<React.SetStateAction<User | null>> | null;
     clearSession: () => void;
-    error: string;
-    setError: React.Dispatch<React.SetStateAction<string>> | null;
+    message: Message;
+    setMessage: React.Dispatch<React.SetStateAction<Message>> | null;
     loginWithGoogle: () => void;
+    registerWithGoogle: () => void;
 }
 
 
@@ -43,9 +51,13 @@ const authContext = createContext<AuthenticationProps>({
     session: null,
     setSession: null,
     clearSession: () => {},
-    error: '',
-    setError: null,
-    loginWithGoogle: () => {}
+    message: {
+        msg: '',
+        status: 0
+    },
+    setMessage: null,
+    loginWithGoogle: () => {},
+    registerWithGoogle: () => {}
 });
 
 
@@ -54,7 +66,10 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [session, setSession] = useState<User | null>(null);
-    const [error, setError] = useState<string>('');
+    const [message, setMessage] = useState<Message>({
+        msg: '',
+        status: 0,
+    });
 
 
     const clearSession = () => setSession(null);
@@ -63,12 +78,46 @@ export const AuthProvider: React.FC = ({ children }) => {
     const router = Router();
 
 
+
+    const resetMessage = useCallback(() => {
+        setMessage({
+            msg: '',
+            status: 0
+        })
+    }, [router]);
+
+
+
+
+    // Pop up sign in to google handler - returns UserCredentials
+    const openGooglePopup = async () => {
+        let result;
+        
+        try {
+            // get user with sign in to google with pop up
+            result = await signInWithPopup(auth, GoogleProvider);
+        } catch (e) {
+            // handle popup closed by user error
+            console.error(e);
+        }
+
+        return result;
+    }
+
+
+
+
+    // This function handles the whole login wih google flow
     const loginWithGoogle = async () => {
-        const result = await signInWithPopup(auth, GoogleProvider);
-        const { user } = result;
-        const { email } = user;
+        const result = await openGooglePopup();
+        
+        if (typeof result === 'undefined') return;
+
+        // get the email from the result.user
+        const { email } = result.user;
 
         try {
+            // find user through API fetching
             const findUser = await fetch(`${process.env.SITE_URL}/api/auth/signin/`, {
                 method: 'POST',
                 headers: {
@@ -77,18 +126,67 @@ export const AuthProvider: React.FC = ({ children }) => {
                 body: JSON.stringify({email})
             });
     
-    
+            // convert the fetch result into json
             const jsonFoundUser = await findUser.json();
-    
+
+
+            // check if status is 100 and user is found
             if (jsonFoundUser.status === 100){
                 router.push('/login/callback');
             } else {
-                setError(jsonFoundUser.msg);
+                // set the error message to payload message
+                setMessage({msg: jsonFoundUser.msg, status: jsonFoundUser.status});
             }
+        
         } catch (e) {
-            setError(e as string);
+            setMessage({msg: e as string, status: 500});
+        }
+        
+    }
+
+
+
+
+    const registerWithGoogle = async () => {
+        const result = await openGooglePopup();
+
+        if (typeof result === 'undefined') return;
+
+        console.log(result);
+
+        const { providerId, user } = result;
+        const { email, photoURL, displayName } = user;
+
+        try {
+            const res = await fetch('/api/auth/signup/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email, 
+                    image: photoURL, 
+                    provider: providerId,
+                    username: displayName,
+                })
+            })
+
+
+            const jsonRes = await res.json();
+
+
+            setMessage({msg: jsonRes.msg, status: jsonRes.status});
+        } catch (e) {
+            console.error(e);
         }
     }
+
+
+
+    useEffect(() => {
+        resetMessage();
+    }, [resetMessage]);
+
 
 
 
@@ -98,9 +196,10 @@ export const AuthProvider: React.FC = ({ children }) => {
                 session, 
                 setSession, 
                 clearSession, 
-                error,
-                setError,
-                loginWithGoogle
+                message,
+                setMessage,
+                loginWithGoogle,
+                registerWithGoogle
             }}
         >
             {children}

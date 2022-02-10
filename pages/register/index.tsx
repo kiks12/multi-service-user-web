@@ -24,20 +24,18 @@ import Link from 'next/link';
 
 
 import Router from '../../src/components/router';
-
-
-
-import { useSignLogic } from '../../src/custom-hooks/useSignLogic';
+import { useAuthentication } from '../../src/custom-hooks/useAuthentication';
 
 
 
 const Register : NextPage = () => {
 
 
-    const [username, setUsername] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [message, setMessage] = useState<string>('');
+    // const [username, setUsername] = useState<string>('');
+    // const [email, setEmail] = useState<string>('');
+    // const [password, setPassword] = useState<string>('');
+    // const [message, setMessage] = useState<string>('');
+    const {registerWithGoogle, message} = useAuthentication();
 
 
 
@@ -77,7 +75,18 @@ const Register : NextPage = () => {
             <div className='login-register-left-container'>
                 <h1>Logo</h1>
                 <div>
-                    {message}
+                    {
+                        message.status === 100 ? (
+                            <>
+                            <p>
+                                {message.msg}
+                            </p>
+                            <Link href='/login' passHref={true}>
+                                <p>Login</p>
+                            </Link>
+                            </>
+                        ) : <p>{message.msg}</p>
+                    }
                 </div>
             </div>
 
@@ -92,7 +101,7 @@ const Register : NextPage = () => {
 
                 
 
-                <form  
+                {/* <form  
                     className='login-register-form'
                     // onSubmit={submitRegistrationForm}
                 >
@@ -166,7 +175,7 @@ const Register : NextPage = () => {
                         </button>
                     </div>
 
-                </form>
+                </form> */}
 
 
 
@@ -177,6 +186,7 @@ const Register : NextPage = () => {
                     <div className='google-facebook-buttons-container'>
                         <button
                             className='button google-button'
+                            onClick={registerWithGoogle}
                         >
                             Sign Up with Google
                         </button>

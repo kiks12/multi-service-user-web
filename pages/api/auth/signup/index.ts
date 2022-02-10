@@ -33,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 
 
-    const { email, image } = req.body;
+    const { username, email, image, provider } = req.body;
 
 
     const existingUser = await prisma.users.findFirst({
@@ -55,8 +55,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     await prisma.users.create({
         data: {
-            username: '',
+            username: username,
             email: email,
+            provider: provider,
             password: '',
             address: '',
             contact: '',

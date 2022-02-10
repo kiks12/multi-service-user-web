@@ -33,7 +33,7 @@ const Login : NextPage = () => {
     const [password, setPassword] = useState<string>('');
 
 
-    const { error, loginWithGoogle } = useAuthentication();
+    const { message, loginWithGoogle } = useAuthentication();
 
 
 
@@ -44,7 +44,7 @@ const Login : NextPage = () => {
 
             <div className='login-register-left-container'>
                 <h1>Logo</h1>
-                <p>{error}</p>
+                <p>{message.msg}</p>
             </div>
 
 
@@ -63,7 +63,7 @@ const Login : NextPage = () => {
                 </div>
            
 
-                <form 
+                {/* <form 
                     className='login-register-form'
                 >
 
@@ -133,7 +133,7 @@ const Login : NextPage = () => {
                         </button>
                     </div>
 
-                </form>
+                </form> */}
 
 
 

@@ -3,7 +3,7 @@
 
 Multi Service Platform - Firebase Configuration
 Created: Feb. 09, 2022
-Last Updated: Feb. 09, 2022
+Last Updated: Feb. 10, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -32,4 +32,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const GoogleProvider = new GoogleAuthProvider();
+GoogleProvider.setCustomParameters({
+  prompt: 'select_account',
+})
 export const auth = getAuth(app);
