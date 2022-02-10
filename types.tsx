@@ -2,7 +2,7 @@
 
 export type User = {
     image: String | null;
-    username: String;
+    username: String | null;
     email: String;
     id: number;
 }

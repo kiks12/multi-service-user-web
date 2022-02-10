@@ -4,7 +4,7 @@
 
 Multi Service Platform - main App file
 Created: Feb. 07, 2022
-Last Updated: Feb. 09, 2022
+Last Updated: Feb. 10, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -23,18 +23,12 @@ import { SignLogicProvider } from '../src/custom-hooks/useSignLogic';
 
 
 
-import AuthChangeLoading from '../src/components/AuthChange/AuthChangeLoading';
-
-
-
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
     
     return (
         <AuthProvider>
             <SignLogicProvider>
-                <AuthChangeLoading>
-                    <Component {...pageProps} />
-                </AuthChangeLoading>
+                <Component {...pageProps} />
             </SignLogicProvider>
         </AuthProvider>
     )

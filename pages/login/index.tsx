@@ -13,16 +13,11 @@ import React, { useEffect, useState } from 'react';
 
 
 
-import type { NextPage } from 'next';
+import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 
 
 
 import Link from 'next/link';
-
-
-
-import { signInWithRedirect } from 'firebase/auth';
-import { auth, GoogleProvider } from '../../scripts/firebase';
 
 
 
@@ -38,14 +33,14 @@ const Login : NextPage = () => {
     const [password, setPassword] = useState<string>('');
 
 
-    const {error} = useAuthentication();
-    const {setType} = useSignLogic();
+    const { error, loginWithGoogle } = useAuthentication();
+    const { setType } = useSignLogic();
 
 
 
     useEffect(() => {
         if (typeof setType === 'function') setType('Login');
-    }, []);
+    }, [setType]);
 
 
 
@@ -157,9 +152,7 @@ const Login : NextPage = () => {
                     <div className='google-facebook-buttons-container'>
                         <button 
                             className='button google-button'
-                            onClick={() => {
-                                signInWithRedirect(auth, GoogleProvider);
-                            }}
+                            onClick={loginWithGoogle}
                         >
                             Sign in with Google
                         </button>
@@ -199,6 +192,29 @@ const Login : NextPage = () => {
 
         </main>
     )
+}
+
+
+
+export const getServerSideProps: GetServerSideProps = async ({req, res}: GetServerSidePropsContext) => {
+    
+    const user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
+
+    if (user){
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            },
+            props: {}
+        }
+    }
+
+    return {
+        props: {
+
+        }
+    }
 }
 
 

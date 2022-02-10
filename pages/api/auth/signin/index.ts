@@ -1,4 +1,17 @@
 
+/*
+
+Multi Service Platform - Login API
+Created: Feb. 08, 2022
+Last Updated: Feb. 10, 2022
+Author: Tolentino, Francis James S.
+
+
+*/
+
+
+import cookie from 'cookie';
+
 
 
 import { NextApiRequest, NextApiResponse } from "next";
@@ -19,7 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         res.send('Only POST method is allowed');
     }
 
-    const { email, password } = req.body;
+    const { email } = req.body;
 
     try {
         const findUser = await prisma.users.findFirst({
@@ -44,18 +57,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             username: findUser.username,
         }
 
-        // if (findUser?.password !== password) {
-        //     res.json({
-        //         msg: 'Password Incorrect',
-        //         status: 500
-        //     })
-        //     return;
-        // }
+
+        res.setHeader("Set-Cookie", cookie.serialize("user", JSON.stringify(foundUser), {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== "development",
+            maxAge: 60 * 60 * 24 * 5,
+            sameSite: "strict",
+            path: "/" 
+        }));
+
+
 
         res.json({
             user: foundUser,
             status: 100
         })
+
     } catch (e) {
         res.json({
             msg: e,
@@ -64,6 +81,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
 }
+
 
 
 export default handler;
