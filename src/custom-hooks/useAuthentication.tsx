@@ -14,7 +14,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
 
 
 import { signInWithPopup } from "firebase/auth";
-import { auth, GoogleProvider } from "../../scripts/firebase";
+import { auth, FacebookProvider, GoogleProvider } from "../../scripts/firebase";
 
 
 
@@ -42,6 +42,7 @@ interface AuthenticationProps {
     setMessage: React.Dispatch<React.SetStateAction<Message>> | null;
     loginWithGoogle: () => void;
     registerWithGoogle: () => void;
+    loginWithFacebook: () => void;
     logout: () => void;
 }
 
@@ -59,6 +60,7 @@ const authContext = createContext<AuthenticationProps>({
     setMessage: null,
     loginWithGoogle: () => {},
     registerWithGoogle: () => {},
+    loginWithFacebook: () => {},
     logout: () => {}
 });
 
@@ -92,13 +94,13 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
 
-    // Pop up sign in to google handler - returns UserCredentials
-    const openGooglePopup = async () => {
+    // Pop up sign in to provider handler - returns UserCredentials
+    const openPopup = async (provider: any) => {
         let result;
         
         try {
-            // get user with sign in to google with pop up
-            result = await signInWithPopup(auth, GoogleProvider);
+            // get user with sign in with pop up
+            result = await signInWithPopup(auth, provider);
         } catch (e) {
             // handle popup closed by user error
             console.error(e);
@@ -112,7 +114,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     // This function handles the whole login wih google flow
     const loginWithGoogle = async () => {
-        const result = await openGooglePopup();
+        const result = await openPopup(GoogleProvider);
         
         if (typeof result === 'undefined') return;
 
@@ -151,7 +153,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
     const registerWithGoogle = async () => {
-        const result = await openGooglePopup();
+        const result = await openPopup(GoogleProvider);
 
         if (typeof result === 'undefined') return;
 
@@ -181,6 +183,12 @@ export const AuthProvider: React.FC = ({ children }) => {
         } catch (e) {
             console.error(e);
         }
+    }
+
+
+
+    const loginWithFacebook = async () => {
+        const result = await openPopup(FacebookProvider);
     }
 
 
@@ -215,6 +223,7 @@ export const AuthProvider: React.FC = ({ children }) => {
                 message,
                 setMessage,
                 loginWithGoogle,
+                loginWithFacebook,
                 registerWithGoogle,
                 logout
             }}

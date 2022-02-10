@@ -10,7 +10,7 @@ Author: Tolentino, Francis James S.
 
 
 
-import React, { useState } from 'react';
+import React from 'react';
 
 
 
@@ -29,11 +29,11 @@ import { useAuthentication } from '../../src/custom-hooks/useAuthentication';
 const Login : NextPage = () => {
 
 
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    // const [email, setEmail] = useState<string>('');
+    // const [password, setPassword] = useState<string>('');
 
 
-    const { message, loginWithGoogle } = useAuthentication();
+    const { message, loginWithGoogle, loginWithFacebook } = useAuthentication();
 
 
 
@@ -153,6 +153,7 @@ const Login : NextPage = () => {
                         <button 
                             className='button facebook-button'
                             style={{margin: '0.5em 0 0 0'}}
+                            onClick={loginWithFacebook}
                         >
                             Sign in with Facebook
                         </button>
