@@ -44,7 +44,6 @@ const Login : NextPage = () => {
 
             <div className='login-register-left-container'>
                 <h1>Logo</h1>
-                <p>{message.msg}</p>
             </div>
 
 
@@ -61,6 +60,15 @@ const Login : NextPage = () => {
                         Sign in to continue
                     </p>
                 </div>
+                
+                
+                {
+                    message.msg !== '' && (
+                        <div className={message.status === 500 ? 'error-message' : 'success-message'}>
+                            { message.msg }
+                        </div>
+                    )
+                }
            
 
                 {/* <form 
@@ -138,9 +146,6 @@ const Login : NextPage = () => {
 
 
                 <div className='social-media-sign-in-sign-up-container'>
-                    <div>
-                        <p className='secondary-purple-text'>Social Media Sign In</p>
-                    </div>
                     
 
                     <div className='google-facebook-buttons-container'>
@@ -148,21 +153,22 @@ const Login : NextPage = () => {
                             className='button google-button'
                             onClick={loginWithGoogle}
                         >
-                            Sign in with Google
+                            Sign In with Google
                         </button>
                         <button 
                             className='button facebook-button'
                             style={{margin: '0.5em 0 0 0'}}
                             onClick={loginWithFacebook}
                         >
-                            Sign in with Facebook
+                            Sign In with Facebook
                         </button>
                     </div>
 
                     
                     <div
                         style={{
-                            display: 'flex'
+                            display: 'flex',
+                            margin: '3em 0 0 0'
                         }}
                     >
                         <p 
@@ -191,7 +197,7 @@ const Login : NextPage = () => {
 
 
 
-export const getServerSideProps: GetServerSideProps = async ({req, res}: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }: GetServerSidePropsContext) => {
     
     const user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
 

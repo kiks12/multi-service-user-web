@@ -74,20 +74,7 @@ const Register : NextPage = () => {
 
             <div className='login-register-left-container'>
                 <h1>Logo</h1>
-                <div>
-                    {
-                        message.status === 100 ? (
-                            <>
-                            <p>
-                                {message.msg}
-                            </p>
-                            <Link href='/login' passHref={true}>
-                                <p>Login</p>
-                            </Link>
-                            </>
-                        ) : <p>{message.msg}</p>
-                    }
-                </div>
+                
             </div>
 
 
@@ -96,10 +83,26 @@ const Register : NextPage = () => {
 
                 <div>
                     <h1>Hello!</h1>
-                    <p>Create an Account</p>
+                    <p
+                        className='secondary-purple-text'
+                        style={{
+                            letterSpacing: '0.06em'
+                        }}
+                    >
+                        Create an Account
+                    </p>
                 </div>
 
-                
+
+                {
+                    message.msg !== '' && (
+                        <div className={message.status === 500 ? 'error-message' : 'success-message'}>
+                            { message.msg }
+                        </div>
+                    )
+                }
+
+
 
                 {/* <form  
                     className='login-register-form'
@@ -181,8 +184,6 @@ const Register : NextPage = () => {
 
                 <div className='social-media-sign-in-sign-up-container'>
 
-                    <p className='secondary-purple-text'>Social Media Sign Up</p>
-
                     <div className='google-facebook-buttons-container'>
                         <button
                             className='button google-button'
@@ -203,7 +204,8 @@ const Register : NextPage = () => {
 
                     <div
                         style={{
-                            display: 'flex'
+                            display: 'flex',
+                            margin: '3em 0 0 0'
                         }}
                     >
                         <p 

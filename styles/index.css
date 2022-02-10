@@ -6,7 +6,13 @@
     --secondaryPurple: #716D8C;
     --mainBlue: #6FA4F0;
     --googleRed: #BD4B44;
-    --facebookBlue: #2C71D9;
+    --googleBlue: #4285F4;
+    --facebookBlue: #4267B2;
+    --darkFacebookBlue: #3a5a9b;
+    --errorRed: rgb(138, 27, 27);
+    --errorRedBg: rgba(189, 16, 16, 0.3);
+    --messageGreen: rgb(15, 92, 44);
+    --messageGreenBg: rgba(22, 134, 65, 0.3);
     --white: #ffffff;
     --gray: #DBDBE2;
 }
@@ -55,10 +61,9 @@ grid template
 .login-register-right-container {
     padding: 1em 4em;
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 
@@ -73,13 +78,12 @@ grid template
 
 
 .social-media-sign-in-sign-up-container {
+    margin: 2em 0 0 0;
     padding: 2em 0 0 0;
-    border-top: 0.3px solid var(--secondaryPurple);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    flex: 1;
 }
 
 
@@ -87,6 +91,29 @@ grid template
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+
+
+
+.error-message {
+    width: 100%;
+    background-color: var(--errorRedBg);
+    padding: 0.7em;
+    margin: 1em 0 0 0;
+    border: 0.1px solid var(--errorRed);
+    border-radius: 0.3em;
+    color: var(--errorRed);
+}
+
+
+.success-message {
+    width: 100%;
+    background-color: var(--messageGreenBg);
+    padding: 0.7em;
+    margin: 1em 0 0 0;
+    border: 0.1px solid var(--messageGreen);
+    border-radius: 0.3em;
+    color: var(--messageGreen);
 }
 
 
@@ -245,6 +272,7 @@ grid template
 .button {
     width: 100%;
     padding: 0.4em;
+    transition: cubic-bezier(0.215, 0.610, 0.355, 1) 0.2s; 
 }
 
 
@@ -265,18 +293,32 @@ grid template
 
 
 .google-button {
-    background-color: var(--white);
-    border: 1px solid var(--googleRed);
-    color: var(--googleRed);
-    cursor: pointer; 
+    border: none;
+    color: var(--secondaryPurple);
+    border-radius: 0.3em;
+    padding: 0.9em;
+    cursor: pointer;
+}
+
+
+.google-button:hover{
+    background-color: var(--googleBlue);
+    color: var(--white);
 }
 
 
 .facebook-button {
-    background-color: var(--white);
-    border: 1px solid var(--facebookBlue);
-    color: var(--facebookBlue);
+    background-color: var(--facebookBlue);
+    border: none;
+    color: var(--white);
+    border-radius: 0.3em;
+    padding: 0.9em;
     cursor: pointer; 
+}
+
+
+.facebook-button:hover {
+    background-color: var(--darkFacebookBlue);
 }
 
 
