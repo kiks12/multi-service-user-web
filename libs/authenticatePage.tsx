@@ -16,7 +16,7 @@ const authenticatePage = ({req}: GetServerSidePropsContext) => {
     
     const user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
 
-    return user !== null;
+    return [user !== null, user];
 }
 
 

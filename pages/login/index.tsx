@@ -211,7 +211,7 @@ const Login : NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     
-    const isAuthenticated = authenticatePage(ctx);
+    const [isAuthenticated] = authenticatePage(ctx);
 
     if (isAuthenticated) {
         return {
