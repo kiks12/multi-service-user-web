@@ -34,7 +34,6 @@ interface Message {
 
 
 interface AuthenticationProps {
-    loading: boolean;
     session: User | null;
     setSession: React.Dispatch<React.SetStateAction<User | null>> | null;
     clearSession: () => void;
@@ -49,7 +48,6 @@ interface AuthenticationProps {
 
 
 const authContext = createContext<AuthenticationProps>({
-    loading: false,
     session: null,
     setSession: null,
     clearSession: () => {},
@@ -68,7 +66,6 @@ const authContext = createContext<AuthenticationProps>({
 
 export const AuthProvider: React.FC = ({ children }) => {
 
-    const [loading, setLoading] = useState<boolean>(false);
     const [session, setSession] = useState<User | null>(null);
     const [message, setMessage] = useState<Message>({
         msg: '',
@@ -83,12 +80,14 @@ export const AuthProvider: React.FC = ({ children }) => {
     const clearSession = () => setSession(null);
 
 
+    // this callback hook resets the error/success messages on router change to /login, /register
     const resetMessage = useCallback(() => {
-        setMessage({
-            msg: '',
-            status: 0
-        })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        if (router.pathname === '/login' || router.pathname === '/register'){
+            setMessage({
+                msg: '',
+                status: 0
+            })
+        }
     }, [router]);
 
 
@@ -152,16 +151,21 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
 
+    // This function handles the register with google flow 
     const registerWithGoogle = async () => {
+        // get UserCredentials from popup sign in with google
         const result = await openPopup(GoogleProvider);
 
         if (typeof result === 'undefined') return;
 
 
+        // get needed information from signed in account
         const { providerId, user } = result;
         const { email, photoURL, displayName } = user;
 
+
         try {
+            // register account using API POST fetching to /api/auth/signup/ 
             const res = await fetch('/api/auth/signup/', {
                 method: 'POST',
                 headers: {
@@ -194,7 +198,6 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
     const logout = async () => {
-        clearSession();
         await fetch(`/api/auth/signout/`, {
             method: 'POST',
             headers: {
@@ -202,7 +205,8 @@ export const AuthProvider: React.FC = ({ children }) => {
             },
             body: JSON.stringify({})
         });
-        router.push('/login');
+        await router.push('/login');
+        clearSession();
     }
 
 
@@ -213,10 +217,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
 
-
     return (
         <authContext.Provider value={{
-                loading, 
                 session, 
                 setSession, 
                 clearSession, 
