@@ -42,6 +42,7 @@ interface AuthenticationProps {
     setMessage: React.Dispatch<React.SetStateAction<Message>> | null;
     loginWithGoogle: () => void;
     registerWithGoogle: () => void;
+    logout: () => void;
 }
 
 
@@ -57,7 +58,8 @@ const authContext = createContext<AuthenticationProps>({
     },
     setMessage: null,
     loginWithGoogle: () => {},
-    registerWithGoogle: () => {}
+    registerWithGoogle: () => {},
+    logout: () => {}
 });
 
 
@@ -72,11 +74,11 @@ export const AuthProvider: React.FC = ({ children }) => {
     });
 
 
-    const clearSession = () => setSession(null);
-
 
     const router = Router();
+    
 
+    const clearSession = () => setSession(null);
 
 
     const resetMessage = useCallback(() => {
@@ -84,6 +86,7 @@ export const AuthProvider: React.FC = ({ children }) => {
             msg: '',
             status: 0
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router]);
 
 
@@ -152,7 +155,6 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         if (typeof result === 'undefined') return;
 
-        console.log(result);
 
         const { providerId, user } = result;
         const { email, photoURL, displayName } = user;
@@ -183,6 +185,20 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
 
+    const logout = async () => {
+        clearSession();
+        await fetch(`/api/auth/signout/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        });
+        router.push('/login');
+    }
+
+
+
     useEffect(() => {
         resetMessage();
     }, [resetMessage]);
@@ -199,7 +215,8 @@ export const AuthProvider: React.FC = ({ children }) => {
                 message,
                 setMessage,
                 loginWithGoogle,
-                registerWithGoogle
+                registerWithGoogle,
+                logout
             }}
         >
             {children}

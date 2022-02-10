@@ -4,7 +4,7 @@
 
 Multi Service Platform - Pop Up Component in Navigation Bar
 Created: Feb. 09, 2022
-Last Updated: Feb. 09, 2022
+Last Updated: Feb. 10, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -20,11 +20,6 @@ import { useAuthentication } from '../../custom-hooks/useAuthentication';
 
 
 
-import { signOut } from 'firebase/auth';
-import { auth } from '../../../scripts/firebase';
-
-
-
 interface Props {
     setShowPopup: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -34,7 +29,7 @@ interface Props {
 const TopNavbarPopUp: React.FC<Props> = ({ setShowPopup }) => {
 
 
-    const { clearSession } = useAuthentication();
+    const { logout } = useAuthentication();
 
 
     const popupRef = useClickOutsideElement(() => {
@@ -50,10 +45,7 @@ const TopNavbarPopUp: React.FC<Props> = ({ setShowPopup }) => {
                 <li className='top-navbar-popup-li'>Help and Support</li>
                 <li 
                     className='top-navbar-popup-li'
-                    onClick={() => {
-                        clearSession();
-                        signOut(auth);
-                    }}
+                    onClick={() => logout()}
                 >
                     Logout
                 </li>
