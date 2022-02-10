@@ -19,6 +19,7 @@ import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'ne
 
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 
 
@@ -43,7 +44,21 @@ const Login : NextPage = () => {
 
 
             <div className='login-register-left-container'>
-                <h1>Logo</h1>
+                <div
+                    style={{
+                        borderRadius: '50%',
+                        width: '90vh',
+                        height: '90vh',
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Image 
+                        src='/try.svg'
+                        height={800}
+                        width={800}
+                        objectFit='cover'
+                    />
+                </div>
             </div>
 
 

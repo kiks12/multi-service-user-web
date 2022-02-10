@@ -11,7 +11,7 @@ Author: Tolentino, Francis James S.
 
 
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 
 
@@ -20,10 +20,10 @@ import type { NextPage } from 'next';
 
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 
 
-import Router from '../../src/components/router';
 import { useAuthentication } from '../../src/custom-hooks/useAuthentication';
 
 
@@ -73,7 +73,21 @@ const Register : NextPage = () => {
             
 
             <div className='login-register-left-container'>
-                <h1>Logo</h1>
+                <div
+                    style={{
+                        borderRadius: '50%',
+                        width: '90vh',
+                        height: '90vh',
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Image 
+                        src='/try.svg'
+                        height={800}
+                        width={800}
+                        objectFit='cover'
+                    />
+                </div>
                 
             </div>
 
