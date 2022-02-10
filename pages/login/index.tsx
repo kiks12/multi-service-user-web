@@ -3,13 +3,14 @@
 
 Multi Service Platform (User Web) - Login Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 09, 2022
+Last Updated: Feb. 10, 2022
 Author: Tolentino, Francis James S.
 
 */
 
 
-import React, { useEffect, useState } from 'react';
+
+import React, { useState } from 'react';
 
 
 
@@ -22,7 +23,6 @@ import Link from 'next/link';
 
 
 import { useAuthentication } from '../../src/custom-hooks/useAuthentication';
-import { useSignLogic } from '../../src/custom-hooks/useSignLogic';
 
 
 
@@ -34,13 +34,7 @@ const Login : NextPage = () => {
 
 
     const { error, loginWithGoogle } = useAuthentication();
-    const { setType } = useSignLogic();
 
-
-
-    useEffect(() => {
-        if (typeof setType === 'function') setType('Login');
-    }, [setType]);
 
 
 

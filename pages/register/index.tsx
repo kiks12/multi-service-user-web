@@ -4,7 +4,7 @@
 
 Multi Service Platform (User Web) - Register Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 09, 2022
+Last Updated: Feb. 10, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -40,12 +40,6 @@ const Register : NextPage = () => {
     const [message, setMessage] = useState<string>('');
 
 
-    const router = Router();
-
-
-    const { setType } = useSignLogic();
-
-
 
     // const submitRegistrationForm = async (e: any) => {
     //     e.preventDefault();
@@ -73,12 +67,6 @@ const Register : NextPage = () => {
     //         router.push('/login');
     //     }
     // }
-
-
-
-    useEffect(() => {
-        if (typeof setType === 'function') setType('Register');
-    }, []);
 
 
 
