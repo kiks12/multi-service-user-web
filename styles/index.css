@@ -71,6 +71,7 @@ grid template
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
 }
 
 
@@ -79,6 +80,7 @@ grid template
     display: flex;
     align-items: flex-end;
     justify-content: center;
+    width: 100%;
 }
 
 

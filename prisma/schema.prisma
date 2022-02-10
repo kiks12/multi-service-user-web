@@ -17,10 +17,17 @@ model Users {
   userId Int @id @unique @default(autoincrement()) 
   username String? @unique @db.VarChar(50)
   email String @unique @db.VarChar(100)
-  provider String? @db.VarChar(20)
+  provider String @db.VarChar(20)
   image String? @db.VarChar(255)
-  password String? @db.VarChar(255)
+  cover String? @db.VarChar(255)
   address String? @db.VarChar(255)
   contact String? @db.VarChar(255)
+
+  skills String? @db.VarChar(255)
+  description String? @db.VarChar(255)
+  followers Int
+  likes Int
+  verifiedSeller Boolean
+
   firstLogin Boolean
 }

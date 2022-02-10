@@ -28,6 +28,7 @@ import { useAuthentication } from '../../src/custom-hooks/useAuthentication';
 
 import BottomMenu from '../../src/components/LoginRegister/BottomMenu';
 import Logo from '../../src/components/LoginRegister/Logo';
+import authenticatePage from '../../libs/authenticatePage';
 
 
 
@@ -208,15 +209,15 @@ const Login : NextPage = () => {
 
 
 
-export const getServerSideProps: GetServerSideProps = async ({ req }: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     
-    const user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
+    const isAuthenticated = authenticatePage(ctx);
 
-    if (user){
+    if (isAuthenticated) {
         return {
             redirect: {
-                destination: "/",
-                permanent: false,
+                destination: '/',
+                permanent: false
             },
             props: {}
         }

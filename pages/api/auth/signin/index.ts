@@ -73,9 +73,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             status: 100
         })
 
-    } catch (e) {
+    } catch (e:any) {
         res.json({
-            msg: e,
+            msg: e.meta.query_validation_error,
             status: 500
         })
     }

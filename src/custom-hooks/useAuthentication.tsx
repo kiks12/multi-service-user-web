@@ -140,6 +140,7 @@ export const AuthProvider: React.FC = ({ children }) => {
             } else {
                 // set the error message to payload message
                 setMessage({msg: jsonFoundUser.msg, status: jsonFoundUser.status});
+                // console.log(jsonFoundUser);
             }
         
         } catch (e) {

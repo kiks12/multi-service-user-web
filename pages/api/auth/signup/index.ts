@@ -58,10 +58,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             username: username,
             email: email,
             provider: provider,
-            password: '',
             address: '',
             contact: '',
             image: image,
+            followers: 0,
+            likes: 0,
+            verifiedSeller: false,
             firstLogin: true
         }
     })
