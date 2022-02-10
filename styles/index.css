@@ -219,19 +219,30 @@ grid template
     display: flex;
     list-style: none;
     justify-content: flex-end;
+    align-items: center;
     width: 100%;
 }
 
 
 .top-navbar-li {
-    padding: 1em;
+    padding: 0 1em;
     cursor: pointer;
+}
+
+
+.account-circle {
+    height: 2.3em;
+    width: 2.3em;
+    background-color: #3a5a9b;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 
 .top-navbar-popup {
     position: absolute;
-    right: 1em;
+    right: 2em;
+    top: 1em;
     background-color: var(--white);
     border: 1px solid var(--gray);
     width: 14vw;
@@ -251,6 +262,9 @@ grid template
 .top-navbar-popup-li:hover {
     background-color: var(--gray);
 }
+
+
+
 
 
 /*  Navigation Bars  */

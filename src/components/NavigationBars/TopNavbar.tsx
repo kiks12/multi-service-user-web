@@ -11,6 +11,7 @@ Author: Tolentino, Francis James S.
 
 
 
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 
@@ -26,7 +27,7 @@ import TopNavbarPopUp from './TopNavbarPopUp';
 
 const TopNavbar : React.FC = () => {
 
-    // const {session} = useAuthentication();
+    const {session} = useAuthentication();
     const [showPopup, setShowPopup] = useState<boolean>(false);
 
 
@@ -64,18 +65,30 @@ const TopNavbar : React.FC = () => {
                     <li className='top-navbar-li'>Messages</li>
                     <li 
                         className='top-navbar-li'
+                        style={{
+                            position: 'relative'
+                        }}
                     >
                         <div
-                            style={{
-                                position: 'relative'
-                            }}
+                            className='account-circle'
                             onClick={() => {
                                 setShowPopup(true);
                             }}
                         >
-                            Account
-                            {showPopup && <TopNavbarPopUp setShowPopup={setShowPopup} />}
+                            {
+                                session?.image && <Image 
+                                                    src={session?.image as string} 
+                                                    alt='profile' 
+                                                    width={50}
+                                                    height={50}
+                                                    objectFit='cover' 
+                                                    />
+                            }
+                            
                         </div>
+                        {
+                            showPopup && <TopNavbarPopUp setShowPopup={setShowPopup} />
+                        }
                     </li>
                 </ul>
             </div>
