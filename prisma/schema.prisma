@@ -27,7 +27,7 @@ model Users {
   description String? @db.VarChar(255)
   followers Int
   likes Int
-  verifiedSeller Boolean
+  verifiedProvider Boolean
 
   firstLogin Boolean
   firstProviderLogin Boolean

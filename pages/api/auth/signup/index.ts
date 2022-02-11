@@ -63,7 +63,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             image: image,
             followers: 0,
             likes: 0,
-            verifiedSeller: false,
+            verifiedProvider: false,
             firstLogin: true,
             firstProviderLogin: true,
         }
