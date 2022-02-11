@@ -94,7 +94,7 @@ const TopNavbar : React.FC = () => {
                                     }
                                 </>                       
                             ) : (
-                                <Link href='/login' passHref={true}>
+                                <Link href='/hello' passHref={true}>
                                     <button className="button">Login</button>
                                 </Link>
                                 )
