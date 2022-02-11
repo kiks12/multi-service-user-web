@@ -3,7 +3,7 @@
 
 Multi Service Platform - custom hook to handle user information
 Created: Feb. 09, 2022
-Last Updated: Feb. 10, 2022
+Last Updated: Feb. 11, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -32,6 +32,9 @@ interface Message {
 }
 
 
+type LoginType = 'user' | 'provider'
+
+
 
 interface AuthenticationProps {
     session: User | null;
@@ -39,7 +42,7 @@ interface AuthenticationProps {
     clearSession: () => void;
     message: Message;
     setMessage: React.Dispatch<React.SetStateAction<Message>> | null;
-    loginWithGoogle: () => void;
+    loginWithGoogle: (type: LoginType) => void;
     registerWithGoogle: () => void;
     loginWithFacebook: () => void;
     logout: () => void;
@@ -112,7 +115,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
     // This function handles the whole login wih google flow
-    const loginWithGoogle = async () => {
+    const loginWithGoogle = async (type: LoginType) => {
         const result = await openPopup(GoogleProvider);
         
         if (typeof result === 'undefined') return;
@@ -136,7 +139,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
             // check if status is 100 and user is found
             if (jsonFoundUser.status === 100){
-                router.push('/login/callback');
+                if (type === 'user') router.push('/login/callback');
+                if (type === 'provider') router.push('/provider/login/callback');
             } else {
                 // set the error message to payload message
                 setMessage({msg: jsonFoundUser.msg, status: jsonFoundUser.status});

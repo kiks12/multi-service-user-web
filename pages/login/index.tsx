@@ -3,7 +3,7 @@
 
 Multi Service Platform (User Web) - Login Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 10, 2022
+Last Updated: Feb. 11, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -164,7 +164,7 @@ const Login : NextPage = () => {
                             <div className='google-facebook-buttons-container'>
                                 <button 
                                     className='button google-button'
-                                    onClick={loginWithGoogle}
+                                    onClick={() => loginWithGoogle('user')}
                                 >
                                     Sign In with Google
                                 </button>
@@ -208,7 +208,7 @@ const Login : NextPage = () => {
                     </div>
 
 
-                <BottomMenu /> 
+                <BottomMenu type='LoginUser'/> 
 
 
 

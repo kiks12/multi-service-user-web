@@ -29,6 +29,23 @@
 
 
 
+/* PROVIDER LOGIN PAGE */
+
+
+.provider-login-main-container {
+    width: 40%;
+    height: 100vh;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/*  */
+
+
+
 /* LOGIN REGISTER */
 
 
@@ -292,6 +309,13 @@ grid template
 
 
 /* Utilities */
+
+.card {
+    width: 100%;
+    box-shadow: 0px 10px 20px 3px rgba(0,0,0,0.20);
+    padding: 2em;
+}
+
 
 
 .form-control {

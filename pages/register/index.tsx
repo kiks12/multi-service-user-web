@@ -4,7 +4,7 @@
 
 Multi Service Platform (User Web) - Register Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 10, 2022
+Last Updated: Feb. 11, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -230,7 +230,7 @@ const Register : NextPage = () => {
                 </div>
 
 
-                <BottomMenu />
+                <BottomMenu type='LoginUser'/>
 
 
 
