@@ -3,7 +3,7 @@
 
 Multi Service Platform - Registration API
 Created: Feb. 08, 2022
-Last Updated: Feb. 10, 2022
+Last Updated: Feb. 11, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -64,7 +64,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             followers: 0,
             likes: 0,
             verifiedSeller: false,
-            firstLogin: true
+            firstLogin: true,
+            firstProviderLogin: true,
         }
     })
 

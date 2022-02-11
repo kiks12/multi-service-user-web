@@ -30,4 +30,5 @@ model Users {
   verifiedSeller Boolean
 
   firstLogin Boolean
+  firstProviderLogin Boolean
 }
