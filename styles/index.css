@@ -301,10 +301,15 @@ grid template
 }
 
 
+
+
+
+
 .button {
     width: 100%;
     padding: 0.4em;
     transition: cubic-bezier(0.215, 0.610, 0.355, 1) 0.2s; 
+    cursor: pointer;
 }
 
 
@@ -312,7 +317,6 @@ grid template
     background-color: var(--mainPurple);
     border: 0.3px solid var(--mainPurple);
     color: var(--white);
-    cursor: pointer;
 }
 
 
@@ -320,7 +324,6 @@ grid template
     background-color: var(--gray);
     border: 0.3px solid var(--secondaryPurple);
     color: var(--secondaryPurple);
-    cursor: pointer;
 }
 
 
@@ -329,7 +332,6 @@ grid template
     color: var(--secondaryPurple);
     border-radius: 0.3em;
     padding: 0.9em;
-    cursor: pointer;
 }
 
 
@@ -345,13 +347,30 @@ grid template
     color: var(--white);
     border-radius: 0.3em;
     padding: 0.9em;
-    cursor: pointer; 
 }
 
 
 .facebook-button:hover {
     background-color: var(--darkFacebookBlue);
 }
+
+
+.guest-button {
+    background-color: var(--mainPurple);
+    color: var(--white);
+    border-radius: 0.3em;
+    padding: 0.9em;
+    border: none;
+}
+
+
+.guest-button:hover {
+    background-color: var(--secondaryPurple);
+}
+
+
+
+
 
 
 .main-purple-text {

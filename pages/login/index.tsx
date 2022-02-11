@@ -170,6 +170,14 @@ const Login : NextPage = () => {
                             >
                                 Sign In with Facebook
                             </button>
+                            <Link href='/' passHref={true}>
+                                <button 
+                                    className='button guest-button'
+                                    style={{margin: '0.5em 0 0 0'}}
+                                    >
+                                    Continue as a Guest
+                                </button>
+                            </Link>
                         </div>
 
                         
