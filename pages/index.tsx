@@ -15,6 +15,7 @@ import React, { useEffect } from 'react';
 
 
 import type { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from 'next'
+import Head from 'next/head';
 
 
 
@@ -39,6 +40,10 @@ const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSi
 
     return (
         <>
+            <Head>
+                <title>Home</title>
+            </Head>
+
             <Layout />
         </>
     )
