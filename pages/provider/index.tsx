@@ -28,26 +28,26 @@ const Provider : NextPage = () => {
 
 
 
-export const getServerSideProps: GetServerSideProps = async (ctx : GetServerSidePropsContext) => {
+// export const getServerSideProps: GetServerSideProps = async (ctx : GetServerSidePropsContext) => {
 
-    const isAuthenticated = authenticatePage(ctx);
+//     const isAuthenticated = authenticatePage(ctx);
 
-    if (isAuthenticated) {
-        return {
-            props: {}
-        }
-    }
+//     if (isAuthenticated) {
+//         return {
+//             props: {}
+//         }
+//     }
 
-    return {
-        redirect: {
-            destination: '/provider/login',
-            permanent: false
-        },
-        props: {
+//     return {
+//         redirect: {
+//             destination: '/provider/login',
+//             permanent: false
+//         },
+//         props: {
 
-        }
-    }
-}
+//         }
+//     }
+// }
 
 
 
