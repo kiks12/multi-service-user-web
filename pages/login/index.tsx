@@ -14,7 +14,7 @@ import React from 'react';
 
 
 
-import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import type { NextPage } from 'next';
 
 
 
@@ -209,27 +209,5 @@ const Login : NextPage = () => {
 
 
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     
-    const [isAuthenticated] = authenticatePage(ctx);
-
-    if (isAuthenticated) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false
-            },
-            props: {}
-        }
-    }
-
-    return {
-        props: {
-
-        }
-    }
-}
-
-
-
 export default Login;
