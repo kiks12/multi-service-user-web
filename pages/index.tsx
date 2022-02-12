@@ -3,7 +3,7 @@
 
 Multi Service Platform - Home Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 11, 2022
+Last Updated: Feb. 12, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -14,7 +14,11 @@ import React, { useEffect } from 'react';
 
 
 
-import type { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from 'next'
+import type { 
+    GetServerSideProps, 
+    GetServerSidePropsContext, 
+    InferGetServerSidePropsType, 
+    NextPage } from 'next'
 import Head from 'next/head';
 
 
@@ -68,6 +72,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSideP
         props: {}
     }
 }
+
 
 
 export default Home;

@@ -18,8 +18,6 @@ import { NextRequest, NextResponse } from "next/server";
 export const middleware = (req: NextRequest) => {
     const path = req.nextUrl.pathname;
 
-    console.log(req.cookies.user);
-
     if (req.cookies.user && path === '/provider/login'){
         console.log('redirect na dapat');
         return NextResponse.redirect(new URL('/provider', req.url));

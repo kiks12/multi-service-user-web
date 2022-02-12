@@ -3,14 +3,18 @@
 
 Multi Service Platform - Login Callback Route
 Created: Feb. 10, 2022
-Last Updated: Feb. 10, 2022
+Last Updated: Feb. 12, 2022
 Author: Tolentino, Francis James S.
 
 */
 
 
 
-import type { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from 'next';
+import type { 
+    GetServerSideProps, 
+    GetServerSidePropsContext, 
+    InferGetServerSidePropsType,
+     NextPage } from 'next';
 
 
 
