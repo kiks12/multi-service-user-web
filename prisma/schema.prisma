@@ -23,6 +23,7 @@ model Users {
   address String? @db.VarChar(255)
   contact String? @db.VarChar(255)
 
+  shopName String? @db.VarChar(255)
   skills String? @db.VarChar(255)
   description String? @db.VarChar(255)
   followers Int

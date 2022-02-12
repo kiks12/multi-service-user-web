@@ -57,6 +57,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             username: findUser.username,
             address: findUser.address,
             contact: findUser.contact,
+            shopName: findUser.shopName,
             firstLogin: findUser.firstLogin,
             firstProviderLogin: findUser.firstProviderLogin,
             verifiedProvider: findUser.verifiedProvider,

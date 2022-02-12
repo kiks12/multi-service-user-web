@@ -7,6 +7,7 @@ export type User = {
     id: number;
     address: String | null,
     contact: String | null;
+    shopName: String | null;
     firstLogin: boolean;
     firstProviderLogin: boolean;
     verifiedProvider: boolean;
