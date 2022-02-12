@@ -19,15 +19,22 @@ import type { AppProps } from 'next/app';
 
 
 import { AuthProvider } from '../src/custom-hooks/useAuthentication';
+import Head from 'next/head';
+
 
 
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
     
     return (
-        <AuthProvider>
-            <Component {...pageProps} />
-        </AuthProvider>
+        <>  
+            <Head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            </Head>
+            <AuthProvider>
+                <Component {...pageProps} />
+            </AuthProvider>
+        </>
     )
 }
 
