@@ -4,7 +4,7 @@
 
 Multi Service Platform - Pop Up Component in Navigation Bar
 Created: Feb. 09, 2022
-Last Updated: Feb. 10, 2022
+Last Updated: Feb. 12, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -12,6 +12,7 @@ Author: Tolentino, Francis James S.
 
 
 import React from 'react';
+import Link from 'next/link';
 
 
 
@@ -41,6 +42,11 @@ const TopNavbarPopUp: React.FC<Props> = ({ setShowPopup }) => {
         <div className='top-navbar-popup' ref={popupRef}>
             <ul className='top-navbar-popup-ul'>
                 <li className='top-navbar-popup-li'>Profile</li>
+
+                <Link href='/provider' passHref={true}>
+                    <li className='top-navbar-popup-li'>Be a Provider</li>
+                </Link>
+
                 <li className='top-navbar-popup-li'>Settings</li>
                 <li className='top-navbar-popup-li'>Help and Support</li>
                 <li 

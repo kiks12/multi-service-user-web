@@ -4,7 +4,7 @@
 
 Multi Service Platform - Top Navigation Bar Component
 Created: Feb. 09, 2022
-Last Updated: Feb. 10, 2022
+Last Updated: Feb. 12, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -62,6 +62,10 @@ const TopNavbar : React.FC = () => {
             <div className='top-navbar-ul-container'>
                 <ul className='top-navbar-ul'>
                     <li className='top-navbar-li'>Messages</li>
+
+                    <Link href='/provider/services' passHref={true} >
+                        <li className='top-navbar-li'>My Services</li>
+                    </Link>
                     
                     <li 
                         className='top-navbar-li'
@@ -94,7 +98,7 @@ const TopNavbar : React.FC = () => {
                                     }
                                 </>                       
                             ) : (
-                                <Link href='/hello' passHref={true}>
+                                <Link href='/login' passHref={true}>
                                     <button className="button">Login</button>
                                 </Link>
                                 )
