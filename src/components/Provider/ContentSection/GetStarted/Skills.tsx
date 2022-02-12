@@ -59,6 +59,7 @@ const Skills: React.FC = () => {
                 <input 
                     value={skill}
                     onChange={(e) => setSkill(e.target.value)}
+                    className='form-control'
                 />
             </form>
 
