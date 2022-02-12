@@ -93,6 +93,7 @@ const BasicInformation: React.FC = () => {
                     <input
                         name='shopName'
                         className='form-control' 
+                        placeholder='Enter your shop Name'
                         value={session?.shopName as string}
                         onChange={handleInputChange}
                     />
@@ -109,6 +110,7 @@ const BasicInformation: React.FC = () => {
                     <label>Address</label>
                     <input
                         name='address'
+                        placeholder='Address'
                         className='form-control' 
                         value={session?.address as string}
                         onChange={handleInputChange}
@@ -126,6 +128,7 @@ const BasicInformation: React.FC = () => {
                     <label>Contact</label>
                     <input
                         name='contact'
+                        placeholder='0000 000 0000'
                         className='form-control' 
                         value={session?.contact as string}
                         onChange={handleInputChange}

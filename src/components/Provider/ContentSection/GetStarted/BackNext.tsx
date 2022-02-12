@@ -40,6 +40,7 @@ const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
 
 
     const backButtonLogicHandler = () => {
+        window.localStorage.setItem('activePrompt', BACK_NEXT_PROMPTS[activePrompt][0]);
         setActivePrompt((prev:any) => {
             prev = BACK_NEXT_PROMPTS[activePrompt][0]
             return prev;
@@ -49,11 +50,13 @@ const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
 
 
     const nextButtonLogicHandler = () => {
+        window.localStorage.setItem('activePrompt', BACK_NEXT_PROMPTS[activePrompt][1]);
         setActivePrompt((prev:any) => {
             prev = BACK_NEXT_PROMPTS[activePrompt][1]
             return prev;
         })
     }
+    
 
 
     return (

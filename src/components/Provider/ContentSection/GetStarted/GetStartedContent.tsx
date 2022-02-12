@@ -10,13 +10,14 @@ Author: Tolentino, Francis James S.
 
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+
+
 import BackNext from './BackNext';
 import BasicInformation from './BasicInformation';
-
-
-
 import GetStartedBar from './GetStartedBar';
+import ShopDescription from './ShopDescription';
 
 
 
@@ -31,6 +32,15 @@ const GetStartedContent: React.FC = () => {
     const [activePrompt, setActivePrompt] = useState<ActivePrompt>('Basic');
 
 
+    useEffect(() => {
+        const persistedActivePrompt = window.localStorage.getItem('activePrompt');
+
+        if(persistedActivePrompt){
+            setActivePrompt(window.localStorage.getItem('activePrompt') as ActivePrompt);
+        }
+    }, []);
+
+
     return (
         <div>
             <h2>Get Started</h2>
@@ -41,6 +51,10 @@ const GetStartedContent: React.FC = () => {
 
             {
                 activePrompt === 'Basic' && <BasicInformation />
+            }
+                
+            {
+                activePrompt === 'Desc' && <ShopDescription />
             }
 
             <BackNext 

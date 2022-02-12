@@ -41,6 +41,7 @@ const ACTIVE_LI = {
 type ActivePrompt = 'Basic' | 'Desc' | 'Skills' | 'Upload' | 'Final';
 
 
+
 interface GetStartedBarProps {
     activePrompt: ActivePrompt;
     setActivePrompt: React.Dispatch<React.SetStateAction<ActivePrompt>>;
@@ -51,6 +52,12 @@ interface GetStartedBarProps {
 const GetStartedBar: React.FC<GetStartedBarProps> = ({activePrompt, setActivePrompt}) => {
 
 
+    const changeActivePromptHandler = (prompt: ActivePrompt) => {
+        localStorage.setItem('activePrompt', prompt);
+        setActivePrompt(prompt);
+    }
+
+
 
     return (
         <div>
@@ -59,35 +66,35 @@ const GetStartedBar: React.FC<GetStartedBarProps> = ({activePrompt, setActivePro
 
                 <li 
                     style={activePrompt === 'Basic' ? ACTIVE_LI : LI}
-                    onClick={() => setActivePrompt('Basic')}    
+                    onClick={() => changeActivePromptHandler('Basic')}    
                 >
                     Basic Information
                 </li>
 
                 <li 
                     style={activePrompt === 'Desc' ? ACTIVE_LI : LI}
-                    onClick={() => setActivePrompt('Desc')}    
+                    onClick={() => changeActivePromptHandler('Desc')}    
                 >
                     Shop Description
                 </li>
 
                 <li 
                     style={activePrompt === 'Skills' ? ACTIVE_LI : LI}
-                    onClick={() => setActivePrompt('Skills')}    
+                    onClick={() => changeActivePromptHandler('Skills')}    
                 >
                     Skills
                 </li>
 
                 <li 
                     style={activePrompt === 'Upload' ? ACTIVE_LI : LI}
-                    onClick={() => setActivePrompt('Upload')}    
+                    onClick={() => changeActivePromptHandler('Upload')}    
                 >
                     Upload Images/Videos
                 </li>
 
                 <li 
                     style={activePrompt === 'Final' ? ACTIVE_LI : LI}
-                    onClick={() => setActivePrompt('Final')}    
+                    onClick={() => changeActivePromptHandler('Final')}    
                 >
                     Finalization
                 </li>
