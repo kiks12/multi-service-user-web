@@ -18,6 +18,7 @@ import BackNext from './BackNext';
 import BasicInformation from './BasicInformation';
 import GetStartedBar from './GetStartedBar';
 import ShopDescription from './ShopDescription';
+import Skills from './Skills';
 
 
 
@@ -41,6 +42,7 @@ const GetStartedContent: React.FC = () => {
     }, []);
 
 
+
     return (
         <div>
             <h2>Get Started</h2>
@@ -55,6 +57,10 @@ const GetStartedContent: React.FC = () => {
                 
             {
                 activePrompt === 'Desc' && <ShopDescription />
+            }
+
+            {
+                activePrompt === 'Skills' && <Skills />
             }
 
             <BackNext 

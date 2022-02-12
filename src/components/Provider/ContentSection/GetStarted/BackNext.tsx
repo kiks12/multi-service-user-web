@@ -14,6 +14,10 @@ import React from 'react';
 
 
 
+import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
+
+
+
 type ActivePrompt = 'Basic' | 'Desc' | 'Skills' | 'Upload' | 'Final';
 
 
@@ -37,6 +41,8 @@ const BACK_NEXT_PROMPTS = {
 
 
 const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
+
+    const { session } = useAuthentication();
 
 
     const backButtonLogicHandler = () => {
@@ -98,7 +104,12 @@ const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
                             Next
                         </button>
                     ) : (
-                        <button className='button main-button'>
+                        <button 
+                            className='button main-button'
+                            onClick={() => {
+                                console.log(session);
+                            }}
+                        >
                             Finish
                         </button>
                     )

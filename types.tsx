@@ -1,14 +1,21 @@
 
 
 export type User = {
-    image: String | null;
-    username: String | null;
-    email: String;
-    id: number;
-    address: String | null,
-    contact: String | null;
-    shopName: String | null;
+    id: number,
+    username: string | null;
+    email: string;
+    image: string | null;
+    cover: string | null;
+    address: string | null;
+    contact: string | null;
+
+    shopName: string | null;
+    skills: string | null;
+    description: string | null;
+    followers: number;
+    likes: number;
+    verifiedProvider: boolean;
+
     firstLogin: boolean;
     firstProviderLogin: boolean;
-    verifiedProvider: boolean;
 }
