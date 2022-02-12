@@ -47,6 +47,9 @@ const useActivePage = () => {
     useEffect(() => {
 
 
+        // Check if the route is connected to provider
+        // every route that has provider as its index 1 is a page within providers
+        // In this line we are checking if it is a provider page
         if (pathname[1] !== 'provider'){
             switch (pathname[1]){
                 case '':
@@ -71,10 +74,15 @@ const useActivePage = () => {
         } 
 
 
+        // Check if it is a provider page and also if it has no 
+        // preceeding pathname. If no preceeding pathname 
+        // set the active page to Provider-Overview
         if (pathname[1] === 'provider' && typeof pathname[2] === 'undefined') {
             setActivePage('Provider-Overview');
             return;
-        } else {
+        }
+        // If otherwise has preceeding pathname then execute switch case 
+        else {
 
             switch (pathname[2]){
                 case 'services':
@@ -84,12 +92,13 @@ const useActivePage = () => {
                     setActivePage('');
                 break;
             }
-            
+
         }
 
 
     }, []);
 
+    
 
     return activePage;
 }
