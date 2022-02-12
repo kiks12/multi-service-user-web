@@ -11,14 +11,15 @@ Author: Tolentino, Francis James S.
 
 
 import type { NextPage } from 'next';
+import Layout from '../../../src/components/Provider/Layout/ProviderLayout';
 
 
 
 const ProviderServices : NextPage = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <Layout />
+        </>
     )
 }
 

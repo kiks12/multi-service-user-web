@@ -20,9 +20,7 @@ import authenticatePage from "../../libs/authenticatePage";
 
 
 
-// import FirstProviderLogin from "../../src/components/Provider/FirstProviderLogin";
 import ProviderLayout from "../../src/components/Provider/Layout/ProviderLayout";
-// import ProviderLayout from "../../src/components/Provider/ProviderLayout/ProviderMain";
 
 
 
@@ -32,7 +30,7 @@ import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 
 const Provider : NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
-    const { session, setSession } = useAuthentication();
+    const { setSession } = useAuthentication();
 
     useEffect(() => {
         if (typeof setSession === 'function') setSession(user);
@@ -41,10 +39,6 @@ const Provider : NextPage = ({ user }: InferGetServerSidePropsType<typeof getSer
 
     return (
         <>
-            {/* {
-                session ? session.firstProviderLogin ? <FirstProviderLogin /> : <ProviderLayout />
-                : <></>
-            } */}
             <ProviderLayout />
         </>
     )
