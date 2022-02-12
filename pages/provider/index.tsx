@@ -20,8 +20,9 @@ import authenticatePage from "../../libs/authenticatePage";
 
 
 
-import FirstProviderLogin from "../../src/components/Provider/FirstProviderLogin";
-import ProviderLayout from "../../src/components/Provider/ProviderLayout/ProviderLayout";
+// import FirstProviderLogin from "../../src/components/Provider/FirstProviderLogin";
+import ProviderLayout from "../../src/components/Provider/Layout/ProviderLayout";
+// import ProviderLayout from "../../src/components/Provider/ProviderLayout/ProviderMain";
 
 
 
@@ -37,17 +38,14 @@ const Provider : NextPage = ({ user }: InferGetServerSidePropsType<typeof getSer
         if (typeof setSession === 'function') setSession(user);
     }, []);
 
-    useEffect(() => {
-        console.log(session);
-    }, []); 
-
 
     return (
         <>
-            {
+            {/* {
                 session ? session.firstProviderLogin ? <FirstProviderLogin /> : <ProviderLayout />
                 : <></>
-            }
+            } */}
+            <ProviderLayout />
         </>
     )
 }
