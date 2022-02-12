@@ -52,10 +52,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSideP
     }
 
     return {
-        redirect: {
-            permanent: false,
-            destination: '/provider/login'
-        },
         props: {}
     }
 }

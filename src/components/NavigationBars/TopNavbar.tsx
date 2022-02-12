@@ -63,8 +63,8 @@ const TopNavbar : React.FC = () => {
                 <ul className='top-navbar-ul'>
                     <li className='top-navbar-li'>Messages</li>
 
-                    <Link href='/provider/services' passHref={true} >
-                        <li className='top-navbar-li'>My Services</li>
+                    <Link href='/provider' passHref={true} >
+                        <li className='top-navbar-li'>My Shop</li>
                     </Link>
                     
                     <li 
