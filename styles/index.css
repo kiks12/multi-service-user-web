@@ -21,6 +21,8 @@
 
     --h1: 18px;
     --normalFontSize: 14.5px;
+    --smallerNormalFontSize: 13.5px;
+    --smallestNormalFontSize: 12.5px;
 }
 
 
@@ -37,6 +39,30 @@
 li {
     font-size: var(--normalFontSize);
 }
+
+
+
+/* RESPONSIVE TEXTS */
+
+@media (max-width: 70em) {
+    li,
+    p,
+    button {
+        font-size: var(--smallerNormalFontSize);
+    }
+}
+
+
+@media (max-width: 40em) {
+    li,
+    p,
+    button {
+        font-size: var(--smallestNormalFontSize);
+    }
+}
+
+/* RESPONSIVE TEXTS */
+
 
 
 
