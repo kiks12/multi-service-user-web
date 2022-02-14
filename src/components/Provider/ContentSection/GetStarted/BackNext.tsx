@@ -71,7 +71,7 @@ const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
     const finalizationLogicHandler = async () => {
         // create a post request to Provider Information Update API Route
         try {
-            const res = await fetch(`/api/provider/information/update?id=${session?.id}&accessToken=${session?.accessToken}`, {
+            const res = await fetch(`/api/provider/information/update?id=${session?.userId}&accessToken=${session?.accessToken}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

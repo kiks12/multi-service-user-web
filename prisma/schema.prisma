@@ -1,10 +1,10 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-
 generator client {
   provider = "prisma-client-js"
 }
+
 
 
 datasource db {
@@ -13,24 +13,42 @@ datasource db {
 }
 
 
-model Users {
-  userId Int @id @unique @default(autoincrement()) 
-  accessToken String @unique @db.VarChar(255)
-  username String? @unique @db.VarChar(50)
-  email String @unique @db.VarChar(100)
-  provider String @db.VarChar(20)
-  image String? @db.VarChar(255)
-  cover String? @db.VarChar(255)
-  address String? @db.VarChar(255)
-  contact String? @db.VarChar(255)
 
-  shopName String? @db.VarChar(255)
-  skills String? @db.VarChar(255)
-  description String? @db.VarChar(255)
-  followers Int
-  likes Int
+model Users {
+  userId      Int     @id @unique @default(autoincrement())
+  accessToken String  @unique @db.VarChar(255)
+  username    String? @unique @db.VarChar(50)
+  email       String  @unique @db.VarChar(100)
+  provider    String  @db.VarChar(20)
+  image       String? @db.VarChar(255)
+  cover       String? @db.VarChar(255)
+  address     String? @db.VarChar(255)
+  contact     String? @db.VarChar(255)
+
+  shopName         String? @db.VarChar(255)
+  skills           String? @db.VarChar(255)
+  description      String? @db.VarChar(255)
+  followers        Int
+  likes            Int
   verifiedProvider Boolean
 
-  firstLogin Boolean
+  firstLogin         Boolean
   firstProviderLogin Boolean
+  Services           Services[]
+}
+
+
+
+model Services {
+  serviceId      Int    @id @unique @default(autoincrement())
+  user           Users  @relation(fields: [userId], references: [userId])
+  userId         Int
+  title          String @db.VarChar(255)
+  serviceDetails String @db.VarChar(255)
+  priceType      String @db.VarChar(15)
+  priceInitial   Int
+  priceFinal     Int?
+  dislikes       Int
+  likes          Int
+  ratings        Float
 }
