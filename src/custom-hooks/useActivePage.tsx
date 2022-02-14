@@ -3,7 +3,7 @@
 
 Multi Service Platform - custom hook that handles active li in left navigation bar
 Created: Feb. 09, 2022
-Last Updated: Feb. 12, 2022
+Last Updated: Feb. 14, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -46,7 +46,6 @@ const useActivePage = () => {
     
     useEffect(() => {
 
-
         // Check if the route is connected to provider
         // every route that has provider as its index 1 is a page within providers
         // In this line we are checking if it is a provider page
@@ -71,34 +70,33 @@ const useActivePage = () => {
                     setActivePage('');
                     break;
             }
-        } 
-
-
-        // Check if it is a provider page and also if it has no 
-        // preceeding pathname. If no preceeding pathname 
-        // set the active page to Provider-Overview
-        if (pathname[1] === 'provider' && typeof pathname[2] === 'undefined') {
-            setActivePage('Provider-Overview');
-            return;
-        }
-        // If otherwise has preceeding pathname then execute switch case 
-        else {
-
-            switch (pathname[2]){
-                case 'services':
-                    setActivePage('Provider-Services');
-                    break;
-                default:
-                    setActivePage('');
-                break;
+        } else {
+            // Check if it is a provider page and also if it has no 
+            // preceeding pathname. If no preceeding pathname 
+            // set the active page to Provider-Overview
+            if (pathname[1] === 'provider' && typeof pathname[2] === 'undefined') {
+                setActivePage('Provider-Overview');
+                return;
             }
+            // If otherwise has preceeding pathname then execute switch case 
+            else {
 
+                switch (pathname[2]){
+                    case 'services':
+                        setActivePage('Provider-Services');
+                        break;
+                    default:
+                        setActivePage('');
+                        break;
+                }
+
+            }
         }
 
 
-    }, []);
+    }, [pathname]);
 
-    
+
 
     return activePage;
 }
