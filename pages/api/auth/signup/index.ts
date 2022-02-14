@@ -3,7 +3,7 @@
 
 Multi Service Platform - Registration API
 Created: Feb. 08, 2022
-Last Updated: Feb. 11, 2022
+Last Updated: Feb. 14, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -11,6 +11,7 @@ Author: Tolentino, Francis James S.
 
 
 import type { NextApiRequest, NextApiResponse } from "next";
+import { generateAccessToken } from "../../../../libs/hashAccessToken";
 
 
 
@@ -52,14 +53,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
 
+    const generatedAccessToken = generateAccessToken({email, username});
+
+
 
     await prisma.users.create({
         data: {
             username: username,
+            accessToken: generatedAccessToken,
             email: email,
             provider: provider,
-            address: '',
-            contact: '',
+            address: null,
+            contact: null,
             image: image,
             followers: 0,
             likes: 0,

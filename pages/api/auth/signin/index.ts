@@ -3,7 +3,7 @@
 
 Multi Service Platform - Login API
 Created: Feb. 08, 2022
-Last Updated: Feb. 12, 2022
+Last Updated: Feb. 14, 2022
 Author: Tolentino, Francis James S.
 
 
@@ -53,6 +53,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const foundUser : User = {
             email: findUser.email,
             id: findUser.userId,
+            accessToken: findUser.accessToken,
             image: findUser.image,
             username: findUser.username,
             address: findUser.address,

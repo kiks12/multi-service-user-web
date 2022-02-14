@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Back Next Component
 Created: Feb. 12, 2022
-Last Updated: Feb. 12, 2022
+Last Updated: Feb. 14, 2022
 Auhtor: Tolentino, Francis James S.
 
 */
@@ -65,6 +65,24 @@ const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
     
 
 
+    const finalizationLogicHandler = async () => {
+        try {
+            const res = await fetch(`/api/provider/information/update?id=${session?.id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(session),
+            })
+
+            console.log(res);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+
+
     return (
         <div style={{
             width: '100%',
@@ -106,9 +124,7 @@ const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
                     ) : (
                         <button 
                             className='button main-button'
-                            onClick={() => {
-                                console.log(session);
-                            }}
+                            onClick={finalizationLogicHandler}
                         >
                             Finish
                         </button>

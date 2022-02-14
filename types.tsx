@@ -2,6 +2,7 @@
 
 export type User = {
     id: number,
+    accessToken: string,
     username: string | null;
     email: string;
     image: string | null;
