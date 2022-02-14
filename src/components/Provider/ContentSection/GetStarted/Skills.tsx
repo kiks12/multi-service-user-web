@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Skills Content
 Created: Feb. 12, 2022
-Last Updated: Feb. 12, 2022
+Last Updated: Feb. 14, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -12,23 +12,28 @@ Author: Tolentino, Francis James S.
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
+import useSplitArray from '../../../../custom-hooks/useSplitArray';
 
 
 
 const Skills: React.FC = () => {
 
+
     const [skill, setSkill] = useState<string>('');
     const { session, setSession } = useAuthentication();
 
 
-    const skills = useMemo(() => {
-        return session?.skills?.split("|");
-    }, [session]);
+    const skills = useSplitArray({
+        stringToSplit: session?.skills as string,
+        splitter: '|',
+        dependencies: [session],
+    });
 
 
     useEffect(() => {
-        console.log(session?.skills);
-    }, [session]);
+        console.log(skills);
+    }, [skills]);
+
 
 
     return (
@@ -66,7 +71,7 @@ const Skills: React.FC = () => {
             <ul>
                 {
                     skills && skills.map((skill) => {
-                        if (!skill) return <React.Fragment key={skill}></React.Fragment>
+                        if (!skill || skill === '') return <React.Fragment key={skill}></React.Fragment>
                         return <li key={skill}>{skill}</li>
                     })
                 }

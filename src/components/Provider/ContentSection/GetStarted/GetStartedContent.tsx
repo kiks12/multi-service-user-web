@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Main Component
 Created: Feb. 12, 2022
-Last Updated: Feb. 12, 2022
+Last Updated: Feb. 14, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -16,6 +16,7 @@ import React, { useEffect, useState } from 'react';
 
 import BackNext from './BackNext';
 import BasicInformation from './BasicInformation';
+import Finalization from './Finalization';
 import GetStartedBar from './GetStartedBar';
 import ShopDescription from './ShopDescription';
 import Skills from './Skills';
@@ -61,6 +62,10 @@ const GetStartedContent: React.FC = () => {
 
             {
                 activePrompt === 'Skills' && <Skills />
+            }
+
+            {
+                activePrompt === 'Final' && <Finalization />
             }
 
             <BackNext 
