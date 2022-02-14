@@ -5,14 +5,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
-
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-
-
 
 model Users {
   userId      Int     @id @unique @default(autoincrement())
@@ -37,14 +33,13 @@ model Users {
   Services           Services[]
 }
 
-
-
 model Services {
   serviceId      Int    @id @unique @default(autoincrement())
   user           Users  @relation(fields: [userId], references: [userId])
   userId         Int
   title          String @db.VarChar(255)
   serviceDetails String @db.VarChar(255)
+  status         String @db.VarChar(10)
   priceType      String @db.VarChar(15)
   priceInitial   Int
   priceFinal     Int?

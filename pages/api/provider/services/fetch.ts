@@ -11,6 +11,9 @@ Author: Tolentino, Francis James S.
 
 
 import { NextApiRequest, NextApiResponse } from "next";
+
+
+
 import prisma from "../../../../prisma/prisma";
 
 
@@ -20,6 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const { id, accessToken } = req.query;
     const userId = parseInt(id as string, 10);
     
+
     try {
 
         const user = await prisma.users.findFirst({
@@ -36,13 +40,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     userId: userId,
                 }
             });
-            
-            
-            console.log(services);
+
+
+            res.json({
+                services: services,
+                status: 100,
+            })
         }
 
     } catch (e) {
         console.error(e);
+        res.json({
+            msg: JSON.stringify(e),
+            status: 500
+        })
     }
     
 }
