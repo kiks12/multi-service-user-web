@@ -11,11 +11,30 @@ Author: Tolentino, Francis James S.
 
 
 import { NextApiRequest, NextApiResponse } from "next";
+import prisma from "../../../../prisma/prisma";
+
+
+interface UpdateParams {
+    id: number,
+    accessToken: string,
+}
 
 
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-    console.log(req);
+
+    const { id, accessToken } = req.query;
+    const { description,
+            shopName,
+            address,
+            contact, 
+            skills } = req.body;
+
+    console.log('params: ', req.query);
+    console.log('body: ', req.body);
+
+    
+
 }
 
 

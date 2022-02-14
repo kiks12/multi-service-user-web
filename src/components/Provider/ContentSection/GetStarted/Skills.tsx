@@ -24,7 +24,7 @@ const Skills: React.FC = () => {
 
 
     const skills = useSplitArray({
-        stringToSplit: session?.skills as string,
+        stringToSplit: session?.skills ? session?.skills as string : '',
         splitter: '|',
         dependencies: [session],
     });
