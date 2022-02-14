@@ -18,6 +18,7 @@ import React, { useState } from 'react';
 
 
 import { useAuthentication } from '../../custom-hooks/useAuthentication';
+import AccountButton from './AccountButton';
 
 
 
@@ -76,23 +77,9 @@ const TopNavbar : React.FC = () => {
                         {
                             session ? (  
                                 <>
-                                    <div
-                                        className='account-circle'
-                                        onClick={() => {
-                                            setShowPopup(true);
-                                        }}
-                                    >
-                                        {
-                                            session?.image && <Image 
-                                                                src={session?.image as string} 
-                                                                alt='profile' 
-                                                                width={50}
-                                                                height={50}
-                                                                objectFit='cover' 
-                                                                />
-                                        }
-                                        
-                                    </div>
+                                    <AccountButton 
+                                        onClick={() => setShowPopup(true)}
+                                    /> 
                                     {
                                         showPopup && <TopNavbarPopUp setShowPopup={setShowPopup} />
                                     }
@@ -101,7 +88,7 @@ const TopNavbar : React.FC = () => {
                                 <Link href='/login' passHref={true}>
                                     <button className="button">Login</button>
                                 </Link>
-                                )
+                            )
                         }
                     </li>
 
