@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Basic Information Content
 Created: Feb. 12, 2022
-Last Updated: Feb. 12, 2022
+Last Updated: Feb. 14, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -42,7 +42,6 @@ const BasicInformation: React.FC = () => {
             margin: '2em 0 0 0'
         }}>
             <form>
-
 
                 <div 
                     style={{
@@ -96,6 +95,7 @@ const BasicInformation: React.FC = () => {
                         placeholder='Enter your shop Name'
                         value={session?.shopName as string}
                         onChange={handleInputChange}
+                        required
                     />
                 </div>
 
@@ -114,6 +114,7 @@ const BasicInformation: React.FC = () => {
                         className='form-control' 
                         value={session?.address as string}
                         onChange={handleInputChange}
+                        required
                     />
                 </div>
 
@@ -132,9 +133,9 @@ const BasicInformation: React.FC = () => {
                         className='form-control' 
                         value={session?.contact as string}
                         onChange={handleInputChange}
+                        required
                     />
                 </div>
-
 
             </form>
         </div>

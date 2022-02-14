@@ -15,6 +15,7 @@ import React, { useEffect, useState } from 'react';
 
 
 import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
+import CreateNewService from './CreateNewService';
 
 
 
@@ -43,6 +44,7 @@ const Services: React.FC = () => {
 
 
         if (session) {
+            console.log('fetching id: ', session.userId);
             handler();
         }
     }, [session]);
@@ -51,12 +53,19 @@ const Services: React.FC = () => {
     return (
         <div>
             <p>Active Services</p>
-            <div>
+            <div 
+                style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(15em, 1fr))',
+                    gridGap: '0.5em'
+                }}
+            >
                 {
-                    services.length !== 0 ? services.map((service, idx) => {
+                    (services && services.length !== 0) && services.map((service, idx) => {
                         return <Service service={service} key={idx}/>
-                    }) : <p>Currently no Services</p>
+                    })
                 }
+                <CreateNewService />
             </div>
         </div>
     )
