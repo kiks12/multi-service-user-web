@@ -10,58 +10,44 @@ Author: Tolentino, Francis James S.
 
 
 
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 
 
-import { useAuthentication } from '../../../custom-hooks/useAuthentication';
+import AccountButton from '../../NavigationBars/AccountButton';
 
 
 
 const ProviderTopNavbar: React.FC = () => {
 
-    const { session } = useAuthentication();
 
 
     return (
-        <div>
-            <h1>{session?.shopName}</h1>
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                height: '100%'
+            }}
+        >
+            <h1>Logo</h1>
 
-            <ul>
-                <li>Switch to buying</li>
+            <ul 
+                style={{
+                    listStyle: 'none',
+                    display: 'flex',
+                    alignItems: 'center'
+                }}
+            >
+                <Link href='/' passHref={true} >
+                    <li>Switch to buying</li>
+                </Link>
                 <li>
-                    {
-                            session ? (  
-                                <>
-                                    <div
-                                        className='account-circle'
-                                        // onClick={() => {
-                                        //     setShowPopup(true);
-                                        // }}
-                                    >
-                                        {
-                                            session?.image && <Image 
-                                                                src={session?.image as string} 
-                                                                alt='profile' 
-                                                                width={50}
-                                                                height={50}
-                                                                objectFit='cover' 
-                                                                />
-                                        }
-                                        
-                                    </div>
-                                    {
-                                        // showPopup && <TopNavbarPopUp setShowPopup={setShowPopup} />
-                                    }
-                                </>                       
-                            ) : (
-                                <Link href='/login' passHref={true}>
-                                    <button className="button">Login</button>
-                                </Link>
-                                )
-                        }
+                    <AccountButton 
+                        onClick={() => {}}
+                    />
                 </li>
             </ul>
         </div>
