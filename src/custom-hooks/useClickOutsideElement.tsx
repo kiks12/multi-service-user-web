@@ -3,7 +3,7 @@
 
 Multi Service Platform - custom hook that handles on outside click of modal/popup components
 Created: Feb. 09, 2022
-Last Update: Feb. 09, 2022
+Last Update: Feb. 14, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -14,7 +14,7 @@ import { useEffect, useRef } from "react";
 
 
 
-type ElementRef = HTMLDivElement | null;
+type ElementRef = HTMLDivElement | any | null;
 
 
 
@@ -40,7 +40,7 @@ const useClickOutsideElement = (handler: () => void) => {
         }
 
 
-    }, []);
+    }, [handler]);
 
 
 

@@ -83,6 +83,55 @@ li {
 
 
 
+/* PROVIDER GET STARTED */
+
+
+.get-started-content-container {
+    padding: 2em 0 0 0;
+}
+
+
+.skills-ul {
+    display: block;
+    list-style: none;
+    position: relative;
+}
+
+.skills-ul > * + * {
+    margin-left: 0.5em;
+}
+
+
+.skills-li {
+    display: inline-block;
+    margin-top: 0.5em;
+    padding: 0.5em 1em;
+    background-color: var(--white);
+    cursor: pointer;
+    border-radius: 10em;
+    border: 0.3px solid var(--secondaryPurple);
+    position: relative;
+}
+
+
+.skills-active-li {
+    display: inline-block;
+    margin-top: 0.5em;
+    padding: 0.5em 1em;
+    background-color: var(--mainPurple);
+    color: var(--white);
+    cursor: pointer;
+    border-radius: 10em;
+    border: 0.3px solid var(--mainPurple);
+    position: relative;
+}
+
+
+/* PROVIDER GET STARTED */
+
+
+
+
 /* PROVIDER LAYOUT */
 
 
