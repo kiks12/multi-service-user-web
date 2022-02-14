@@ -42,7 +42,7 @@ const BACK_NEXT_PROMPTS = {
 
 const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
 
-    const { session } = useAuthentication();
+    const { session, setSession } = useAuthentication();
 
 
     const backButtonLogicHandler = () => {
@@ -75,7 +75,11 @@ const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
                 body: JSON.stringify(session),
             })
 
-            console.log(res);
+
+            const jsonRes = await res.json();
+            
+
+            if (typeof setSession === 'function') setSession(jsonRes.user);
         } catch (e) {
             console.error(e);
         }
