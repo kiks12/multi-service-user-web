@@ -45,6 +45,7 @@ const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
     const { session, setSession } = useAuthentication();
 
 
+    // change active prompt per click on back button to persist the active prompt 
     const backButtonLogicHandler = () => {
         window.localStorage.setItem('activePrompt', BACK_NEXT_PROMPTS[activePrompt][0]);
         setActivePrompt((prev:any) => {
@@ -55,6 +56,7 @@ const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
 
 
 
+    // change active prompt per click on next button to persist the active prompt 
     const nextButtonLogicHandler = () => {
         window.localStorage.setItem('activePrompt', BACK_NEXT_PROMPTS[activePrompt][1]);
         setActivePrompt((prev:any) => {
@@ -65,7 +67,9 @@ const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
     
 
 
+    // on click handler of finish button
     const finalizationLogicHandler = async () => {
+        // create a post request to Provider Information Update API Route
         try {
             const res = await fetch(`/api/provider/information/update?id=${session?.id}&accessToken=${session?.accessToken}`, {
                 method: 'POST',
@@ -76,8 +80,8 @@ const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
             })
 
 
-            const jsonRes = await res.json();
-            
+        const jsonRes = await res.json();
+
 
             if (typeof setSession === 'function') setSession(jsonRes.user);
         } catch (e) {

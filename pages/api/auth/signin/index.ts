@@ -34,6 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { email } = req.body;
 
+    
     try {
         const findUser = await prisma.users.findFirst({
             where: {

@@ -13,7 +13,11 @@ Author: Tolentino, Francis James S.
 import cookie from 'cookie';
 
 
+
 import { NextApiRequest, NextApiResponse } from "next";
+
+
+
 import prisma from "../../../../prisma/prisma";
 
 
@@ -25,8 +29,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const userId = parseInt(id as string, 10);
 
 
-    console.log(typeof userId, ' id: ', userId); 
-
 
     const { description,
             shopName,
@@ -35,7 +37,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             skills } = req.body;
 
 
+    
     try {
+        // update the provider information using id and accesstoken params
+        // update the properties in req.body (desc, shopName, address, etc.)
         await prisma.users.updateMany({
             where: {
                 userId: userId,
@@ -51,17 +56,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             }
         })
 
+        // if successfully updated then status isOk set to true
         isOk = true;
 
+
+        // then get the latest version of the provider information from database
         const updatedUserInformation = await prisma.users.findFirst({
             where: {
                 userId: userId
             }
         }) 
 
-        
+
+
         if (isOk && updatedUserInformation) {
 
+            // update user cookie to the latest version of the data from database
             res.setHeader("Set-Cookie", cookie.serialize("user", JSON.stringify(updatedUserInformation), {
                 httpOnly: true,
                 secure: process.env.NODE_ENV !== "development",
@@ -71,6 +81,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             }));
 
 
+            // send the remarks, status, and updated information through json response
             res.json({
                 msg: 'Your Provider Information is successfully updated',
                 user: updatedUserInformation,                
