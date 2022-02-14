@@ -10,7 +10,7 @@ Author: Tolentino, Francis James S.
 
 
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 
 
@@ -21,12 +21,18 @@ import MainGrid from './MainGrid';
 
 
 
-const Layout: React.FC = () => {
+interface LayoutProps {
+    contentSection?: ReactElement;
+}
+
+
+
+const Layout: React.FC<LayoutProps> = ({ contentSection }) => {
     return (
         <MainGrid 
             topNavbar={<ProviderTopNavbar />}
             leftNavbar={<ProviderLeftNavbar />}
-            contentSection={<ProviderContentSection />}
+            contentSection={contentSection ? contentSection : <ProviderContentSection />}
         />
     )
 }

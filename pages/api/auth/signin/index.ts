@@ -53,7 +53,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const foundUser : User = {
             email: findUser.email,
-            id: findUser.userId,
+            userId: findUser.userId,
             accessToken: findUser.accessToken,
             image: findUser.image,
             username: findUser.username,

@@ -15,7 +15,7 @@ import React, { useEffect, useState } from 'react';
 
 
 import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
-import CreateNewService from './CreateNewService';
+import CreateNewServiceComponent from './Create/CreateNewServiceComponent';
 
 
 
@@ -25,6 +25,8 @@ import Service from './Service';
 
 const Services: React.FC = () => {
 
+
+    const [activePrompt, setActivePrompt] = useState<string>('');
     const [services, setServices] = useState<any[]>([]);
     const { session } = useAuthentication();
 
@@ -37,6 +39,8 @@ const Services: React.FC = () => {
             });
 
             const jsonRes = await res.json();
+
+
             const services = jsonRes.services;
 
             setServices(services);
@@ -44,10 +48,11 @@ const Services: React.FC = () => {
 
 
         if (session) {
-            console.log('fetching id: ', session.userId);
             handler();
         }
+
     }, [session]);
+
 
 
     return (
@@ -65,7 +70,8 @@ const Services: React.FC = () => {
                         return <Service service={service} key={idx}/>
                     })
                 }
-                <CreateNewService />
+
+                <CreateNewServiceComponent />
             </div>
         </div>
     )
