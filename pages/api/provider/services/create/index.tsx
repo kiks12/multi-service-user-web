@@ -1,32 +1,37 @@
 
 /*
 
-Multi Services Platform - Provider Create new Service Page
+Multi Services Platform - Provider Create new Service API ROUTE
 Created: Feb. 14, 2022
-Last Updated: Feb. 14, 2022
+Last Updated: Feb. 15, 2022
 Author: Tolentino, Francis James S.
 
 */
 
 
 
-import type { NextPage } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
+import { extractIDandAccessToken } from "../../../../../libs/extractIDandAccessToken";
 
 
 
-import Layout from "../../../../../src/components/Provider/Layout/ProviderLayout";
-import CreateNewServiceContent from "../../../../../src/components/Provider/ContentSection/Services/Create/CreateNewServiceContent";
+const handler = (req: NextApiRequest, res: NextApiResponse) => {
+
+    if (req.method !== 'POST') {
+        res.json({
+            msg: 'only POST requests are allowed',
+            status: 500
+        })
+    }
 
 
+    const { userId, accessToken } = extractIDandAccessToken(req);
 
-const CreateService: NextPage = () => {
-    return (
-        <>
-            <Layout contentSection={<CreateNewServiceContent />}/>
-        </>
-    )
+
+    console.log('userId: ', userId, ' accessToken: ', accessToken);
+   
 }
 
 
 
-export default CreateService;
+export default handler;

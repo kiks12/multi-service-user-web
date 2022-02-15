@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Services Content
 Created: Feb. 14, 2022
-Last Updated: Feb. 14, 2022
+Last Updated: Feb. 15, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -26,7 +26,6 @@ import Service from './Service';
 const Services: React.FC = () => {
 
 
-    const [activePrompt, setActivePrompt] = useState<string>('');
     const [services, setServices] = useState<any[]>([]);
     const { session } = useAuthentication();
 
