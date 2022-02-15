@@ -29,6 +29,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
 
 
     console.log('userId: ', userId, ' accessToken: ', accessToken);
+    console.log('body: ', req.body);
    
 }
 
