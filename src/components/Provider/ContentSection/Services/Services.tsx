@@ -20,6 +20,11 @@ import CreateNewServiceComponent from './Create/CreateNewServiceComponent';
 
 
 import Service from './Service';
+import ServicesMenu from './ServicesMenu';
+
+
+
+type Prompts = 'active' | 'inactive' | 'all'
 
 
 
@@ -27,6 +32,10 @@ const Services: React.FC = () => {
 
 
     const [services, setServices] = useState<any[]>([]);
+    const [activePrompt, setActivePrompt] = useState<Prompts>('active');
+
+
+
     const { session } = useAuthentication();
 
 
@@ -62,9 +71,15 @@ const Services: React.FC = () => {
 
     return (
         <div>
-            <p>Active Services</p>
+            <ServicesMenu 
+                activePrompt={activePrompt} 
+                onClick={(value: Prompts) => {
+                    setActivePrompt(value);
+                }}
+            />
             <div 
                 style={{
+                    margin: '1.5em 0 0 0',
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(10em, 1fr))',
                     gridGap: '0.5em'

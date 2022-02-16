@@ -42,6 +42,45 @@ li {
 
 
 
+/* MENUS */
+
+
+.menu-ul {
+    display: flex;
+    list-style: none;
+}
+
+
+.menu-li, .menu-li-active {
+    padding: 1em;
+    position: relative;
+    cursor: pointer;
+}
+
+
+.menu-li-active::after {
+    width: 50%;
+    height: 0.5vh;
+    content: '';
+    background-color: var(--mainPurple);
+    border-radius: 1em;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+}
+
+
+.menu-ul > * + * {
+    margin-left: 1em;
+}
+
+
+/* MENUS */
+
+
+
 /* RESPONSIVE TEXTS */
 
 @media (max-width: 70em) {
@@ -148,7 +187,7 @@ li {
     grid-row-start: 1;
     grid-column-start: 1;
     grid-column-end: 3;
-    border-bottom: 0.3px solid var(--secondaryPurple);
+    border-bottom: 0.3px solid var(--gray);
 }
 
 
@@ -156,7 +195,7 @@ li {
     grid-row-start: 2;
     grid-column-start: 1;
     grid-column-end: 2;
-    border-right: 0.3px solid var(--secondaryPurple);
+    border-right: 0.3px solid var(--gray);
 }
 
 
