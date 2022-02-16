@@ -1,8 +1,27 @@
 
+/*
+
+Multi Service Platform - Provider Create Service upload images API route
+Created: Feb. 16, 2022
+Last Updated: Feb. 16, 2022
+Author: Tolentino, Francis James S.
+
+*/
+
+
+
+import { NextApiResponse } from "next";
+
+
 
 import multer from "multer";
-import { NextApiResponse } from "next";
+
+
+
 import nextConnect from "next-connect";
+
+
+
 import prisma from "../../../../../prisma/prisma";
 
 
@@ -10,12 +29,13 @@ import prisma from "../../../../../prisma/prisma";
 const route = nextConnect();
 
 
-
+// multer upload configuration 
+// set destination to dynamic path
 const upload = multer({
     storage: multer.diskStorage({
         destination: (req, _file, cb) => {
             const { id, title } = req.query;
-            console.log('id: ', id, ' title: ', title);
+
             cb(null, `./public/users/${id}/${title}/`);
         },
         filename: (_req, file, cb) => cb(null, file.originalname),
@@ -24,11 +44,13 @@ const upload = multer({
 
 
 
+// route middleware use of upload array
 route.use(upload.array('files'));
 
 
 
-const uploadAllImages = async ({files, id, title, serviceId}: any) => {
+// this function saves the images' metadata like name, path, etc. to database
+const saveImagesToDatabase = async ({files, id, title, serviceId}: any) => {
     const data = [];
     
     for (let i=0; i < files.length; i++) {
@@ -43,7 +65,6 @@ const uploadAllImages = async ({files, id, title, serviceId}: any) => {
     await prisma.images.createMany({
         data: data
     }) 
-
 }
 
 
@@ -52,7 +73,7 @@ route.post(async (req: any, res: NextApiResponse) => {
     const { id, title, serviceId } = req.query;
 
 
-    await uploadAllImages({
+    await saveImagesToDatabase({
         files: req.files,
         id: id, 
         title: title, 

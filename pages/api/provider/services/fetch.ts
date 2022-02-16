@@ -38,6 +38,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             const services = await prisma.services.findMany({
                 where: {
                     userId: userId,
+                }, 
+                include: {
+                    Images: true
                 }
             });
 

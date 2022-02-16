@@ -11,11 +11,15 @@ Author: Tolentino, Francis James S.
 
 
 import Image from 'next/image';
+
+
+
 import React, { useState } from 'react';
 
 
 
 import { useAuthentication } from '../../../../../custom-hooks/useAuthentication';
+
 
 
 
@@ -56,7 +60,7 @@ const CreateService: React.FC = () => {
             })
 
             const jsonRes = await res.json();
-            
+            console.log(jsonRes);            
         } catch (e) {
             console.error(e);
         }
@@ -90,11 +94,42 @@ const CreateService: React.FC = () => {
 
 
 
+    const publishServiceToDatabase = async (e:any) => {
+        e.preventDefault();
+        const res = await postNewService();
+        const { serviceId } = res;
+        await uploadImages(serviceId);
+    }
+
+
+
+    const imageInputOnchangeHandler = (e: any) => {
+        e.preventDefault();
+        if (e.target.files){
+            for (let i = 0; i < e.target.files?.length; i++){
+                setUploadedImages(prev => {
+                    if (e.target.files){
+                        return [
+                            ...prev, 
+                            e.target.files[i]
+                        ]
+                    }
+
+                    return prev;
+                })
+            }
+        }
+    }
+
+
+
     return (
         <div>
             <p>Create new Service</p>
             <div>
                 <form>
+
+
                     <div>
                         <label>Title</label>
                         <input
@@ -104,6 +139,8 @@ const CreateService: React.FC = () => {
                             required 
                         />
                     </div>
+
+
                     <div>
                         <label>Details</label>
                         <textarea
@@ -112,6 +149,8 @@ const CreateService: React.FC = () => {
                             required
                         />
                     </div>
+
+
                     <div>
                         <label>Pricing Type</label>
                         <select
@@ -122,6 +161,8 @@ const CreateService: React.FC = () => {
                             <option value='Range'>Range</option>
                         </select>
                     </div>
+
+
                     <div>
                         <label>Starting Price</label>
                         <input
@@ -131,6 +172,8 @@ const CreateService: React.FC = () => {
                             required
                         />
                     </div>
+
+
                     <div>
                         <label>Last Price</label>
                         <input 
@@ -139,42 +182,30 @@ const CreateService: React.FC = () => {
                             onChange={(e) => setLastPrice(e.target.value)}
                         />
                     </div>
+
+
                     <div>
                         <input
                             name='files'
                             type='file'
                             accept="image/png, image/gif, image/jpeg"
-                            onChange={(e) => {
-                                if (e.target.files){
-                                    for (let i = 0; i < e.target.files?.length; i++){
-                                        setUploadedImages(prev => {
-                                            if (e.target.files){
-                                                return [
-                                                    ...prev, 
-                                                    e.target.files[i]
-                                                ]
-                                            }
-
-                                            return prev;
-                                        })
-                                    }
-                                }
-                            }}
+                            onChange={imageInputOnchangeHandler}
+                            multiple={true}
                         />
+
                         {
                             uploadedImages.length !== 0 && uploadedImages.map((file, idx) => {
-                                return <Image key={idx} src={URL.createObjectURL(file)} width={100} height={100}/>
+                                return <Image key={idx} alt='' src={URL.createObjectURL(file)} width={100} height={100}/>
                             })
                         }
+
                     </div>
+
+
+
                     <button
                         type='submit'
-                        onClick={async (e) => {
-                            e.preventDefault();
-                            const res = await postNewService();
-                            const { serviceId } = res;
-                            await uploadImages(serviceId);
-                        }}
+                        onClick={publishServiceToDatabase}
                     >
                         Publish Service
                     </button>

@@ -10,7 +10,11 @@ Author: Tolentino, Francis James S.
 
 
 
-import React, { useEffect } from 'react';
+import Image from 'next/image';
+
+
+
+import React from 'react';
 
 
 
@@ -27,6 +31,7 @@ interface ServiceProps {
         ratings: number,
         priceInitial: number, 
         priceFinal: number | null, 
+        Images: any[]
     }
 }
 
@@ -34,7 +39,6 @@ interface ServiceProps {
 
 const Service: React.FC<ServiceProps> = ({ service }) => {
 
-    console.log(service);
 
 
     return (
@@ -49,10 +53,17 @@ const Service: React.FC<ServiceProps> = ({ service }) => {
                     width: '100%',
                     backgroundColor: 'var(--gray)',
                     borderRadius: '0.5em 0.5em 0 0', 
+                    overflow: 'hidden',
                     height: '22vh'
                 }}
             >
-                image
+                <Image 
+                    src={service.Images[0].path} 
+                    alt={service.Images[0].filename}
+                    width={600}
+                    height={600}
+                    objectFit='fill'
+                />
             </div>
 
             <div 
