@@ -13,8 +13,8 @@ import useActivePage from '../../../custom-hooks/useActivePage';
 
 
 
-const ACTIVE_PAGE = 'provider-left-navbar-li-active';
-const INACTIVE_PAGE = 'provider-left-navbar-li';
+const ACTIVE_PAGE = 'left-navbar-li-active';
+const INACTIVE_PAGE = 'left-navbar-li';
 
 
 
@@ -25,7 +25,7 @@ const ProviderLeftNavbar: React.FC = () => {
 
     return (
         <div>
-            <ul className='provider-left-navbar-ul'>
+            <ul className='left-navbar'>
                 <Link href='/provider' passHref={true}>
                     <li className={activePage === 'Provider-Overview' ? ACTIVE_PAGE : INACTIVE_PAGE}>
                         Overview
@@ -37,7 +37,7 @@ const ProviderLeftNavbar: React.FC = () => {
                     </li>
                 </Link>
 
-                <li className='provider-left-navbar-li'>Settings</li>
+                <li className='left-navbar-li'>Settings</li>
             </ul>
         </div>
     )

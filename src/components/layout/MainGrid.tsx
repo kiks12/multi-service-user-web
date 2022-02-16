@@ -3,7 +3,7 @@
 
 Multi Service Platform - Main Grid for multiple pages
 Created: Feb. 09, 2022
-Last Updated: Feb. 12, 2022
+Last Updated: Feb. 16, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -27,10 +27,14 @@ const MainGrid : React.FC<MainGridProps> = ({ contentSection, leftNavbar, topNav
                 {leftNavbar}
             </div>
             <div className='top-navbar-container'>
-                {topNavbar}
+                <div className='container'>
+                    {topNavbar}
+                </div>
             </div>
             <div className='content-section-container'>
-                {contentSection}
+                <div className='container'>
+                    {contentSection}
+                </div>
             </div>
         </main>
     )

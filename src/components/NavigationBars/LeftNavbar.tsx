@@ -3,7 +3,7 @@
 
 Multi Service Platform - Left Navigation Bar Component
 Created: Feb. 09, 2022
-Last Updated: Feb. 09, 2022
+Last Updated: Feb. 16, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -33,21 +33,8 @@ const LeftNavbar : React.FC = () => {
 
     return (
         <div className='left-navbar'>
-
-            <div
-                style={{
-                    display: 'flex',
-                    alignItems: 'center'
-                }}
-            >
-                <h1>LOGO</h1>
-            </div>
             
-            <div
-                style={{
-                    margin: '2em 0 0 0'
-                }}
-            >
+            <div>
                 <ul>
                     <Link href='/' passHref={true}>
                         <li className={activePage === 'Home' ? ACTIVE_PAGE : INACTIVE_PAGE}>

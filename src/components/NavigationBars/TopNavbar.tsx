@@ -4,7 +4,7 @@
 
 Multi Service Platform - Top Navigation Bar Component
 Created: Feb. 09, 2022
-Last Updated: Feb. 12, 2022
+Last Updated: Feb. 16, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -36,6 +36,10 @@ const TopNavbar : React.FC = () => {
 
     return (
         <div className='top-navbar'>
+
+            <div>
+                <h1>LOGO</h1>
+            </div>
 
             <div className='top-navbar-search-form-container'>
                 <form className='top-navbar-search-form'>
