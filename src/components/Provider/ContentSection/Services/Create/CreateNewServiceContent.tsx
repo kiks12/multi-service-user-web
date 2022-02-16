@@ -10,6 +10,7 @@ Author: Tolentino, Francis James S.
 
 
 
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 
@@ -27,6 +28,37 @@ const CreateService: React.FC = () => {
     const [type, setType] = useState<'Flat Rate' | 'Range'>('Flat Rate');
     const [startingPrice, setStartingPrice] = useState<string>('');
     const [lastPrice, setLastPrice] = useState<string>('');
+    const [uploadedImages, setUploadedImages] = useState<any[]>([]);
+
+
+
+    const imagesFormData = () => {
+        const formData = new FormData();
+
+        if (uploadedImages){
+            for (let i=0; i < uploadedImages.length; i++) {
+                formData.append('files', uploadedImages[i]);
+            }
+        }
+
+        return formData;
+    }
+
+
+    const uploadImages = async () => {
+
+        const formData = imagesFormData();
+        try {
+            const res = await fetch('/api/provider/services/upload-images/', {
+                method: 'POST',
+                body: formData,
+            })
+
+            const jsonRes = await res.json();
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
 
     return (
@@ -78,32 +110,60 @@ const CreateService: React.FC = () => {
                             onChange={(e) => setLastPrice(e.target.value)}
                         />
                     </div>
+                    <div>
+                        <input
+                            name='files'
+                            type='file'
+                            accept="image/png, image/gif, image/jpeg"
+                            onChange={(e) => {
+                                if (e.target.files){
+                                    for (let i = 0; i < e.target.files?.length; i++){
+                                        setUploadedImages(prev => {
+                                            if (e.target.files){
+                                                return [
+                                                    ...prev, 
+                                                    e.target.files[i]
+                                                ]
+                                            }
+
+                                            return prev;
+                                        })
+                                    }
+                                }
+                            }}
+                        />
+                        {
+                            uploadedImages.length !== 0 && uploadedImages.map((file, idx) => {
+                                return <Image key={idx} src={URL.createObjectURL(file)} width={100} height={100}/>
+                            })
+                        }
+                    </div>
                     <button
                         type='submit'
                         onClick={async (e) => {
                             e.preventDefault();
+                            uploadImages();
+                            // try {
+                            //     const res = await fetch(`/api/provider/services/create?id=${session?.userId}&accessToken=${session?.accessToken}`, {
+                            //         method: 'POST',
+                            //         headers: {
+                            //             'Content-Type': 'application/json',
+                            //         },
+                            //         body: JSON.stringify({
+                            //             title: title, 
+                            //             details: details, 
+                            //             type: type,
+                            //             startingPrice: parseInt(startingPrice, 10), 
+                            //             lastPrice: parseInt(lastPrice, 10)
+                            //         })
+                            //     })
 
-                            try {
-                                const res = await fetch(`/api/provider/services/create?id=${session?.userId}&accessToken=${session?.accessToken}`, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        title: title, 
-                                        details: details, 
-                                        type: type,
-                                        startingPrice: parseInt(startingPrice, 10), 
-                                        lastPrice: parseInt(lastPrice, 10)
-                                    })
-                                })
+                            //     const jsonRes = await res.json();
 
-                                const jsonRes = await res.json();
-
-                                console.log(jsonRes);
-                            } catch (e) {
-                                console.error(e);                            
-                            }
+                            //     console.log(jsonRes);
+                            // } catch (e) {
+                            //     console.error(e);                            
+                            // }
                             
                         }}
                     >
