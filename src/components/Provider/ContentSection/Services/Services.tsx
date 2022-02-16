@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Services Content
 Created: Feb. 14, 2022
-Last Updated: Feb. 15, 2022
+Last Updated: Feb. 16, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -54,13 +54,19 @@ const Services: React.FC = () => {
 
 
 
+    if (services.length === 0) {
+        return <p>Loading..</p>
+    }
+
+
+
     return (
         <div>
             <p>Active Services</p>
             <div 
                 style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(15em, 1fr))',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(10em, 1fr))',
                     gridGap: '0.5em'
                 }}
             >
