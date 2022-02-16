@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider main Create Service Component
 Created: Feb. 14, 2022
-Last Updated: Feb. 15, 2022
+Last Updated: Feb. 16, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -93,10 +93,14 @@ const CreateService: React.FC = () => {
                                         title: title, 
                                         details: details, 
                                         type: type,
-                                        startingPrice: startingPrice, 
-                                        lastPrice: lastPrice
+                                        startingPrice: parseInt(startingPrice, 10), 
+                                        lastPrice: parseInt(lastPrice, 10)
                                     })
                                 })
+
+                                const jsonRes = await res.json();
+
+                                console.log(jsonRes);
                             } catch (e) {
                                 console.error(e);                            
                             }

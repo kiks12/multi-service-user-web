@@ -3,7 +3,7 @@
 
 Multi Services Platform - Provider Create new Service API ROUTE
 Created: Feb. 14, 2022
-Last Updated: Feb. 15, 2022
+Last Updated: Feb. 16, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -11,11 +11,18 @@ Author: Tolentino, Francis James S.
 
 
 import { NextApiRequest, NextApiResponse } from "next";
+
+
+
 import { extractIDandAccessToken } from "../../../../../libs/extractIDandAccessToken";
 
 
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
+import prisma from "../../../../../prisma/prisma";
+
+
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method !== 'POST') {
         res.json({
@@ -28,8 +35,53 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     const { userId, accessToken } = extractIDandAccessToken(req);
 
 
-    console.log('userId: ', userId, ' accessToken: ', accessToken);
-    console.log('body: ', req.body);
+    try {
+        const user = await prisma.users.findMany({
+            where: {
+                userId: userId, 
+                accessToken: accessToken,
+            }
+        })
+
+
+        if (!user) {
+            res.json({
+                msg: 'This user is not registered in records',
+                statu: 500, 
+            })
+        }
+
+
+        const { title, details, type, startingPrice, lastPrice } = req.body;
+
+
+        const newService = await prisma.services.create({
+            data: {
+                userId: userId,
+                title: title, 
+                serviceDetails: details, 
+                status: 'active',
+                priceType: type,
+                priceInitial: startingPrice, 
+                priceFinal: lastPrice, 
+                dislikes: 0, 
+                likes: 0, 
+                ratings: 0,
+            }
+        })
+
+
+        if (newService) {
+            res.json({
+                msg: 'Your new service is created successfully', 
+                status: 100
+            })
+        }
+
+
+    } catch (e) {
+        console.error(e);
+    }
    
 }
 
