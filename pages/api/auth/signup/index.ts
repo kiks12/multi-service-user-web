@@ -3,7 +3,7 @@
 
 Multi Service Platform - Registration API
 Created: Feb. 08, 2022
-Last Updated: Feb. 14, 2022
+Last Updated: Feb. 16, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -11,11 +11,19 @@ Author: Tolentino, Francis James S.
 
 
 import type { NextApiRequest, NextApiResponse } from "next";
+
+
+
 import { generateAccessToken } from "../../../../libs/hashAccessToken";
 
 
 
 import prisma from "../../../../prisma/prisma";
+
+
+
+import fs from 'fs';
+import path from "path";
 
 
 
@@ -91,6 +99,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         });
     }
 
+
+
+    fs.mkdir(path.join(__dirname, `../../../../../public/users/${createdUser?.userId}`), (err) => {
+        if(err) console.log(err);
+        else console.log('Directory Created Successfully');
+    })
 
 
     res.json({

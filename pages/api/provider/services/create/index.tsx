@@ -22,6 +22,11 @@ import prisma from "../../../../../prisma/prisma";
 
 
 
+import fs from 'fs';
+import path from "path";
+
+
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method !== 'POST') {
@@ -33,6 +38,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 
     const { userId, accessToken } = extractIDandAccessToken(req);
+
+
 
 
     try {
@@ -55,6 +62,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const { title, details, type, startingPrice, lastPrice } = req.body;
 
 
+        fs.mkdir(path.join(__dirname, `../../../../../../public/users/${userId}/${title}`), (err) => {
+            if (err) console.error(err);
+            else console.log('Directory Created Successfully!');
+        });
+
+
+
         const newService = await prisma.services.create({
             data: {
                 userId: userId,
@@ -73,7 +87,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         if (newService) {
             res.json({
-                msg: 'Your new service is created successfully', 
+                msg: 'Your new service is created successfully',
+                serviceId: newService.serviceId,
                 status: 100
             })
         }

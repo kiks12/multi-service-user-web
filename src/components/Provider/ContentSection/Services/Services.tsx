@@ -54,9 +54,9 @@ const Services: React.FC = () => {
 
 
 
-    if (services.length === 0) {
-        return <p>Loading..</p>
-    }
+    // if (services.length === 0) {
+    //     return <p>Loading..</p>
+    // }
 
 
 

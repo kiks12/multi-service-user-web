@@ -45,20 +45,49 @@ const CreateService: React.FC = () => {
     }
 
 
-    const uploadImages = async () => {
+
+    const uploadImages = async (serviceId: number) => {
 
         const formData = imagesFormData();
         try {
-            const res = await fetch('/api/provider/services/upload-images/', {
+            const res = await fetch(`/api/provider/services/upload-images/?id=${session?.userId}&title=${title}&serviceId=${serviceId}`, {
                 method: 'POST',
                 body: formData,
             })
 
             const jsonRes = await res.json();
+            
         } catch (e) {
             console.error(e);
         }
     }
+
+
+
+    const postNewService = async () => {
+        try {
+            const res = await fetch(`/api/provider/services/create?id=${session?.userId}&accessToken=${session?.accessToken}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: title, 
+                    details: details, 
+                    type: type,
+                    startingPrice: parseInt(startingPrice, 10), 
+                    lastPrice: parseInt(lastPrice, 10)
+                })
+            })
+
+            const jsonRes = await res.json();
+
+            return jsonRes;
+        } catch (e) {
+            console.error(e);                            
+        }
+    }
+
 
 
     return (
@@ -142,29 +171,9 @@ const CreateService: React.FC = () => {
                         type='submit'
                         onClick={async (e) => {
                             e.preventDefault();
-                            uploadImages();
-                            // try {
-                            //     const res = await fetch(`/api/provider/services/create?id=${session?.userId}&accessToken=${session?.accessToken}`, {
-                            //         method: 'POST',
-                            //         headers: {
-                            //             'Content-Type': 'application/json',
-                            //         },
-                            //         body: JSON.stringify({
-                            //             title: title, 
-                            //             details: details, 
-                            //             type: type,
-                            //             startingPrice: parseInt(startingPrice, 10), 
-                            //             lastPrice: parseInt(lastPrice, 10)
-                            //         })
-                            //     })
-
-                            //     const jsonRes = await res.json();
-
-                            //     console.log(jsonRes);
-                            // } catch (e) {
-                            //     console.error(e);                            
-                            // }
-                            
+                            const res = await postNewService();
+                            const { serviceId } = res;
+                            await uploadImages(serviceId);
                         }}
                     >
                         Publish Service

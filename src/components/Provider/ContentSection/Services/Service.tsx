@@ -34,6 +34,8 @@ interface ServiceProps {
 
 const Service: React.FC<ServiceProps> = ({ service }) => {
 
+    console.log(service);
+
 
     return (
         <div 
