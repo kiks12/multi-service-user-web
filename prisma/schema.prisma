@@ -31,19 +31,31 @@ model Users {
   firstLogin         Boolean
   firstProviderLogin Boolean
   Services           Services[]
+  Images             Images[]
 }
 
 model Services {
-  serviceId      Int    @id @unique @default(autoincrement())
-  user           Users  @relation(fields: [userId], references: [userId])
+  serviceId      Int      @id @unique @default(autoincrement())
+  user           Users    @relation(fields: [userId], references: [userId])
   userId         Int
-  title          String @db.VarChar(255)
-  serviceDetails String @db.VarChar(255)
-  status         String @db.VarChar(10)
-  priceType      String @db.VarChar(15)
+  title          String   @db.VarChar(255)
+  serviceDetails String   @db.VarChar(255)
+  status         String   @db.VarChar(10)
+  priceType      String   @db.VarChar(15)
   priceInitial   Int
   priceFinal     Int?
   dislikes       Int
   likes          Int
   ratings        Float
+  Images         Images[]
+}
+
+model Images {
+  imageId   Int      @id @unique @default(autoincrement())
+  user      Users    @relation(fields: [userId], references: [userId])
+  userId    Int
+  service   Services @relation(fields: [serviceId], references: [serviceId])
+  serviceId Int
+  name      String
+  path      String   @unique
 }
