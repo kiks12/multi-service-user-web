@@ -3,10 +3,18 @@
 
 Multi Service Platform - Provider Service Component in Services Content Section
 Created: Feb. 14, 2022
-Last Updated: Feb. 16, 2022
+Last Updated: Feb. 17, 2022
 Author: Tolentino, Francis James S.
 
 */
+
+
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import {
+    faEllipsis
+} from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -42,21 +50,17 @@ const Service: React.FC<ServiceProps> = ({ service }) => {
 
 
     return (
-        <div 
-            style={{
-                border: '0.3px solid var(--gray)',
-                borderRadius: '0.5em',
-            }}
-        >
-            <div
-                style={{
-                    width: '100%',
-                    backgroundColor: 'var(--gray)',
-                    borderRadius: '0.5em 0.5em 0 0', 
-                    overflow: 'hidden',
-                    height: '22vh'
-                }}
-            >
+        <div className='service-container'>
+            <div className='service-triple-dot-container'>
+                <FontAwesomeIcon 
+                    icon={faEllipsis}
+                    style={{
+                        fontSize: '1.5em',
+                        color: 'var(--white)'
+                    }}
+                />
+            </div>
+            <div className='service-image-container'>
                 <Image 
                     src={service.Images[0].path} 
                     alt={service.Images[0].filename}
@@ -66,16 +70,9 @@ const Service: React.FC<ServiceProps> = ({ service }) => {
                 />
             </div>
 
-            <div 
-                style={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'space-between', 
-                    padding: '0.5em'
-                }}
-            >
+            <div className='service-text-container'>
                 <p>{service.title}</p>
-                <p>
+                <p className='main-purple-text'>
                     {service.priceType === 'Range' ? `Starting at P${service.priceInitial}` : `Price: P${service.priceInitial}`}
                 </p>
             </div>
