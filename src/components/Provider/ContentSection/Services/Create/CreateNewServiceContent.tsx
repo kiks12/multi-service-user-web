@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider main Create Service Component
 Created: Feb. 14, 2022
-Last Updated: Feb. 16, 2022
+Last Updated: Feb. 17, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -14,12 +14,18 @@ import Image from 'next/image';
 
 
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 
 
 import { useAuthentication } from '../../../../../custom-hooks/useAuthentication';
 
+
+
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'PHP'
+})
 
 
 
@@ -30,9 +36,26 @@ const CreateService: React.FC = () => {
     const [title, setTitle] = useState<string>('');
     const [details, setDetails] = useState<string>('');
     const [type, setType] = useState<'Flat Rate' | 'Range'>('Flat Rate');
-    const [startingPrice, setStartingPrice] = useState<string>('');
-    const [lastPrice, setLastPrice] = useState<string>('');
+    const [startingPrice, setStartingPrice] = useState<string>('0');
+    const [lastPrice, setLastPrice] = useState<string>('0');
     const [uploadedImages, setUploadedImages] = useState<any[]>([]);
+
+
+
+    const memoizedUploadedImages = useMemo(() => {
+        return uploadedImages.map(image => URL.createObjectURL(image));
+    }, [uploadedImages]);
+
+
+    const formattedStartingPrice = useMemo(() => {
+        return formatter.format(parseInt(startingPrice, 10));
+    }, [startingPrice]);
+
+
+
+    const formattedLastPrice = useMemo(() => {
+        return formatter.format(parseInt(lastPrice, 10));
+    }, [lastPrice]);
 
 
 
@@ -124,91 +147,223 @@ const CreateService: React.FC = () => {
 
 
     return (
-        <div>
-            <p>Create new Service</p>
+        <div style={{
+            margin: '1em 0'
+        }}>
+            <div className='card'>
+                <h2>Create new Service</h2>
+            </div>    
             <div>
                 <form>
 
-
-                    <div>
-                        <label>Title</label>
-                        <input
-                            placeholder='Ultimate Laundry Wow'
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            required 
-                        />
-                    </div>
-
-
-                    <div>
-                        <label>Details</label>
-                        <textarea
-                            value={details}
-                            onChange={(e) => setDetails(e.target.value)}
-                            required
-                        />
-                    </div>
-
-
-                    <div>
-                        <label>Pricing Type</label>
-                        <select
-                            value={type}
-                            onChange={(e) => setType(e.target.value as 'Flat Rate' | 'Range')}
-                        >
-                            <option value='Flat Rate'>Flat rate</option>
-                            <option value='Range'>Range</option>
-                        </select>
-                    </div>
-
-
-                    <div>
-                        <label>Starting Price</label>
-                        <input
-                            type='number'
-                            value={startingPrice}
-                            onChange={(e) => setStartingPrice(e.target.value)} 
-                            required
-                        />
-                    </div>
-
-
-                    <div>
-                        <label>Last Price</label>
-                        <input 
-                            type='number'
-                            value={lastPrice}
-                            onChange={(e) => setLastPrice(e.target.value)}
-                        />
-                    </div>
-
-
-                    <div>
-                        <input
-                            name='files'
-                            type='file'
-                            accept="image/png, image/gif, image/jpeg"
-                            onChange={imageInputOnchangeHandler}
-                            multiple={true}
-                        />
-
-                        {
-                            uploadedImages.length !== 0 && uploadedImages.map((file, idx) => {
-                                return <Image key={idx} alt='' src={URL.createObjectURL(file)} width={100} height={100}/>
-                            })
-                        }
-
-                    </div>
-
-
-
-                    <button
-                        type='submit'
-                        onClick={publishServiceToDatabase}
+                    <div 
+                        className='card'
+                        style={{
+                            margin: '1em 0'
+                        }}
                     >
-                        Publish Service
-                    </button>
+                        <h2>Title and Description</h2>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                margin: '1em 0'
+                            }}
+                        >
+                            <label>Title</label>
+                            <input
+                                className='form-control'
+                                placeholder='Ultimate Laundry Wow'
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                required 
+                            />
+                        </div>
+
+
+
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                margin: '1em 0'
+                            }}
+                        >
+                            <label>Details</label>
+                            <textarea
+                                className='form-control'
+                                style={{
+                                    height: '30vh',
+                                    resize: 'none'
+                                }}
+                                value={details}
+                                onChange={(e) => setDetails(e.target.value)}
+                                required
+                            />
+                        </div>
+                    </div>
+
+
+                    <div 
+                        className='card'
+                        style={{
+                            margin: '1em 0'
+                        }}
+                    >
+                        <h2>Pricing</h2>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                margin: '1em 0'
+                            }}
+                        >
+                            <label>Pricing Type</label>
+                            <select
+                                className='form-control'
+                                value={type}
+                                onChange={(e) => setType(e.target.value as 'Flat Rate' | 'Range')}
+                            >
+                                <option value='Flat Rate'>Flat rate</option>
+                                <option value='Range'>Range</option>
+                            </select>
+                        </div>
+
+                        
+
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                margin: '1em 0'
+                            }}
+                        >
+                            <label>Starting Price</label>
+                            <div style={{
+                                display: 'flex'
+                            }}>
+                                <input
+                                    className='form-control'
+                                    type='number'
+                                    value={startingPrice}
+                                    onChange={(e) => setStartingPrice(e.target.value)} 
+                                    required
+                                />
+                                <div style={{
+                                    margin: '0 1em',
+                                    padding: '0 1em',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                    <h3>{formattedStartingPrice}</h3>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                margin: '1em 0'
+                            }}
+                        >
+                            <small className='warning-text'>
+                                <i>
+                                    * Please Ignore if pricing type is flat rate
+                                </i>
+                            </small>    
+                            <label>Last Price</label>
+                            <div style={{
+                                display: 'flex'
+                            }}>
+                                <input 
+                                    className='form-control'
+                                    type='number'
+                                    value={lastPrice}
+                                    onChange={(e) => setLastPrice(e.target.value)}
+                                    disabled={type === 'Flat Rate'}
+                                />
+                                <div style={{
+                                    margin: '0 1em',
+                                    padding: '0 1em',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                    <h3>{formattedLastPrice}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div 
+                        className='card'
+                        style={{
+                            margin: '1em 0'
+                        }}
+                    >
+                        <h2>Gallery</h2>
+                        <div
+                            style={{
+                                margin: '1em 0',
+                                display: 'flex'
+                            }}
+                        >
+                            {
+                                memoizedUploadedImages.length !== 0 && memoizedUploadedImages.map((file, idx) => {
+                                    return (
+                                        <div 
+                                            key={idx}
+                                            style={{
+                                                height: '22.5vh',
+                                                width: '22.5vh',
+                                                overflow: 'hidden',
+                                                borderRadius: '0.5em',
+                                                marginRight: '1em'
+                                            }}
+                                        >
+                                            <Image 
+                                                alt='' 
+                                                src={file} 
+                                                width={500} 
+                                                height={500}
+                                                objectFit='fill'
+                                            />
+                                        </div>
+                                    )
+                                })
+                            }
+                            <input
+                                name='files'
+                                id='files'
+                                type='file'
+                                accept="image/png, image/gif, image/jpeg"
+                                onChange={imageInputOnchangeHandler}
+                                multiple={true}
+                                className='upload-images-input-button'
+                            />
+                            <label htmlFor='files'>Upload Images</label>
+
+
+                        </div>
+                    </div>
+
+
+                    <div style={{
+                        padding: '1em 0 2em 0'
+                    }}>
+                        <button
+                            className='main-button'
+                            type='submit'
+                            onClick={publishServiceToDatabase}
+                            >
+                            Publish Service
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

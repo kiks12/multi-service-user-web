@@ -383,10 +383,7 @@ grid template
 
 .left-navbar-container{
     grid-row-start: 2;
-    grid-row-end: 2;
-    position: sticky;
-    background-color: var(--white);
-    top: 0;
+    grid-row-end: 3;
 }
 
 
@@ -404,7 +401,8 @@ grid template
     grid-row-start: 2;
     grid-row-end: 3;
     grid-column-start: 2;
-    height: 100%;
+    height: 1fr;
+    overflow-y: scroll;
 }
 
 
@@ -549,7 +547,9 @@ grid template
 
 .card {
     width: 100%;
-    box-shadow: 0px 10px 20px 3px rgba(0,0,0,0.15);
+    border-radius: 0.5em;
+    /* box-shadow: 0px 8px 7px rgba(0,0,0,0.15); */
+    border: 0.3px solid var(--gray);
     padding: 2em;
 }
 
@@ -568,6 +568,37 @@ grid template
 }
 
 
+
+.upload-images-input-button {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	z-index: -1;
+}
+
+
+.upload-images-input-button + label {
+    color: var(--secondaryPurple);
+    background-color: var(--gray);
+    padding: 4em 1em;
+    border: 0.3px solid var(--secondaryPurple);
+    border-radius: 0.5em;
+    font-size: var(--normalFontSize);
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+.upload-images-input-button + label * {
+    pointer-events: none;
+}
+
+
+.upload-images-input-button:focus + label {
+    outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+}
 
 
 
@@ -643,6 +674,9 @@ button {
     color: var(--mainPurple);
 }
 
+.warning-text {
+    color: var(--googleRed)
+}
 
 .secondary-purple-text {
     color: var(--secondaryPurple);
