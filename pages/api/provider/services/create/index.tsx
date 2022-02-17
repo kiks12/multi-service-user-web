@@ -3,7 +3,7 @@
 
 Multi Services Platform - Provider Create new Service API ROUTE
 Created: Feb. 14, 2022
-Last Updated: Feb. 16, 2022
+Last Updated: Feb. 17, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -59,7 +59,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
 
-        const { title, details, type, startingPrice, lastPrice } = req.body;
+        const { title, details, type, startingPrice, lastPrice, category } = req.body;
 
 
         fs.mkdir(path.join(__dirname, `../../../../../../public/users/${userId}/${title}`), (err) => {
@@ -73,7 +73,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             data: {
                 userId: userId,
                 title: title, 
-                serviceDetails: details, 
+                serviceDetails: details,
+                category: category,
                 status: 'active',
                 priceType: type,
                 priceInitial: startingPrice, 

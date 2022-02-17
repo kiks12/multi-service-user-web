@@ -14,7 +14,7 @@ import Image from 'next/image';
 
 
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 
 
@@ -113,6 +113,7 @@ const CreateService: React.FC = () => {
                 body: JSON.stringify({
                     title: title, 
                     details: details, 
+                    category: categories.join(' | '),
                     type: type,
                     startingPrice: parseInt(startingPrice, 10), 
                     lastPrice: parseInt(lastPrice, 10)
