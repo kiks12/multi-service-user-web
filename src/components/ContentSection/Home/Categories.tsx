@@ -12,7 +12,8 @@ Author: Tolentino, Francis James S.
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faComputerMouse
+    faComputerMouse,
+    faAirFreshener,
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -48,11 +49,19 @@ const Categories: React.FC = () => {
             }}>
                 <div
                     style={{
-                        backgroundColor: 'red'
+                        // backgroundColor: 'red'
                     }}
                 >
                     <FontAwesomeIcon icon={faComputerMouse} />
                     <p>Computer Servicing</p> 
+                </div>
+                <div
+                    style={{
+                        // backgroundColor: 'red'
+                    }}
+                >
+                    <FontAwesomeIcon icon={faAirFreshener} />
+                    <p>AC Maintenance</p> 
                 </div>
             </div>
         </div>
