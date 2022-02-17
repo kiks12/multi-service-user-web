@@ -64,13 +64,16 @@ const Home: NextPage = ({ user, services}: InferGetServerSidePropsType<typeof ge
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     
     const [isAuthenticated, user] = authenticatePage(ctx);
-    const services = await fetchServices({
-        userId: user.userId,
-        accessToken: user.accessToken
-    })
-
-
+    
+    
     if (isAuthenticated) {
+        
+        const services = await fetchServices({
+            userId: user.userId,
+            accessToken: user.accessToken
+        })
+
+
         return {
             props: {
                 user: user,
