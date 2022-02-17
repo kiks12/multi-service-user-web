@@ -3,7 +3,7 @@
 
 Multi Service Platform - Server Side Authenticate page function
 Created: Feb. 10, 2022
-Last Updated: Feb. 10, 2022
+Last Updated: Feb. 17, 2022
 Author: Tolentino, Francis James S.
 
 */

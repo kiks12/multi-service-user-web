@@ -3,7 +3,7 @@
 
 Multi Service Platform - Home Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 12, 2022
+Last Updated: Feb. 17, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -25,6 +25,7 @@ import Head from 'next/head';
 
 import Layout from '../src/components/layout/Layout';
 import authenticatePage from '../libs/authenticatePage';
+import fetchServices from '../libs/fetchServices';
 
 
 
@@ -32,7 +33,7 @@ import { useAuthentication } from '../src/custom-hooks/useAuthentication';
 
 
 
-const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSideProps>) => { 
+const Home: NextPage = ({ user, services}: InferGetServerSidePropsType<typeof getServerSideProps>) => { 
 
     const {setSession} = useAuthentication();
 
@@ -40,6 +41,11 @@ const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSi
     useEffect(() => {
         if(typeof setSession === 'function') setSession(user);
     }, [setSession, user]);
+
+
+    useEffect(() => {
+        console.log(services);
+    }, [services]);
 
 
     return (
@@ -58,11 +64,17 @@ const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSi
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     
     const [isAuthenticated, user] = authenticatePage(ctx);
+    const services = await fetchServices({
+        userId: user.userId,
+        accessToken: user.accessToken
+    })
+
 
     if (isAuthenticated) {
         return {
             props: {
-                user: user
+                user: user,
+                services: services
             }
         }
     }

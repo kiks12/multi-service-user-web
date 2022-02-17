@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Services Fetch API Route
 Created: Feb. 14, 2022
-Last Updated: Feb. 14, 2022
+Last Updated: Feb. 17, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -19,7 +19,6 @@ import prisma from "../../../../prisma/prisma";
 
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    let isOk = false;
     const { id, accessToken } = req.query;
     const userId = parseInt(id as string, 10);
     
