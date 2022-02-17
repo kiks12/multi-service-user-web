@@ -78,12 +78,6 @@ const Services: React.FC = () => {
 
 
 
-    // if (services.length === 0) {
-    //     return <p>Loading..</p>
-    // }
-
-
-
     return (
         <div>
             <ServicesMenu 
@@ -106,7 +100,9 @@ const Services: React.FC = () => {
                     })
                 }
 
-                <CreateNewServiceComponent />
+                {
+                    (activePrompt === 'active' || activePrompt === 'all') && <CreateNewServiceComponent />
+                }
             </div>
         </div>
     )
