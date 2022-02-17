@@ -3,7 +3,7 @@
 
 Multi Service Platform - Custom hook to split array everytime the dependency change
 Created: Feb. 14, 2022
-Last Updated: Feb. 14, 2022
+Last Updated: Feb. 17, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -25,10 +25,10 @@ const useSplitArray = ({ stringToSplit, splitter, dependencies }: ArraySplitProp
         
     const splittedArray = useMemo(() => {
         return (stringToSplit.split(splitter)).map(string => string.trim());
-    }, dependencies);
+    }, [splitter, stringToSplit]);
 
 
-    return splittedArray;
+    return splittedArray.filter(value => value !== '');
 }
 
 

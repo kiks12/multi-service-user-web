@@ -14,11 +14,12 @@ import Image from 'next/image';
 
 
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 
 
 import { useAuthentication } from '../../../../../custom-hooks/useAuthentication';
+import useSplitArray from '../../../../../custom-hooks/useSplitArray';
 
 
 
@@ -39,12 +40,23 @@ const CreateService: React.FC = () => {
     const [startingPrice, setStartingPrice] = useState<string>('0');
     const [lastPrice, setLastPrice] = useState<string>('0');
     const [uploadedImages, setUploadedImages] = useState<any[]>([]);
+    const [categories, setCategories] = useState<any[]>([]);
+
+
+
+    const [skillsArrayIndex, setSkillsArrayIndex] = useState<number>(0);
+    const skillsArray = useSplitArray({
+        stringToSplit: session?.skills ? session.skills as string : '',
+        splitter: '|',
+    });
+
 
 
 
     const memoizedUploadedImages = useMemo(() => {
         return uploadedImages.map(image => URL.createObjectURL(image));
     }, [uploadedImages]);
+
 
 
     const formattedStartingPrice = useMemo(() => {
@@ -200,6 +212,79 @@ const CreateService: React.FC = () => {
                                 onChange={(e) => setDetails(e.target.value)}
                                 required
                             />
+                        </div>
+                    </div>
+
+                    
+                    <div className='card'>
+                        <h2>Category</h2>
+                        <div style={{
+                            margin: '1em 0'
+                        }}>
+                      
+                            {
+                                categories.length !== 0 && categories.map((category, idx) => {
+                                    return (
+                                        <div 
+                                            key={idx}
+                                            style={{
+                                                display: 'flex',
+                                                margin: '1em 0'
+                                            }}
+                                        >
+                                            <select 
+                                                className='form-control' 
+                                                style={{width: '90%'}}
+                                            >
+                                                {
+                                                    skillsArray.length !== 0 && skillsArray.map((skill, idx2) => {
+                                                        if (skill === '') return <React.Fragment key={idx2}>{skill}</React.Fragment>
+                                                        return <option key={idx2}>{skill}</option>
+                                                    })
+                                                }
+                                            </select>
+                                            <button
+                                                type='button'
+                                                style={{
+                                                    width: '10%',
+                                                    marginLeft: '1em'
+                                                }}
+                                                onClick={() => {
+                                                    setCategories((prev) => {
+                                                        return prev.filter((_cat, idxCat) => idx !== idxCat);
+                                                    })
+                                                    setSkillsArrayIndex(prev => prev -= 1);
+                                                }}
+                                            >
+                                                Remove
+                                            </button>
+                                        </div>
+                                    )
+                                })
+                            }
+
+                            <div style={{
+                                display: 'flex'
+                            }}>
+                                <div style={{width: '90%'}}>
+                                    <input className='form-control' disabled/>
+                                </div>
+                                <button 
+                                    type='button'
+                                    style={{
+                                        marginLeft: '1em',
+                                        width: '10%'
+                                    }}
+                                    onClick={() => {
+                                        setCategories(prev => [...prev, skillsArray[skillsArrayIndex]])
+                                        setSkillsArrayIndex(prev => prev += 1)
+                                    }}
+                                    disabled={skillsArrayIndex === skillsArray.length}
+                                >
+                                    +
+                                </button>
+                            </div>
+
                         </div>
                     </div>
 
