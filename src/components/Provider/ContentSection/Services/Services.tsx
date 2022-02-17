@@ -3,22 +3,22 @@
 
 Multi Service Platform - Provider Services Content
 Created: Feb. 14, 2022
-Last Updated: Feb. 16, 2022
+Last Updated: Feb. 17, 2022
 Author: Tolentino, Francis James S.
 
 */
 
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 
 
 import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
+
+
+
 import CreateNewServiceComponent from './Create/CreateNewServiceComponent';
-
-
-
 import Service from './Service';
 import ServicesMenu from './ServicesMenu';
 
@@ -33,6 +33,21 @@ const Services: React.FC = () => {
 
     const [services, setServices] = useState<any[]>([]);
     const [activePrompt, setActivePrompt] = useState<Prompts>('active');
+
+
+
+    const filteredServices = useMemo(() => {
+        if (activePrompt === 'active') {
+            return services.filter(service => service.status === 'active');
+        }
+
+        if (activePrompt === 'inactive') {
+            return services.filter(service => service.status === 'inactive');
+        }
+
+        return services;
+    }, [services, activePrompt]);
+
 
 
 
@@ -86,7 +101,7 @@ const Services: React.FC = () => {
                 }}
             >
                 {
-                    (services && services.length !== 0) && services.map((service, idx) => {
+                    (filteredServices && filteredServices.length !== 0) && filteredServices.map((service, idx) => {
                         return <Service service={service} key={idx}/>
                     })
                 }
