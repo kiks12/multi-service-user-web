@@ -123,33 +123,47 @@ export const AuthProvider: React.FC = ({ children }) => {
         // get the email from the result.user
         const { email } = result.user;
 
-        try {
-            // find user through API fetching
-            const findUser = await fetch(`${process.env.SITE_URL}/api/auth/signin/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({email})
-            });
-    
-            // convert the fetch result into json
-            const jsonFoundUser = await findUser.json();
 
-
-            // check if status is 100 and user is found
-            if (jsonFoundUser.status === 100){
-                if (type === 'user') router.push('/login/callback');
-                if (type === 'provider') router.push('/provider/login/callback');
-            } else {
-                // set the error message to payload message
-                setMessage({msg: jsonFoundUser.msg, status: jsonFoundUser.status});
-                // console.log(jsonFoundUser);
-            }
+        const res = await fetch('http://localhost:4000/auth/signin/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email}),
+            credentials: "include"
+        })
         
-        } catch (e) {
-            setMessage({msg: e as string, status: 500});
-        }
+        const resJson = await res.json();
+        console.log(resJson);
+
+
+        // try {
+        //     // find user through API fetching
+        //     const findUser = await fetch(`${process.env.SITE_URL}/api/auth/signin/`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({email})
+        //     });
+    
+        //     // convert the fetch result into json
+        //     const jsonFoundUser = await findUser.json();
+
+
+        //     // check if status is 100 and user is found
+        //     if (jsonFoundUser.status === 100){
+        //         if (type === 'user') router.push('/login/callback');
+        //         if (type === 'provider') router.push('/provider/login/callback');
+        //     } else {
+        //         // set the error message to payload message
+        //         setMessage({msg: jsonFoundUser.msg, status: jsonFoundUser.status});
+        //         // console.log(jsonFoundUser);
+        //     }
+        
+        // } catch (e) {
+        //     setMessage({msg: e as string, status: 500});
+        // }
         
     }
 
