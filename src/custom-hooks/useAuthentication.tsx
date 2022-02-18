@@ -3,7 +3,7 @@
 
 Multi Service Platform - custom hook to handle user information
 Created: Feb. 09, 2022
-Last Updated: Feb. 11, 2022
+Last Updated: Feb. 18, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -28,7 +28,7 @@ import Router from "../components/router";
 
 interface Message {
     msg: string;
-    status: 100 | 500 | 0;
+    status: 100 | 500 | 400 | 0;
 }
 
 
@@ -124,17 +124,34 @@ export const AuthProvider: React.FC = ({ children }) => {
         const { email } = result.user;
 
 
-        const res = await fetch('http://localhost:4000/auth/signin/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({email}),
-            credentials: "include"
-        })
-        
-        const resJson = await res.json();
-        console.log(resJson);
+        try {
+            const res = await fetch('http://localhost:4000/auth/signin/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+                credentials: "include"
+            })
+            
+            const resJson = await res.json();
+
+            if (resJson.status !== 100) {
+                setMessage({
+                    msg: resJson.msg,
+                    status: resJson.status
+                })
+            }
+
+            if (type === 'user') router.push('/');
+            if (type === 'provider') router.push('/provider/login/callback');
+        } catch (e) {
+            setMessage({
+                msg: e as string,
+                status: 400
+            })
+            console.error(e);
+        }
 
 
         // try {

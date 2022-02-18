@@ -35,7 +35,7 @@ import { useAuthentication } from '../src/custom-hooks/useAuthentication';
 
 const Home: NextPage = ({ user, services}: InferGetServerSidePropsType<typeof getServerSideProps>) => { 
 
-    const {setSession} = useAuthentication();
+    const { setSession } = useAuthentication();
 
 
     useEffect(() => {
