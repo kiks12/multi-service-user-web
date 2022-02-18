@@ -3,7 +3,7 @@
 
 Multi Service Platform - Home Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 17, 2022
+Last Updated: Feb. 18, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -24,16 +24,15 @@ import Head from 'next/head';
 
 
 import Layout from '../src/components/layout/Layout';
-import authenticatePage from '../libs/authenticatePage';
-import fetchServices from '../libs/fetchServices';
 
 
 
 import { useAuthentication } from '../src/custom-hooks/useAuthentication';
+import fetchUserInformation from '../libs/fetchUserInformation';
 
 
 
-const Home: NextPage = ({ user, services}: InferGetServerSidePropsType<typeof getServerSideProps>) => { 
+const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSideProps>) => { 
 
     const { setSession } = useAuthentication();
 
@@ -43,9 +42,9 @@ const Home: NextPage = ({ user, services}: InferGetServerSidePropsType<typeof ge
     }, [setSession, user]);
 
 
-    useEffect(() => {
-        console.log(services);
-    }, [services]);
+    // useEffect(() => {
+    //     console.log(services);
+    // }, [services]);
 
 
     return (
@@ -61,23 +60,14 @@ const Home: NextPage = ({ user, services}: InferGetServerSidePropsType<typeof ge
 
 
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
     
-    const [isAuthenticated, user] = authenticatePage(ctx);
-    
-    
-    if (isAuthenticated) {
-        
-        const services = await fetchServices({
-            userId: user.userId,
-            accessToken: user.accessToken
-        })
-
+    if (req.cookies.accessToken) {
+        const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
         return {
             props: {
-                user: user,
-                services: services
+                user: userInformation.user
             }
         }
     }
