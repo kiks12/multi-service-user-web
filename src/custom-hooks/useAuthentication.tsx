@@ -143,6 +143,7 @@ export const AuthProvider: React.FC = ({ children }) => {
                 })
             }
 
+            // router.push(`/login/${resJson.accessToken}`);
             if (type === 'user') router.push('/');
             if (type === 'provider') router.push('/provider/login/callback');
         } catch (e) {
@@ -234,12 +235,9 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
     const logout = async () => {
-        await fetch(`/api/auth/signout/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({})
+        await fetch(`http://localhost:4000/auth/signout`, {
+            method: 'GET',
+            credentials: 'include'
         });
         await router.push('/login');
         clearSession();

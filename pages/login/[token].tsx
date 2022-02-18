@@ -30,6 +30,10 @@ import Router from '../../src/components/router';
 
 
 
+import cookie from 'cookie';
+
+
+
 const LoginCallback : NextPage = ({user}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     
     const {setSession} = useAuthentication();
@@ -51,13 +55,22 @@ const LoginCallback : NextPage = ({user}: InferGetServerSidePropsType<typeof get
 
 
 
-export const getServerSideProps: GetServerSideProps = async ({req} : GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async ({query, res} : GetServerSidePropsContext) => {
 
-    const user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
+    // const user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
+    console.log(query);
+
+    res.setHeader('Set-Cookie', cookie.serialize('accessToken', query.token as string, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+        secure: false,
+        sameSite: "lax"
+    }));
+
 
     return {
         props: {
-            user
+            // user
         }
     }
 }
