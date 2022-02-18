@@ -3,16 +3,26 @@
 
 Multi Service Platform - Bookings Page
 Created: Feb. 09, 2022
-Last Updated: Feb. 12, 2022
+Last Updated: Feb. 18, 2022
 Author: Tolentino, Francis James S.
 
 */
 
 
 
-import type { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
+import type { 
+    GetServerSideProps, 
+    GetServerSidePropsContext, 
+    InferGetServerSidePropsType, 
+    NextPage } from "next";
+
+
+
 import { useEffect } from "react";
-import authenticatePage from "../../libs/authenticatePage";
+
+
+
+import fetchUserInformation from "../../libs/fetchUserInformation";
 
 
 
@@ -39,17 +49,18 @@ const Bookings: NextPage = ({user}: InferGetServerSidePropsType<typeof getServer
 
 
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
 
-    const [isAuthenticated, user] = authenticatePage(ctx);
+    if (req.cookies.accessToken) {
+        const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
-    if (isAuthenticated) {
         return {
             props: {
-                user
+                user: userInformation.user
             }
         }
     }
+
 
     return {
         props: {}
