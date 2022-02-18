@@ -53,7 +53,7 @@ const ProviderLogin : NextPage = () => {
 
                 {
                     message.msg !== '' && (
-                        <div className={message.status === 500 ? 'error-message' : 'success-message'}>
+                        <div className={message.status !== 200 ? 'error-message' : 'success-message'}>
                             { message.msg }
                         </div>
                     )

@@ -144,7 +144,7 @@ export const AuthProvider: React.FC = ({ children }) => {
             } else {   
                 // router.push(`/login/${resJson.accessToken}`);
                 if (type === 'user') router.push('/');
-                if (type === 'provider') router.push('/provider/login/callback');
+                if (type === 'provider') router.push('/provider/');
             }
 
         } catch (e) {

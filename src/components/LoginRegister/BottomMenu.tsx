@@ -26,7 +26,7 @@ interface BottomMenuProps {
 const BottomMenu: React.FC<BottomMenuProps> = ({ type }) => {
     return (
         <div className='login-register-right-bottom-row'>
-            <Link href={type === 'LoginUser' ? '/provider' : '/login'} passHref={true}>
+            <Link href={type === 'LoginUser' ? '/provider/login' : '/login'} passHref={true}>
                 <p className='main-purple-link'>
                     {type === 'LoginUser' ? 'Be a Provider' : 'Login as a User'}
                 </p>

@@ -3,7 +3,7 @@
 
 Multi Service Platform (User Web) - Login Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 11, 2022
+Last Updated: Feb. 18, 2022
 Author: Tolentino, Francis James S.
 
 */

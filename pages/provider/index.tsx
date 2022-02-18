@@ -3,7 +3,7 @@
 
 Multi Service Platform - Main Provider Page
 Created: Feb. 10, 2022
-Last Updated: Feb. 12`, 2022
+Last Updated: Feb. 18, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -15,8 +15,14 @@ import type {
     GetServerSidePropsContext, 
     InferGetServerSidePropsType,
     NextPage } from "next";
+
+
+
 import { useEffect } from "react";
-import authenticatePage from "../../libs/authenticatePage";
+
+
+
+import fetchUserInformation from "../../libs/fetchUserInformation";
 
 
 
@@ -46,23 +52,18 @@ const Provider : NextPage = ({ user }: InferGetServerSidePropsType<typeof getSer
 
 
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
 
-    const [isAuthenticated, user] = authenticatePage(ctx);
+    if (req.cookies.accessToken) {
+        const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
-    if (isAuthenticated) {
         return {
             props: {
-                user
+                user: userInformation.user
             }
         }
     }
-
     return {
-        redirect: {
-            permanent: false,
-            destination: '/provider/login'
-        },
         props: {}
     }
 }
