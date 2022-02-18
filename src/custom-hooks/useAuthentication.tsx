@@ -28,7 +28,7 @@ import Router from "../components/router";
 
 interface Message {
     msg: string;
-    status: 100 | 500 | 400 | 0;
+    status: 200 | 100 | 500 | 400 | 0;
 }
 
 
@@ -136,16 +136,16 @@ export const AuthProvider: React.FC = ({ children }) => {
             
             const resJson = await res.json();
 
-            if (resJson.status !== 100) {
+            if (resJson.status !== 200) {
                 setMessage({
                     msg: resJson.msg,
                     status: resJson.status
                 })
+            } else {   
+                // router.push(`/login/${resJson.accessToken}`);
+                if (type === 'user') router.push('/');
+                if (type === 'provider') router.push('/provider/login/callback');
             }
-
-            // router.push(`/login/${resJson.accessToken}`);
-            if (type === 'user') router.push('/');
-            if (type === 'provider') router.push('/provider/login/callback');
         } catch (e) {
             setMessage({
                 msg: e as string,
@@ -203,7 +203,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         try {
             // register account using API POST fetching to /api/auth/signup/ 
-            const res = await fetch('/api/auth/signup/', {
+            const res = await fetch('http://localhost:4000/auth/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
