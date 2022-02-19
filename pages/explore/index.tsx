@@ -3,7 +3,7 @@
 
 Multi Service Platform - Explore Page
 Created: Feb. 09, 2022
-Last Updated: Feb. 18, 2022
+Last Updated: Feb. 19, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -36,12 +36,12 @@ import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 
 const Explore: NextPage = ({user}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
-    const {setSession} = useAuthentication();
+    const { setSession } = useAuthentication();
 
 
     useEffect(() => {
         if (typeof setSession === 'function') setSession(user);
-    }, []);
+    }, [setSession, user]);
 
 
     
@@ -57,6 +57,17 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
     if (req.cookies.accessToken) {
         const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
+
+        if (!userInformation) {
+            return {
+                props: {
+                    user: {}
+                }
+            }
+        }
+
+
+
         return {
             props: {
                 user: userInformation.user
@@ -65,8 +76,11 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
     }
 
 
+
     return {
-        props: {}
+        props: {
+            user: {}
+        }
     }
 
 }
