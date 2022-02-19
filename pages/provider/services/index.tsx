@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Services Page
 Created: Feb. 12, 2022
-Last Updated: Feb. 14, 2022
+Last Updated: Feb. 19, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -23,7 +23,7 @@ import { useAuthentication } from '../../../src/custom-hooks/useAuthentication';
 
 
 
-import authenticatePage from '../../../libs/authenticatePage';
+import fetchUserInformation from '../../../libs/fetchUserInformation';
 
 
 
@@ -49,26 +49,37 @@ const ProviderServices : NextPage = ({user}: InferGetServerSidePropsType<typeof 
 
 
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
 
-    const [isAuthenticated, user] = authenticatePage(ctx);
+    if (req.cookies.accessToken) {
+        const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
-    if (isAuthenticated) {
+
+        if (!userInformation) {
+            return {
+                props: {
+                    user: {}
+                }
+            }
+        }
+
+
+
         return {
             props: {
-                user: user,
+                user: userInformation.user
             }
         }
     }
 
 
+
     return {
-        redirect: {
-            permanent: false,
-            destination: '/provider/login'
-        },
-        props: {}
+        props: {
+            user: {}
+        }
     }
+
 }
 
 
