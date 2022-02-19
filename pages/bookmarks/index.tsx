@@ -3,7 +3,7 @@
 
 Multi Service Platform - Bookmarks Page
 Created: Feb. 09, 2022
-Last Updated: Feb. 18, 2022
+Last Updated: Feb. 19, 2022
 Author: Tolentino, Francis James S.
 
 */
