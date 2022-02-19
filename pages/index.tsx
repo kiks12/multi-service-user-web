@@ -3,7 +3,7 @@
 
 Multi Service Platform - Home Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 18, 2022
+Last Updated: Feb. 19, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -65,6 +65,17 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
     if (req.cookies.accessToken) {
         const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
+
+        if (!userInformation) {
+            return {
+                props: {
+                    user: {}
+                }
+            }
+        }
+
+
+
         return {
             props: {
                 user: userInformation.user
@@ -73,8 +84,11 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
     }
 
 
+
     return {
-        props: {}
+        props: {
+            user: {}
+        }
     }
 }
 
