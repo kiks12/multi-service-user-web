@@ -3,7 +3,7 @@
 
 Multi Services Platform - Provider Create new Service Page
 Created: Feb. 14, 2022
-Last Updated: Feb. 15, 2022
+Last Updated: Feb. 19, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -18,9 +18,6 @@ import type {
 
 
 
-import authenticatePage from "../../../../libs/authenticatePage";
-
-
 
 import { useEffect } from "react";
 import { useAuthentication } from "../../../../src/custom-hooks/useAuthentication";
@@ -29,6 +26,7 @@ import { useAuthentication } from "../../../../src/custom-hooks/useAuthenticatio
 
 import Layout from "../../../../src/components/Provider/Layout/ProviderLayout";
 import CreateNewServiceContent from "../../../../src/components/Provider/ContentSection/Services/Create/CreateNewServiceContent";
+import fetchUserInformation from "../../../../libs/fetchUserInformation";
 
 
 
@@ -54,26 +52,35 @@ const CreateService: NextPage = ({user}: InferGetServerSidePropsType<typeof getS
 
 
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
 
-    const [isAuthenticated, user] = authenticatePage(ctx);
+    if (req.cookies.accessToken) {
+        const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
 
-    if (isAuthenticated) {
+        if (!userInformation) {
+            return {
+                props: {
+                    user: {}
+                }
+            }
+        }
+
+
+
         return {
             props: {
-                user: user
+                user: userInformation.user
             }
         }
     }
 
 
+
     return {
-        redirect: {
-            permanent: false,
-            destination: '/provider/login'
-        },
-        props: {}
+        props: {
+            user: {}
+        }
     }
 }
 
