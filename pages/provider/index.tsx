@@ -3,7 +3,7 @@
 
 Multi Service Platform - Main Provider Page
 Created: Feb. 10, 2022
-Last Updated: Feb. 18, 2022
+Last Updated: Feb. 19, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -40,7 +40,7 @@ const Provider : NextPage = ({ user }: InferGetServerSidePropsType<typeof getSer
 
     useEffect(() => {
         if (typeof setSession === 'function') setSession(user);
-    }, []);
+    }, [setSession, user]);
 
 
     return (
@@ -57,15 +57,32 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
     if (req.cookies.accessToken) {
         const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
+
+        if (!userInformation) {
+            return {
+                props: {
+                    user: {}
+                }
+            }
+        }
+
+
+
         return {
             props: {
                 user: userInformation.user
             }
         }
     }
+
+
+
     return {
-        props: {}
+        props: {
+            user: {}
+        }
     }
+
 }
 
 
