@@ -41,7 +41,7 @@ const Bookmarks: NextPage = ({user}: InferGetServerSidePropsType<typeof getServe
 
     useEffect(() => {
         if (typeof setSession === 'function') setSession(user);
-    }, []);
+    }, [setSession, user]);
 
 
 
@@ -57,6 +57,17 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
     if (req.cookies.accessToken) {
         const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
+
+        if (!userInformation) {
+            return {
+                props: {
+                    user: {}
+                }
+            }
+        }
+
+
+
         return {
             props: {
                 user: userInformation.user
@@ -65,9 +76,13 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
     }
 
 
+
     return {
-        props: {}
+        props: {
+            user: {}
+        }
     }
+
 }
 
 
