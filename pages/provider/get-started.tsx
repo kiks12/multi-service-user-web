@@ -56,6 +56,30 @@ const GetStarted: NextPage = ({user}: InferGetServerSidePropsType<typeof getServ
     }, [setSession, user]);
 
 
+    
+    useEffect(() => {
+        setStartProcess(localStorage.getItem('startProcess') === 'true');
+        setActivePrompt(() => {
+            return localStorage.getItem('activePrompt') as ActivePrompt;
+        });
+    }, [setStartProcess]);
+
+
+
+
+    const startProcessHandler = () => {
+        setStartProcess(true);
+        localStorage.setItem('startProcess', (!startProcess).toString());
+    }
+
+
+
+    const cancelProcessHandler = () => {
+        setStartProcess(false);
+        localStorage.setItem('startProcess', (!startProcess).toString());
+    }
+
+
 
 
     return (
@@ -93,7 +117,7 @@ const GetStarted: NextPage = ({user}: InferGetServerSidePropsType<typeof getServ
                                 </div>
                                 <button 
                                     className="main-button"
-                                    onClick={() => setStartProcess(true)}
+                                    onClick={startProcessHandler}
                                 >
                                     Start Now
                                 </button>
@@ -120,7 +144,7 @@ const GetStarted: NextPage = ({user}: InferGetServerSidePropsType<typeof getServ
                                     style={{
                                         width: '10%'
                                     }}
-                                    onClick={() => setStartProcess(false)}
+                                    onClick={cancelProcessHandler}
                                 >
                                     Cancel
                                 </button>
