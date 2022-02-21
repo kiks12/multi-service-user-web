@@ -619,6 +619,12 @@ button {
 }
 
 
+.red-button {
+    background-color: var(--googleRed);
+    color: var(--white);
+}
+
+
 .gray-button {
     background-color: var(--gray);
     border: 0.3px solid var(--secondaryPurple);

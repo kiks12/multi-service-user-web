@@ -3,7 +3,7 @@
 
 Multi Service Platform - Main Provider Page
 Created: Feb. 10, 2022
-Last Updated: Feb. 19, 2022
+Last Updated: Feb. 21, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -62,6 +62,17 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
             return {
                 props: {
                     user: {}
+                }
+            }
+        }
+
+
+
+        if (userInformation.user.firstProviderLogin) {
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: '/provider/get-started'
                 }
             }
         }
