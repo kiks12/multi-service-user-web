@@ -11,9 +11,9 @@ Author: Tolentino, Francis James S.
 
 
 import React, { useState } from 'react';
-import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
-import useClickOutsideElement from '../../../../custom-hooks/useClickOutsideElement';
-import useSplitArray from '../../../../custom-hooks/useSplitArray';
+import { useAuthentication } from '../../../custom-hooks/useAuthentication';
+import useClickOutsideElement from '../../../custom-hooks/useClickOutsideElement';
+import useSplitArray from '../../../custom-hooks/useSplitArray';
 
 
 

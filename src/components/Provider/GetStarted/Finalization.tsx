@@ -14,11 +14,11 @@ import React, { useMemo } from 'react';
 
 
 
-import { User } from '../../../../../types';
+import { User } from '../../../../types';
 
 
 
-import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
+import { useAuthentication } from '../../../custom-hooks/useAuthentication';
 
 
 

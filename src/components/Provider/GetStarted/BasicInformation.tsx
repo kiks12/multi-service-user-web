@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Basic Information Content
 Created: Feb. 12, 2022
-Last Updated: Feb. 14, 2022
+Last Updated: Feb. 21, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -11,7 +11,7 @@ Author: Tolentino, Francis James S.
 
 
 import React from 'react';
-import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
+import { useAuthentication } from '../../../custom-hooks/useAuthentication';
 
 
 
@@ -93,7 +93,7 @@ const BasicInformation: React.FC = () => {
                         name='shopName'
                         className='form-control' 
                         placeholder='Enter your shop Name'
-                        value={session?.shopName as string}
+                        value={!session?.shopName ? '' : session?.shopName as string}
                         onChange={handleInputChange}
                         required
                     />
@@ -112,7 +112,7 @@ const BasicInformation: React.FC = () => {
                         name='address'
                         placeholder='Address'
                         className='form-control' 
-                        value={session?.address as string}
+                        value={!session?.address ? '' : session?.address as string}
                         onChange={handleInputChange}
                         required
                     />
@@ -131,7 +131,7 @@ const BasicInformation: React.FC = () => {
                         name='contact'
                         placeholder='0000 000 0000'
                         className='form-control' 
-                        value={session?.contact as string}
+                        value={!session?.contact ? '' : session?.contact as string}
                         onChange={handleInputChange}
                         required
                     />

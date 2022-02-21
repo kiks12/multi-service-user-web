@@ -19,7 +19,7 @@ import { useAuthentication } from '../../../custom-hooks/useAuthentication';
 
 
 
-import GetStartedContent from './GetStarted/GetStartedContent';
+import GetStartedContent from '../GetStarted/GetStartedContent';
 import Services from './Services/Services';
 
 

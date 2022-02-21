@@ -29,10 +29,12 @@ import fetchUserInformation from "../../libs/fetchUserInformation";
 
 
 import Layout from "../../src/components/Provider/Layout/ProviderLayout";
-import GetStartedBar from "../../src/components/Provider/ContentSection/GetStarted/GetStartedBar";
-import BasicInformation from "../../src/components/Provider/ContentSection/GetStarted/BasicInformation";
-import ShopDescription from "../../src/components/Provider/ContentSection/GetStarted/ShopDescription";
-import Skills from "../../src/components/Provider/ContentSection/GetStarted/Skills";
+import GetStartedBar from "../../src/components/Provider/GetStarted/GetStartedBar";
+import BasicInformation from "../../src/components/Provider/GetStarted/BasicInformation";
+import ShopDescription from "../../src/components/Provider/GetStarted/ShopDescription";
+import Skills from "../../src/components/Provider/GetStarted/Skills";
+import Finalization from "../../src/components/Provider/GetStarted/Finalization";
+import BackNext from "../../src/components/Provider/GetStarted/BackNext";
 
 
 
@@ -42,7 +44,7 @@ type ActivePrompt = 'Basic' | 'Desc' | 'Skills' | 'Upload' | 'Final';
 
 
 
-const GetStarted: NextPage = ({user}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const GetStarted: NextPage = ({user, accessToken}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
 
     const { setSession } = useAuthentication();
@@ -169,6 +171,22 @@ const GetStarted: NextPage = ({user}: InferGetServerSidePropsType<typeof getServ
                                     <Skills />
                                 )
                             }
+                            {
+                                activePrompt === 'Upload' && ( 
+                                    <p>Upload</p>
+                                )
+                            }
+                            {
+                                activePrompt === 'Final' && ( 
+                                    <Finalization />
+                                )
+                            }
+
+                            <BackNext 
+                                activePrompt={activePrompt}
+                                setActivePrompt={setActivePrompt}
+                                accessToken={accessToken}
+                            />
                         </>
                     )
                 }
@@ -198,7 +216,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
 
         return {
             props: {
-                user: userInformation.user
+                user: userInformation.user,
+                accessToken: req.cookies.accessToken
             }
         }
     }

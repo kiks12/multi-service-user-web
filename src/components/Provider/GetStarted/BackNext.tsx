@@ -11,12 +11,12 @@ Auhtor: Tolentino, Francis James S.
 
 
 import React from 'react';
-import authorizedFetch from '../../../../../utils/authorizedFetch';
-import { __backend__ } from '../../../../constants';
+import authorizedFetch from '../../../../utils/authorizedFetch';
+import { __backend__ } from '../../../constants';
 
 
 
-import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
+import { useAuthentication } from '../../../custom-hooks/useAuthentication';
 
 
 
