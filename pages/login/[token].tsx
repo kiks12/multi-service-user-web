@@ -36,7 +36,7 @@ import cookie from 'cookie';
 
 const LoginCallback : NextPage = ({user}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     
-    const {setSession} = useAuthentication();
+    const { setSession } = useAuthentication();
 
 
     const router = Router();

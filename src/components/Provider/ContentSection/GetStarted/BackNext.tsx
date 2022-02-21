@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Back Next Component
 Created: Feb. 12, 2022
-Last Updated: Feb. 14, 2022
+Last Updated: Feb. 21, 2022
 Auhtor: Tolentino, Francis James S.
 
 */
@@ -11,6 +11,8 @@ Auhtor: Tolentino, Francis James S.
 
 
 import React from 'react';
+import authorizedFetch from '../../../../../utils/authorizedFetch';
+import { __backend__ } from '../../../../constants';
 
 
 
@@ -25,6 +27,7 @@ type ActivePrompt = 'Basic' | 'Desc' | 'Skills' | 'Upload' | 'Final';
 interface BackNextProps {
     activePrompt: ActivePrompt;
     setActivePrompt: React.Dispatch<React.SetStateAction<ActivePrompt>>;
+    accessToken: string;
 }
 
 
@@ -40,7 +43,7 @@ const BACK_NEXT_PROMPTS = {
 
 
 
-const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
+const BackNext: React.FC<BackNextProps> = ({ activePrompt, setActivePrompt, accessToken }) => {
 
     const { session, setSession } = useAuthentication();
 
@@ -71,16 +74,18 @@ const BackNext: React.FC<BackNextProps> = ({activePrompt, setActivePrompt}) => {
     const finalizationLogicHandler = async () => {
         // create a post request to Provider Information Update API Route
         try {
-            const res = await fetch(`/api/provider/information/update?id=${session?.userId}&accessToken=${session?.accessToken}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            const res = await authorizedFetch({
+                url:`${__backend__}/provider/update-information?firstVerifiedLogin=0`,
+                method: 'PUT',
+                accessToken: accessToken,
                 body: JSON.stringify(session),
-            })
+            });
 
 
-        const jsonRes = await res.json();
+            const jsonRes = await res.json();
+
+
+            console.log(jsonRes);
 
 
             if (typeof setSession === 'function') setSession(jsonRes.user);
