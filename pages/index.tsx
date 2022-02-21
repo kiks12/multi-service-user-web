@@ -42,21 +42,19 @@ const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSi
     }, [setSession, user]);
 
 
-    // useEffect(() => {
-    //     console.log(services);
-    // }, [services]);
-
-
     return (
         <>
             <Head>
                 <title>Home</title>
             </Head>
 
-            <Layout />
+            <Layout> 
+                <p>Home</p>
+            </Layout>
         </>
     )
 }
+
 
 
 
