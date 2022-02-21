@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Shop Description Content
 Created: Feb. 12, 2022
-Last Updated: Feb. 12, 2022
+Last Updated: Feb. 21, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -25,7 +25,7 @@ const ShopDescription: React.FC = () => {
             <input
                 name='description'
                 className='form-control'
-                value={session?.description as string}
+                value={!session?.description ? '' : session?.description as string}
                 onChange={(e:any) => {
                     if (typeof setSession === 'function') {
                         setSession((prev: any) => {

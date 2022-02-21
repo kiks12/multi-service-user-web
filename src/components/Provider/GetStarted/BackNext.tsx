@@ -82,13 +82,7 @@ const BackNext: React.FC<BackNextProps> = ({ activePrompt, setActivePrompt, acce
             });
 
 
-            const jsonRes = await res.json();
-
-
-            console.log(jsonRes);
-
-
-            if (typeof setSession === 'function') setSession(jsonRes.user);
+            if (typeof setSession === 'function') setSession(res.user);
         } catch (e) {
             console.error(e);
         }
