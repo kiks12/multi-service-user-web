@@ -18,6 +18,7 @@
     --messageGreenBg: rgba(22, 134, 65, 0.3);
     --white: #ffffff;
     --gray: #DBDBE2;
+    --blackModalBg: rgba(24, 24, 24, 0.8);
 
 
     --h1: 18px;
@@ -536,6 +537,17 @@ grid template
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 /* Utilities */
 
 .container { 
@@ -550,8 +562,36 @@ grid template
     border-radius: 0.5em;
     /* box-shadow: 0px 8px 7px rgba(0,0,0,0.15); */
     border: 0.3px solid var(--gray);
+    background-color: var(--white);
     padding: 2em;
 }
+
+
+
+/* MODALS */
+
+
+.modal-container {
+    position: absolute;
+    padding: 3em;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: var(--blackModalBg); */
+}
+
+
+.modal-container > .card {
+    box-shadow: 0px 8px 15px rgba(49, 49, 49, 0.2);
+}
+
+
+/* MODALS */
+
 
 
 

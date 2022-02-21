@@ -214,6 +214,17 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
 
 
 
+        if (!userInformation.user.firstVerifiedLogin) {
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: '/provider'
+                }
+            }
+        }
+
+
+
         return {
             props: {
                 user: userInformation.user,
