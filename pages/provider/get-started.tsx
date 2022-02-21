@@ -214,7 +214,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
 
 
 
-        if (!userInformation.user.firstVerifiedLogin) {
+        if (!userInformation.user.firstProviderLogin) {
             return {
                 redirect: {
                     permanent: false,
