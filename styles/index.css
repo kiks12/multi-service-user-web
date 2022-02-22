@@ -108,6 +108,19 @@ li {
 
 /* SERVICES in PROVIDER PAGE */
 
+
+.services-container {
+    display: grid;
+    margin: 1em 0;
+    grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+}
+
+
+.service-container + * {
+    margin-left: 1em;
+}
+
+
 .service-container {
     border: 0.3px solid var(--gray);
     border-radius: 0.5em;

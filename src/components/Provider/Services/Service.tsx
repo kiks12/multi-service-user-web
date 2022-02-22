@@ -23,6 +23,7 @@ import Image from 'next/image';
 
 
 import React from 'react';
+import { __backend__ } from '../../../constants';
 
 
 
@@ -62,7 +63,7 @@ const Service: React.FC<ServiceProps> = ({ service }) => {
             </div>
             <div className='service-image-container'>
                 <Image 
-                    src={service.Images[0].path} 
+                    src='http://localhost:4000/public/HomeScreen.PNG'
                     alt={service.Images[0].filename}
                     width={600}
                     height={600}

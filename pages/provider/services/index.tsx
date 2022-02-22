@@ -48,7 +48,7 @@ const ProviderServices : NextPage = ({
 
     const { setSession } = useAuthentication();
     const [activePrompt, setActivePrompt] = useState<Prompts>('active');
-    const [myServices, setMyServices] = useState<any[]>(services);
+    const [myServices, setMyServices] = useState<any[]>(() => services);
 
 
     useEffect(() => {
@@ -71,6 +71,12 @@ const ProviderServices : NextPage = ({
 
 
 
+    useEffect(() => {
+        console.log(filteredServices);
+    }, [filteredServices]);
+
+
+
 
     return (
         <>
@@ -81,22 +87,25 @@ const ProviderServices : NextPage = ({
                     setActivePrompt(value);
                 }}
                 />
-                <div style={{
-                    padding: '2em 0',
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(10em , 20em))'
-                }}>
+                <div className='services-container'>
+                    
                     {
-                        filteredServices.length !== 0 && filteredServices.map((service, idx) => {
-                            <Service 
-                                service={service}
-                                key={idx}
-                            />
-                        })
+                        (filteredServices.length !== 0) && filteredServices.map((service, idx) => {
+                            return (
+                                <Service 
+                                    service={service}
+                                    key={idx}
+                                />
+                            )
+                        }) 
                     }
+
+
+
                     {
                         (activePrompt === 'active' || activePrompt === 'all') && <CreateNewServiceComponent />
                     }
+
                 </div>
             </Layout>
         </>
@@ -113,6 +122,9 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
         accessToken: req.cookies.accessToken as string,
         method: 'GET',
     })
+
+
+    console.log(servicesFetchResults);
 
 
 

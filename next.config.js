@@ -7,7 +7,7 @@ const nextConfig = {
     BACKEND_URL: 'http://localhost:4000'
   },
   images: {
-    domains: ['lh3.googleusercontent.com'],
+    domains: ['lh3.googleusercontent.com', 'localhost'],
   }
 }
 
