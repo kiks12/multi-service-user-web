@@ -33,7 +33,8 @@ import { __backend__ } from "../src/constants";
 
 const CategoryPage: NextPage = ({
     user,
-    services}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    services,
+    category}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { setSession } = useAuthentication();
 
@@ -47,6 +48,7 @@ const CategoryPage: NextPage = ({
 
     return (
         <Layout>
+            <h2>{category}</h2>
             {
                 services.length !== 0 && services.map((service: any, idx: Key | null | undefined) => {
                     return (
@@ -86,6 +88,7 @@ export const getServerSideProps: GetServerSideProps = async ({
                 props: {
                     user: {},
                     services: res.services,
+                    category: category,
                 }
             }
         }
@@ -96,6 +99,7 @@ export const getServerSideProps: GetServerSideProps = async ({
             props: {
                 user: userInformation.user,
                 services: res.services,
+                category: category,
             }
         }
     }
@@ -106,6 +110,7 @@ export const getServerSideProps: GetServerSideProps = async ({
         props: {
             user: {},
             services: res.services,
+            category: category,
         }
     }
 }
