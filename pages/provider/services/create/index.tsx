@@ -158,7 +158,10 @@ const CreateService: NextPage = ({
                     type: type,
                     startingPrice: parseInt(startingPrice, 10),
                     lastPrice: parseInt(lastPrice, 10)
-                })
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
             });
 
             return res.serviceId;

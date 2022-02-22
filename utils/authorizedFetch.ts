@@ -5,7 +5,7 @@ interface AuthorizedFetchParameters {
     method: 'GET' | 'POST' | 'PUT',
     body?: any, 
     accessToken: string,
-    options?: any
+    headers?: any
 }
 
 
@@ -14,22 +14,21 @@ type AuthorizedFetch = ({
     method,
     body, 
     accessToken,
-    options
+    headers
 }: AuthorizedFetchParameters) => any
 
 
 
-const authorizedFetch: AuthorizedFetch = async ({ url, accessToken, method, body, options }) => {
+const authorizedFetch: AuthorizedFetch = async ({ url, accessToken, method, body, headers }) => {
 
     try {
         const res = await fetch(url, {
             method: method,
             headers: {
-                'Content-Type': 'application/json',
+                ...headers,
                 'Authorization': 'Bearer ' + accessToken,
             },
             body: body,
-            ...options
         })
 
         const resJson = await res.json();
