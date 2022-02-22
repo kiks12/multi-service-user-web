@@ -3,7 +3,7 @@
 
 Multi Services Platform - Provider Create new Service Page
 Created: Feb. 14, 2022
-Last Updated: Feb. 21, 2022
+Last Updated: Feb. 22, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -36,6 +36,10 @@ import Layout from "../../../../src/components/Provider/Layout/ProviderLayout";
 import fetchUserInformation from "../../../../libs/fetchUserInformation";
 import { __backend__ } from "../../../../src/constants";
 import authorizedFetch from "../../../../utils/authorizedFetch";
+import Modal from "../../../../src/components/Modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
 
 
 
@@ -58,6 +62,7 @@ const CreateService: NextPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { session, setSession } = useAuthentication();
+    const router = useRouter();
 
 
 
@@ -66,6 +71,9 @@ const CreateService: NextPage = ({
     }, [setSession, user]);
 
 
+
+    const [openModal, setOpenModal] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>('');
 
 
     const [title, setTitle] = useState<string>('');
@@ -136,7 +144,8 @@ const CreateService: NextPage = ({
                 method: 'POST',
             })
 
-            console.log(res);   
+
+            return res;
         } catch (e) {
             console.error(e);
         }
@@ -164,7 +173,7 @@ const CreateService: NextPage = ({
                 }
             });
 
-            return res.serviceId;
+            return res;
         } catch (e) {
             console.error(e);                            
         }
@@ -176,8 +185,10 @@ const CreateService: NextPage = ({
 
     const publishServiceToDatabase = async (e:any) => {
         e.preventDefault();
-        const serviceId = await postNewService();
-        await uploadImages(serviceId);
+        const { serviceId, msg } = await postNewService();
+        const { msg: msg2 } = await uploadImages(serviceId);
+        setMessage(msg + " and " + msg2);
+        setOpenModal(true);
     }
 
 
@@ -502,6 +513,45 @@ const CreateService: NextPage = ({
                         </form>
                     </div>
                 </div>
+
+                {
+                    openModal &&
+                    <Modal>
+                        <div 
+                            className="card"
+                            style={{
+                                width: 'min(30em , 90%)'
+                            }}
+                        >   
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                margin: '0 0 1em 0'
+                            }}>
+                                <h2>Message</h2>
+                                <FontAwesomeIcon
+                                    onClick={() => setOpenModal(false)}
+                                    style={{
+                                        cursor: 'pointer'
+                                    }}
+                                    icon={faXmark}
+                                />
+                            </div>
+                            <p>{message}</p>
+                            <div style={{
+                                margin: '2em 0 0 0'
+                            }}>
+                                <button onClick={() => {
+                                    setOpenModal(false);
+                                    router.push('/provider/services')
+                                }}>
+                                    Okay
+                                </button>
+                            </div>
+                        </div>
+                    </Modal>
+                }
             </Layout>
         </>
     )
