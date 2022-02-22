@@ -18,8 +18,8 @@ import React, { useMemo, useState } from 'react';
 
 
 
-import { useAuthentication } from '../../../../../custom-hooks/useAuthentication';
-import useSplitArray from '../../../../../custom-hooks/useSplitArray';
+import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
+import useSplitArray from '../../../../custom-hooks/useSplitArray';
 
 
 

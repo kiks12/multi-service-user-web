@@ -25,7 +25,7 @@ import { useAuthentication } from "../../../../src/custom-hooks/useAuthenticatio
 
 
 import Layout from "../../../../src/components/Provider/Layout/ProviderLayout";
-import CreateNewServiceContent from "../../../../src/components/Provider/ContentSection/Services/Create/CreateNewServiceContent";
+import CreateNewServiceContent from "../../../../src/components/Provider/Services/Create/CreateNewServiceContent";
 import fetchUserInformation from "../../../../libs/fetchUserInformation";
 
 
