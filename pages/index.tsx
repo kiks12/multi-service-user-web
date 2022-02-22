@@ -32,6 +32,11 @@ import fetchUserInformation from '../libs/fetchUserInformation';
 
 
 
+import Categories from '../src/components/Home/Categories';
+
+
+
+
 const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSideProps>) => { 
 
     const { setSession } = useAuthentication();
@@ -50,6 +55,8 @@ const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSi
 
             <Layout> 
                 <div>Promos</div>
+
+                <Categories />
             </Layout>
         </>
     )

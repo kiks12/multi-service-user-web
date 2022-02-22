@@ -47,19 +47,19 @@ const Categories: React.FC = () => {
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(10vh, 20%))'
             }}>
-                <div
-                    style={{
-                        // backgroundColor: 'red'
-                    }}
-                >
+                <div>
                     <FontAwesomeIcon icon={faComputerMouse} />
                     <p>Computer Servicing</p> 
                 </div>
-                <div
-                    style={{
-                        // backgroundColor: 'red'
-                    }}
-                >
+                <div>
+                    <FontAwesomeIcon icon={faAirFreshener} />
+                    <p>AC Maintenance</p> 
+                </div>
+                <div>
+                    <FontAwesomeIcon icon={faAirFreshener} />
+                    <p>AC Maintenance</p> 
+                </div>
+                <div>
                     <FontAwesomeIcon icon={faAirFreshener} />
                     <p>AC Maintenance</p> 
                 </div>

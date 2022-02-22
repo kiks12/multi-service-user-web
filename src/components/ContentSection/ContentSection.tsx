@@ -18,7 +18,7 @@ import useActivePage from '../../custom-hooks/useActivePage';
 
 
 
-import HomeContent from './Home/HomeContent';
+import HomeContent from '../Home/HomeContent';
 
 
 
