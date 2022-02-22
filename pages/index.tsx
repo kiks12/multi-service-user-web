@@ -3,7 +3,7 @@
 
 Multi Service Platform - Home Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 19, 2022
+Last Updated: Feb. 22, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -49,7 +49,7 @@ const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSi
             </Head>
 
             <Layout> 
-                <p>Home</p>
+                <div>Promos</div>
             </Layout>
         </>
     )
