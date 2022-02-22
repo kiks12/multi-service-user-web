@@ -33,6 +33,7 @@ import fetchUserInformation from '../libs/fetchUserInformation';
 
 
 import Categories from '../src/components/Home/Categories';
+import Promos from '../src/components/Home/Promos';
 
 
 
@@ -54,7 +55,7 @@ const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSi
             </Head>
 
             <Layout> 
-                <div>Promos</div>
+                <Promos />
 
                 <Categories />
             </Layout>
