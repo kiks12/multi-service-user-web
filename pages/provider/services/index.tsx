@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Services Page
 Created: Feb. 12, 2022
-Last Updated: Feb. 22, 2022
+Last Updated: Feb. 23, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -122,9 +122,6 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
         accessToken: req.cookies.accessToken as string,
         method: 'GET',
     })
-
-
-    console.log(servicesFetchResults);
 
 
 
