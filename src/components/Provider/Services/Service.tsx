@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Service Component in Services Content Section
 Created: Feb. 14, 2022
-Last Updated: Feb. 17, 2022
+Last Updated: Feb. 23, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -18,12 +18,13 @@ import {
 
 
 
-import Image from 'next/image';
+// import Image from 'next/image';
 
 
 
 import React from 'react';
 import { __backend__ } from '../../../constants';
+import Link from 'next/link';
 
 
 
@@ -51,33 +52,35 @@ const Service: React.FC<ServiceProps> = ({ service }) => {
 
 
     return (
-        <div className='service-container'>
-            <div className='service-triple-dot-container'>
-                <FontAwesomeIcon 
-                    icon={faEllipsis}
-                    style={{
-                        fontSize: '1.5em',
-                        color: 'var(--white)'
-                    }}
-                />
-            </div>
-            <div className='service-image-container'>
-                <Image 
-                    src='http://localhost:4000/public/HomeScreen.PNG'
-                    alt={service.Images[0].filename}
-                    width={600}
-                    height={600}
-                    objectFit='fill'
-                />
-            </div>
+        <Link href={`/provider/services/${service.serviceId}`} passHref={true}>
+            <div className='service-container'>
+                <div className='service-triple-dot-container'>
+                    <FontAwesomeIcon 
+                        icon={faEllipsis}
+                        style={{
+                            fontSize: '1.5em',
+                            color: 'var(--white)'
+                        }}
+                    />
+                </div>
+                <div className='service-image-container'>
+                    {/* <Image 
+                        // src='http://localhost:4000/public/HomeScreen.PNG'
+                        // alt={service.Images[0].filename}
+                        width={600}
+                        height={600}
+                        objectFit='fill'
+                    /> */}
+                </div>
 
-            <div className='service-text-container'>
-                <p>{service.title}</p>
-                <p className='main-purple-text'>
-                    {service.priceType === 'Range' ? `Starting at P${service.priceInitial}` : `Price: P${service.priceInitial}`}
-                </p>
+                <div className='service-text-container'>
+                    <p>{service.title}</p>
+                    <p className='main-purple-text'>
+                        {service.priceType === 'Range' ? `Starting at P${service.priceInitial}` : `Price: P${service.priceInitial}`}
+                    </p>
+                </div>
             </div>
-        </div>
+        </Link>
     )
 }
 
