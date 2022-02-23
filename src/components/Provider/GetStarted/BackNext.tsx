@@ -91,6 +91,9 @@ const BackNext: React.FC<BackNextProps> = ({ activePrompt, setActivePrompt, acce
                 url:`${__backend__}/provider/update-information?firstVerifiedLogin=0`,
                 method: 'PUT',
                 accessToken: accessToken,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(session),
             });
 
