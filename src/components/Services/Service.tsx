@@ -56,12 +56,6 @@ const Service: React.FC<ServiceProps> = ({ service }) => {
 
 
 
-    useEffect(() => {
-        console.log(service);
-    }, [service]);
-
-
-
 
     return (
         <div className='default-service-container'>
