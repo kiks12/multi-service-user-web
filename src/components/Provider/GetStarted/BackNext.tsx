@@ -26,7 +26,7 @@ import { useRouter } from 'next/router';
 
 
 
-import Modal from '../../Modal';
+import Modal from '../../Modals/Modal';
 
 
 

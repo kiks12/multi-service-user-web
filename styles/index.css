@@ -659,6 +659,18 @@ grid template
 
 /* Utilities */
 
+
+.split {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.split > * {
+    flex-basis: 100%;
+}
+
+
 .container { 
     width: 95%;
     height: 100%;

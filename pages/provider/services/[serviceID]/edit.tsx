@@ -36,7 +36,7 @@ import Layout from "../../../../src/components/Provider/Layout/ProviderLayout";
 import fetchUserInformation from "../../../../libs/fetchUserInformation";
 import { __backend__ } from "../../../../src/constants";
 import authorizedFetch from "../../../../utils/authorizedFetch";
-import Modal from "../../../../src/components/Modal";
+import Modal from "../../../../src/components/Modals/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";

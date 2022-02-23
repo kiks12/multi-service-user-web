@@ -41,15 +41,23 @@ import Layout from "../../../../src/components/Provider/Layout/ProviderLayout";
 
 
 import { useAuthentication } from "../../../../src/custom-hooks/useAuthentication";
+import DeleteServiceModal from "../../../../src/components/Modals/DeleteServiceModal";
 
 
 
 const Service : NextPage = ({
     user,
-    serviceInformation}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    serviceInformation,
+    accessToken}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+
 
     const { setSession } = useAuthentication();
-    const [serviceInformationState, setServiceInformationState] = useState<any>(serviceInformation);
+    const [serviceInformationState] = useState<any>(serviceInformation);
+
+
+    const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+
+
 
 
     const formattedInitial = useMemo(() => {
@@ -57,9 +65,13 @@ const Service : NextPage = ({
     }, [serviceInformationState])
 
 
+
     const formattedFinal = useMemo(() => {
         return formatter.format(serviceInformationState.priceFinal);
     }, [serviceInformationState])
+
+
+
 
 
     useEffect(() => {
@@ -72,9 +84,18 @@ const Service : NextPage = ({
     }, [setSession, user]);
 
     
-
+    
+    
     return (
         <>
+            {
+                openDeleteModal &&
+                <DeleteServiceModal 
+                    service={serviceInformationState}
+                    accessToken={accessToken}
+                    setOpenDeleteModal={setOpenDeleteModal}
+                />
+            }
             <Layout>
                 <div style={{margin: '0 0 1em 0'}}>
                     <Link href='/provider/services' passHref={true}>
@@ -109,8 +130,19 @@ const Service : NextPage = ({
                         </div>
 
                         <div>
-                            <button>
-                                Edit Service
+                            <Link href={`/provider/services/${serviceInformation.serviceId}/edit`} passHref={true}>
+                                <button>
+                                    Edit Service
+                                </button>
+                            </Link>
+
+                            <button 
+                                style={{
+                                    marginTop: '0.5em'
+                                }}
+                                onClick={() => setOpenDeleteModal(true)}
+                            >
+                                Delete Service
                             </button>
                         </div>
                     </div>
@@ -147,26 +179,54 @@ const Service : NextPage = ({
                 <div>
                     <h2>Pricing</h2>
 
-                    <div>
-                        <h3>Type: </h3>
-                        <p>{serviceInformationState.priceType}</p>
-                    </div>
+                    <div className='split'>
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'center'
+                        }}>
+                            <h3 style={{width: '50%', textAlign: 'center'}}>Type: </h3>
+                            <input 
+                                style={{width: '50%'}}    
+                                value={serviceInformationState.priceType}
+                                className='form-control'
+                                disabled
+                            />
+                        </div>
 
 
-                    <div>
-                        <h3>Starting Price: </h3>
-                        <p>{formattedInitial}</p>
-                    </div>
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'center'
+                        }}>
+                            <h3 style={{width: '50%', textAlign: 'center'}}>Starting Price: </h3>
+                            <input 
+                                style={{width: '50%'}}    
+                                value={formattedInitial}
+                                className='form-control'
+                                disabled
+                            />
+                        </div>
 
 
-                    <div>
-                        <h3>Last Price: </h3>
-                        <p>{formattedFinal}</p>
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'center'
+                        }}>
+                            <h3 style={{width: '50%', textAlign: 'center'}}>Last Price: </h3>
+                            <input 
+                                style={{width: '50%'}}    
+                                value={formattedFinal}
+                                className='form-control'
+                                disabled
+                            />
+                        </div>
                     </div>
                 </div>
 
 
-                <div>
+                <div style={{
+                    margin: '1em 0'
+                }}>
                     <h2>Related Tags</h2>
                     <p>{serviceInformationState.category}</p>
                 </div>
@@ -199,7 +259,8 @@ export const getServerSideProps: GetServerSideProps = async ({req, query}: GetSe
             return {
                 props: {
                     user: {},
-                    serviceInformation: {}
+                    serviceInformation: {},
+                    accessToken: req.cookies.accessToken
                 }
             }
         }
@@ -209,7 +270,8 @@ export const getServerSideProps: GetServerSideProps = async ({req, query}: GetSe
         return {
             props: {
                 user: userInformation.user,
-                serviceInformation: serviceInformationJson.service
+                serviceInformation: serviceInformationJson.service,
+                accessToken: req.cookies.accessToken
             }
         }
     }
@@ -219,7 +281,8 @@ export const getServerSideProps: GetServerSideProps = async ({req, query}: GetSe
     return {
         props: {
             user: {},
-            serviceInformation: {} 
+            serviceInformation: {}, 
+            accessToken: req.cookies.accessToken
         }
     }
 }
