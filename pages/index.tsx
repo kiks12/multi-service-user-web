@@ -3,7 +3,7 @@
 
 Multi Service Platform - Home Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 22, 2022
+Last Updated: Feb. 23, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -34,6 +34,8 @@ import fetchUserInformation from '../libs/fetchUserInformation';
 
 import Categories from '../src/components/Home/Categories';
 import Promos from '../src/components/Home/Promos';
+import ForYou from '../src/components/Home/ForYou';
+import Recents from '../src/components/Home/Recents';
 
 
 
@@ -58,6 +60,10 @@ const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSi
                 <Promos />
 
                 <Categories />
+
+                <ForYou />
+
+                <Recents />
             </Layout>
         </>
     )
