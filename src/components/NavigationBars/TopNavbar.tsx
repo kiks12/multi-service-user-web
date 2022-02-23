@@ -4,7 +4,7 @@
 
 Multi Service Platform - Top Navigation Bar Component
 Created: Feb. 09, 2022
-Last Updated: Feb. 16, 2022
+Last Updated: Feb. 23, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -55,7 +55,7 @@ const TopNavbar : React.FC = () => {
                     >
                         <button
                             type='submit'
-                            className='button gray-button'
+                            className='button'
                             >
                             Search
                         </button>
