@@ -112,6 +112,44 @@ li {
 
 
 
+/* HOME SERVICES PER CATEGORY */
+
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18em, 1fr));
+    grid-gap: 1em;
+    padding: 2em 0;
+}
+
+
+.default-service-container {
+    border: none;
+    cursor: pointer;
+    padding-bottom: 1em;
+}
+
+
+.default-service-container:hover {
+    box-shadow: var(--boxShadow);
+}
+
+
+.default-service-image {
+    background-color: var(--gray);
+    height: min(25vh, 30vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/* HOME SERVICES PER CATEGORY */
+
+
+
+
 
 
 /* HOME categories */

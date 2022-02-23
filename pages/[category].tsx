@@ -3,7 +3,7 @@
 
 Multi Service Platform - Category Page
 Created: Feb. 22, 2022
-Last Updated: Feb. 22, 2022
+Last Updated: Feb. 23, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -27,6 +27,7 @@ import fetchUserInformation from "../libs/fetchUserInformation";
 import Layout from "../src/components/layout/Layout";
 import authorizedFetch from "../utils/authorizedFetch";
 import { __backend__ } from "../src/constants";
+import Service from "../src/components/Services/Service";
 
 
 
@@ -49,13 +50,16 @@ const CategoryPage: NextPage = ({
     return (
         <Layout>
             <h2>{category}</h2>
-            {
-                services.length !== 0 && services.map((service: any, idx: Key | null | undefined) => {
-                    return (
-                        <p key={idx}>{JSON.stringify(service)}</p>
-                    )
-                })
-            }
+
+            <div className='services-grid'>
+                {
+                    services.length !== 0 && services.map((service: any, idx: Key | null | undefined) => {
+                        return (
+                            <Service key={idx} service={service}/>
+                        )
+                    })
+                }
+            </div>
         </Layout>
     )    
 }
@@ -87,7 +91,7 @@ export const getServerSideProps: GetServerSideProps = async ({
             return {
                 props: {
                     user: {},
-                    services: res.services,
+                    services: [],
                     category: category,
                 }
             }
@@ -109,7 +113,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     return {
         props: {
             user: {},
-            services: res.services,
+            services: [],
             category: category,
         }
     }
