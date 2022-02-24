@@ -30,7 +30,7 @@ const AboutProvider: React.FC<AboutProviderProps> = ({user}) => {
 
     return (
         <div style={{
-            margin: '1em 0'
+            margin: '2em 0'
         }}>
             <h3>About the Provider</h3>
 
@@ -46,7 +46,8 @@ const AboutProvider: React.FC<AboutProviderProps> = ({user}) => {
                         height: '7em',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyItems: 'center'
+                        justifyItems: 'center',
+                        zIndex: '-20'
                     }}
                 >
                     <Image
@@ -58,7 +59,7 @@ const AboutProvider: React.FC<AboutProviderProps> = ({user}) => {
                     />
                 </div>
                 <div style={{
-                    width: '25%',
+                    width: '50%',
                     marginInline: '1em'
                 }}>
                     <h4>{user.username}</h4>
