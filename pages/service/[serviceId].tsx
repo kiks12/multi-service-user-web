@@ -19,16 +19,19 @@ import {
 
 
 import fetchUserInformation from "../../libs/fetchUserInformation";
+import { __backend__ } from "../../src/constants";
 
 
 
+import { useEffect } from "react";
 import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 
 
 
 import Layout from "../../src/components/layout/Layout";
-import { useEffect } from "react";
-import { __backend__ } from "../../src/constants";
+import MenuBar from "../../src/components/ServicePage/MenuBar";
+
+
 
 
 
@@ -55,8 +58,9 @@ const ServicePage : NextPage = ({
     return (
         <>
             <Layout>
-                <pre>{JSON.stringify(service, null, 2)}</pre>
+                {/* <pre>{JSON.stringify(service, null, 2)}</pre> */}
                 
+                <MenuBar />
             </Layout>
         </>
     )
