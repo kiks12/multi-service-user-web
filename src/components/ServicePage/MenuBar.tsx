@@ -43,7 +43,8 @@ const MenuBar: React.FC = () => {
                 backgroundColor: 'var(--white)',
                 display: 'flex',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                borderBottom: '0.3px solid var(--gray)'
             }}
         >
             <ul className='menu-ul'>

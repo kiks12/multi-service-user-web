@@ -110,7 +110,8 @@ const ServicePage : NextPage = ({
 
 
                 <ul style={{
-                    margin: '1em 0'
+                    margin: '1em 0',
+                    display: 'flex'
                 }}>
                     {
                         categories && categories.map((category, idx) => {
@@ -136,19 +137,19 @@ const ServicePage : NextPage = ({
                 </ul>
 
 
-               <Overview service={service}/>
+                <Overview service={service}/>
 
 
-               <Description service={service} ref={descriptionRef}/>
+                <Description service={service} ref={descriptionRef}/>
 
 
-               <AboutProvider user={service.Users}/>
+                <AboutProvider user={service.Users}/>
 
 
-               <Reviews />
+                <Reviews />
 
 
-               <Recommended services={recommendeds} currentServiceID={service.serviceId}/>
+                <Recommended services={recommendeds} currentServiceID={service.serviceId}/>
 
 
             </Layout>
