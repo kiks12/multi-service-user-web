@@ -35,6 +35,7 @@ import Overview from "../../src/components/ServicePage/Overview";
 import Link from "next/link";
 import Description from "../../src/components/ServicePage/Description";
 import AboutProvider from "../../src/components/ServicePage/AboutProvider";
+import Reviews from "../../src/components/ServicePage/Reviews";
 
 
 
@@ -139,6 +140,9 @@ const ServicePage : NextPage = ({
 
 
                <AboutProvider user={service.Users}/>
+
+
+               <Reviews />
 
 
             </Layout>

@@ -1,4 +1,12 @@
 
+/*
+
+Multi Service Platform - Service Page About the Provider Component
+Created: Feb. 24, 2022
+Last Updated: Feb. 24, 2022
+Author: Tolentino, Francis James S.
+
+*/
 
 
 
