@@ -3,7 +3,7 @@
 
 Multi Service Platform - Service Page for Users
 Created: Feb. 23, 2022
-Last Updated: Feb. 23, 2022
+Last Updated: Feb. 24, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -33,6 +33,7 @@ import MenuBar from "../../src/components/ServicePage/MenuBar";
 import useSplitArray from "../../src/custom-hooks/useSplitArray";
 import Overview from "../../src/components/ServicePage/Overview";
 import Link from "next/link";
+import Description from "../../src/components/ServicePage/Description";
 
 
 
@@ -101,6 +102,9 @@ const ServicePage : NextPage = ({
 
 
                <Overview service={service}/>
+
+
+               <Description service={service}/>
 
 
             </Layout>
