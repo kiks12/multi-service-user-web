@@ -693,6 +693,11 @@ grid template
 }
 
 
+.split > * + * {
+    margin-left: 1em;
+}
+
+
 .container { 
     width: 95%;
     height: 100%;

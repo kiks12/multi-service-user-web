@@ -19,11 +19,14 @@ interface DescriptionProps {
 
 
 
-const Description: React.FC<DescriptionProps> = ({service}) => {
+const Description = React.forwardRef<HTMLDivElement, DescriptionProps>(({service}, ref) => {
     return (
-        <div style={{
-            margin: '1em 0'
-        }}>
+        <div 
+            ref={ref}
+            style={{
+                margin: '1em 0'
+            }}
+        >
             <h3>About this Service</h3>
 
             <textarea
@@ -32,6 +35,7 @@ const Description: React.FC<DescriptionProps> = ({service}) => {
                     minHeight: '30vh',
                     fontSize: 'var(--normalFontSize)',
                     outline: 'none',
+                    resize: 'none',
                     border: 'none'
                 }}
                 value={service.serviceDetails} 
@@ -39,7 +43,9 @@ const Description: React.FC<DescriptionProps> = ({service}) => {
             />
         </div>
     )
-}
+});
+
+Description.displayName = 'Description'
 
 
 

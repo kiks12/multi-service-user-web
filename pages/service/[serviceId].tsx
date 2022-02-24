@@ -23,7 +23,7 @@ import { __backend__ } from "../../src/constants";
 
 
 
-import { useEffect } from "react";
+import { createRef, useEffect, useRef } from "react";
 import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 
 
@@ -34,6 +34,7 @@ import useSplitArray from "../../src/custom-hooks/useSplitArray";
 import Overview from "../../src/components/ServicePage/Overview";
 import Link from "next/link";
 import Description from "../../src/components/ServicePage/Description";
+import AboutProvider from "../../src/components/ServicePage/AboutProvider";
 
 
 
@@ -44,6 +45,12 @@ const ServicePage : NextPage = ({
     service}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { setSession } = useAuthentication();
+
+
+    const descriptionRef = useRef<HTMLDivElement>(null);
+    // const layoutRef = useRef<HTMLElement>(null);
+
+
 
     const categories = useSplitArray({
         stringToSplit: service.category,
@@ -61,6 +68,30 @@ const ServicePage : NextPage = ({
             if (typeof setSession === 'function') setSession(null);
         }
     }, [setSession, user]);
+
+
+
+    // useEffect(() => {
+    //     const scrollHandler = () => {
+    //         console.log('afdasfd');
+    //     }
+
+    //     if (layoutRef.current) {
+    //         layoutRef.current.addEventListener('scroll', scrollHandler);
+    //     }
+    //     // .addEventListener('scroll', scrollHandler);
+
+
+    //     return () => {
+    //         document.removeEventListener('scroll', scrollHandler);
+    //     }
+    // }, []); 
+
+
+
+    useEffect(() => {
+        console.log(descriptionRef.current?.getBoundingClientRect());
+    }, []);
 
 
 
@@ -104,7 +135,10 @@ const ServicePage : NextPage = ({
                <Overview service={service}/>
 
 
-               <Description service={service}/>
+               <Description service={service} ref={descriptionRef}/>
+
+
+               <AboutProvider user={service.Users}/>
 
 
             </Layout>
