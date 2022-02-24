@@ -35,11 +35,14 @@ const PricingDetails: React.FC<PricingDetailsProps> = ({ service }) => {
     return (
         <div
             style={{
-                width: '35%',
-                margin: '0 0 0 1em',
+                width: '100%',
+                position: 'sticky',
+                top: '3.1em',
+                height: '70vh',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                boxShadow: 'var(--boxShadow)'
             }}
             className='card'
         >

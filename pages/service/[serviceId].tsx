@@ -38,6 +38,7 @@ import AboutProvider from "../../src/components/ServicePage/AboutProvider";
 import Reviews from "../../src/components/ServicePage/Reviews";
 import Recommended from "../../src/components/ServicePage/Recommended";
 import authorizedFetch from "../../utils/authorizedFetch";
+import PricingDetails from "../../src/components/ServicePage/PricingDetails";
 
 
 
@@ -136,20 +137,32 @@ const ServicePage : NextPage = ({
                     }
                 </ul>
 
+                <div className="split">
+                    <div style={{
+                        flexBasis: '65%'
+                    }}>
+                        <Overview service={service}/>
+                        <Description service={service} ref={descriptionRef}/>
+                        <AboutProvider user={service.Users}/>
+                        <Reviews />
+                        <Recommended services={recommendeds} currentServiceID={service.serviceId}/>
+                    </div>
+                    
+                    <div style={{
+                        flexBasis: '35%'
+                    }}>
+                        <PricingDetails service={service}/>
+                    </div>
+                </div>
 
-                <Overview service={service}/>
 
 
-                <Description service={service} ref={descriptionRef}/>
 
 
-                <AboutProvider user={service.Users}/>
 
 
-                <Reviews />
 
 
-                <Recommended services={recommendeds} currentServiceID={service.serviceId}/>
 
 
             </Layout>
