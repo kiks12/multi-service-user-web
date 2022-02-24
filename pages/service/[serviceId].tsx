@@ -36,6 +36,8 @@ import Link from "next/link";
 import Description from "../../src/components/ServicePage/Description";
 import AboutProvider from "../../src/components/ServicePage/AboutProvider";
 import Reviews from "../../src/components/ServicePage/Reviews";
+import Recommended from "../../src/components/ServicePage/Recommended";
+import authorizedFetch from "../../utils/authorizedFetch";
 
 
 
@@ -43,7 +45,8 @@ import Reviews from "../../src/components/ServicePage/Reviews";
 
 const ServicePage : NextPage = ({
     user,
-    service}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    service,
+    recommendeds}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { setSession } = useAuthentication();
 
@@ -145,6 +148,9 @@ const ServicePage : NextPage = ({
                <Reviews />
 
 
+               <Recommended services={recommendeds} currentServiceID={service.serviceId}/>
+
+
             </Layout>
         </>
     )
@@ -168,6 +174,13 @@ export const getServerSideProps: GetServerSideProps = async ({
     const jsonRes = await res.json();
 
 
+    const recommendedServices = await authorizedFetch({
+        method: 'GET',
+        accessToken: req.cookies.accessToken,
+        url: `${__backend__}/services?category=${jsonRes.service.category}`
+    })
+
+
     
     if (req.cookies.accessToken) {
         const userInformation = await fetchUserInformation(req.cookies?.accessToken);
@@ -177,7 +190,8 @@ export const getServerSideProps: GetServerSideProps = async ({
             return {
                 props: {
                     user: {},
-                    service: {}
+                    service: {},
+                    recommendeds: [],
                 }
             }
         }
@@ -187,7 +201,8 @@ export const getServerSideProps: GetServerSideProps = async ({
         return {
             props: {
                 user: userInformation.user,
-                service: jsonRes.service
+                service: jsonRes.service,
+                recommendeds: recommendedServices.services
             }
         }
     }
@@ -197,7 +212,8 @@ export const getServerSideProps: GetServerSideProps = async ({
     return {
         props: {
             user: {},
-            service: {}
+            service: {},
+            recommededs: []
         }
     }
 }
