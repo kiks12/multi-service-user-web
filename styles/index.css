@@ -69,6 +69,28 @@ li {
 }
 
 
+tr {
+    display: flex;
+}
+
+
+tr > * {
+    flex-basis: 100%;
+}
+
+
+td {
+    border-left: 0.3px solid var(--gray);
+    padding: 0.35em 0 0.35em 2em;
+}
+
+
+td:first-child{
+    border-left: none;
+    padding-left: 0;
+}
+
+
 
 
 /* MENUS */
@@ -774,9 +796,17 @@ button {
 
 
 .main-button {
-    background-color: var(--mainPurple);
+    /* background-color: var(--mainPurple); */
+    background: linear-gradient(144deg, var(--secondaryPurple) -100%, var(--mainPurple) 50%, var(--mainBlue) 130%);
     border: 0.3px solid var(--mainPurple);
     color: var(--white);
+}
+
+
+.ghost-button {
+    background-color: transparent;
+    border: 0.3px solid var(--mainPurple);
+    color: var(--mainPurple);
 }
 
 

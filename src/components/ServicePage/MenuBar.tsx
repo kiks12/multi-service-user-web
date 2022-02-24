@@ -10,6 +10,18 @@ Author: Tolentino, Francis James S.
 
 
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faBookmark,
+    faFlag,
+    faHeart
+} from '@fortawesome/free-regular-svg-icons'
+import { 
+    faShare
+} from '@fortawesome/free-solid-svg-icons';
+
+
+
 import React, { useState } from 'react';
 
 
@@ -24,7 +36,16 @@ const MenuBar: React.FC = () => {
 
 
     return (
-        <div>
+        <div
+            style={{
+                position: 'sticky',
+                top: '0',
+                backgroundColor: 'var(--white)',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+            }}
+        >
             <ul className='menu-ul'>
                 <li className={activePart === 'Overview' ? 'menu-li-active' : 'menu-li'}>Overview</li>
                 <li className={activePart === 'Description' ? 'menu-li-active' : 'menu-li'}>Description</li>
@@ -32,6 +53,49 @@ const MenuBar: React.FC = () => {
                 <li className={activePart === 'Reviews' ? 'menu-li-active' : 'menu-li'}>Reviews</li>
                 <li className={activePart === 'FAQs' ? 'menu-li-active' : 'menu-li'}>FAQs</li>
             </ul>
+
+
+            <div style={{
+                display: 'flex',
+                width: '16%'
+            }}>
+                {/* <button 
+                    style={{
+                        flex: '1',
+                        margin: '0 0.5em'
+                    }}
+                >
+                    <FontAwesomeIcon 
+                        icon={faHeart}
+                    />
+                </button> */}
+                <button 
+                    style={{
+                        flex: '1',
+                        margin: '0 0.5em'
+                    }}
+                >
+                    <FontAwesomeIcon 
+                        icon={faBookmark}
+                    />
+                </button>
+                <button style={{
+                    flex: '1',
+                    margin: '0 0.5em'
+                }}>
+                    <FontAwesomeIcon 
+                        icon={faFlag}
+                    />
+                </button>
+                <button style={{
+                    flex: '1',
+                    margin: '0 0.5em'
+                }}>
+                    <FontAwesomeIcon 
+                        icon={faShare}
+                    />
+                </button>
+            </div>
         </div>
     )
 }

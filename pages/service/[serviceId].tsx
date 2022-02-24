@@ -30,6 +30,9 @@ import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 
 import Layout from "../../src/components/layout/Layout";
 import MenuBar from "../../src/components/ServicePage/MenuBar";
+import useSplitArray from "../../src/custom-hooks/useSplitArray";
+import Overview from "../../src/components/ServicePage/Overview";
+import Link from "next/link";
 
 
 
@@ -40,6 +43,13 @@ const ServicePage : NextPage = ({
     service}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { setSession } = useAuthentication();
+
+    const categories = useSplitArray({
+        stringToSplit: service.category,
+        splitter: ' | ',
+        dependencies: service
+    })
+
 
 
     useEffect(() =>{
@@ -61,6 +71,38 @@ const ServicePage : NextPage = ({
                 {/* <pre>{JSON.stringify(service, null, 2)}</pre> */}
                 
                 <MenuBar />
+
+
+                <ul style={{
+                    margin: '1em 0'
+                }}>
+                    {
+                        categories && categories.map((category, idx) => {
+                            return (
+                                <Link 
+                                    href={`/${category.toLocaleLowerCase()}`} 
+                                    passHref={true}
+                                    key={idx}
+                                >
+                                    <li 
+                                        key={idx} 
+                                        className='main-purple-link'
+                                        style={{
+                                            listStyle: 'none'
+                                        }}
+                                    >
+                                        {category} | 
+                                    </li>
+                                </Link>
+                            )
+                        })
+                    }
+                </ul>
+
+
+               <Overview service={service}/>
+
+
             </Layout>
         </>
     )
