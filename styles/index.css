@@ -103,7 +103,7 @@ td:first-child{
 
 
 .menu-li, .menu-li-active {
-    padding: 1em;
+    padding: 0.75em;
     position: relative;
     cursor: pointer;
 }
@@ -548,7 +548,7 @@ main {
     list-style: none;
     flex-direction: column;
     position: sticky;
-    top: 3.1em;
+    top: 3.05em;
 }
 
 
