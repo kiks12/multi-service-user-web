@@ -3,7 +3,7 @@
 
 Multi Service Platform - Home Page
 Created: Feb. 07, 2022
-Last Updated: Feb. 23, 2022
+Last Updated: Mar. 1, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -40,7 +40,7 @@ import Recents from '../src/components/Home/Recents';
 
 
 
-const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSideProps>) => { 
+const Home: NextPage = ({ user, accessToken }: InferGetServerSidePropsType<typeof getServerSideProps>) => { 
 
     const { setSession } = useAuthentication();
 
@@ -56,7 +56,7 @@ const Home: NextPage = ({ user }: InferGetServerSidePropsType<typeof getServerSi
                 <title>Home</title>
             </Head>
 
-            <Layout> 
+            <Layout accessToken={accessToken}> 
                 <Promos />
 
                 <Categories />
@@ -81,7 +81,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
         if (!userInformation) {
             return {
                 props: {
-                    user: {}
+                    user: {},
+                    accessToken: ''
                 }
             }
         }
@@ -90,7 +91,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
 
         return {
             props: {
-                user: userInformation.user
+                user: userInformation.user,
+                accessToken: req.cookies.accessToken
             }
         }
     }
@@ -99,7 +101,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
 
     return {
         props: {
-            user: {}
+            user: {},
+            accessToken: ''
         }
     }
 }

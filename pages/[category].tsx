@@ -3,7 +3,7 @@
 
 Multi Service Platform - Category Page
 Created: Feb. 22, 2022
-Last Updated: Feb. 23, 2022
+Last Updated: Mar. 01, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -35,7 +35,8 @@ import Service from "../src/components/Services/Service";
 const CategoryPage: NextPage = ({
     user,
     services,
-    category}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    category, 
+    accessToken}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { setSession } = useAuthentication();
 
@@ -48,7 +49,7 @@ const CategoryPage: NextPage = ({
 
 
     return (
-        <Layout>
+        <Layout accessToken={accessToken}>
             <h2>{category}</h2>
 
             <div className='services-grid'>
@@ -93,6 +94,7 @@ export const getServerSideProps: GetServerSideProps = async ({
                     user: {},
                     services: [],
                     category: category,
+                    accessToken: '',
                 }
             }
         }
@@ -104,6 +106,7 @@ export const getServerSideProps: GetServerSideProps = async ({
                 user: userInformation.user,
                 services: res.services,
                 category: category,
+                accessToken: req.cookies.accessToken,
             }
         }
     }
@@ -115,6 +118,7 @@ export const getServerSideProps: GetServerSideProps = async ({
             user: {},
             services: [],
             category: category,
+            accessToken: '',
         }
     }
 }

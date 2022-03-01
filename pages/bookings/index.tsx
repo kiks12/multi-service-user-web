@@ -3,7 +3,7 @@
 
 Multi Service Platform - Bookings Page
 Created: Feb. 09, 2022
-Last Updated: Feb. 19, 2022
+Last Updated: Mar. 01, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -31,7 +31,7 @@ import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 
 
 
-const Bookings: NextPage = ({user}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Bookings: NextPage = ({ user, accessToken }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { setSession } = useAuthentication();
 
@@ -43,7 +43,7 @@ const Bookings: NextPage = ({user}: InferGetServerSidePropsType<typeof getServer
 
 
     return (
-        <Layout/>
+        <Layout accessToken={accessToken}/>
     )
 }
 
@@ -58,7 +58,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
         if (!userInformation) {
             return {
                 props: {
-                    user: {}
+                    user: {},
+                    accessToken: '',
                 }
             }
         }
@@ -67,7 +68,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
 
         return {
             props: {
-                user: userInformation.user
+                user: userInformation.user,
+                accessToken: req.cookies.accessToken
             }
         }
     }
@@ -76,7 +78,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
 
     return {
         props: {
-            user: {}
+            user: {},
+            accessToken: ''
         }
     }
 

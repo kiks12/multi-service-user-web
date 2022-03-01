@@ -11,10 +11,6 @@ Author: Tolentino, Francis James S.
 
 
 
-import { 
-    GetServerSideProps, 
-    GetServerSidePropsContext, 
-    InferGetServerSidePropsType } from 'next';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
@@ -25,7 +21,12 @@ import TopNavbarPopUp from './TopNavbarPopUp';
 
 
 
-const TopNavbar : React.FC = ({ accessToken }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+interface TopNavbarProps {
+    accessToken: string;
+}
+
+
+const TopNavbar : React.FC <TopNavbarProps> = ({ accessToken }) => {
 
     const [showPopup, setShowPopup] = useState<boolean>(false);
 
@@ -102,16 +103,6 @@ const TopNavbar : React.FC = ({ accessToken }: InferGetServerSidePropsType<typeo
 }
 
 
-
-
-export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
-
-    return {
-        props: {
-            accessToken: req.cookies.accessToken
-        }
-    }
-}
 
 
 
