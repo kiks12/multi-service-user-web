@@ -3,7 +3,7 @@
 
 Multi Service Platform - Service Page Menu Bar COmponent
 Created: Feb. 24, 2022
-Last Updated: Feb. 24, 2022
+Last Updated: Mar. 01, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -38,13 +38,13 @@ const MenuBar: React.FC = () => {
     return (
         <div
             style={{
-                position: 'sticky',
-                top: '0',
                 backgroundColor: 'var(--white)',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                borderBottom: '0.3px solid var(--gray)'
+                borderBottom: '0.3px solid var(--gray)',
+                position: 'sticky',
+                top: '3.05em'
             }}
         >
             <ul className='menu-ul'>

@@ -37,7 +37,7 @@ const PricingDetails: React.FC<PricingDetailsProps> = ({ service }) => {
             style={{
                 width: '100%',
                 position: 'sticky',
-                top: '3.1em',
+                top: '6.2em',
                 height: '70vh',
                 display: 'flex',
                 flexDirection: 'column',

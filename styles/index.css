@@ -503,39 +503,33 @@ grid template
 
 /*  LAYOUT  */
 
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
 
-.main-grid {
-    display: grid;
-    grid-template-columns: 15% 85%;
-    grid-template-rows: 8% 92%;
-    height: 100vh;
+
+main {
+    display: flex;
     width: min(100%, 100em);
-    margin-inline: auto;
+    margin: 0 auto;
 }
 
 
 .left-navbar-container{
-    grid-row-start: 2;
-    grid-row-end: 3;
+    flex-basis: 15%;
 }
 
 
 .top-navbar-container{
-    grid-column-start: 1;
-    grid-column-end: 3;
     border-bottom: 0.3px solid var(--gray);
     background-color: var(--white);
-    position: sticky;
-    top: 0;
 }
 
 
 .content-section-container{
-    grid-row-start: 2;
-    grid-row-end: 3;
-    grid-column-start: 2;
-    height: 1fr;
-    overflow-y: scroll;
+    flex-basis: 85%;
 }
 
 
@@ -553,6 +547,8 @@ grid template
     display: flex;
     list-style: none;
     flex-direction: column;
+    position: sticky;
+    top: 3.1em;
 }
 
 
@@ -579,7 +575,6 @@ grid template
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100%;
 }
 
 
@@ -700,7 +695,7 @@ grid template
 
 
 .container { 
-    width: 95%;
+    width: min(95%, 100em);
     height: 100%;
     margin-inline: auto;
 }
@@ -714,6 +709,8 @@ grid template
     background-color: var(--white);
     padding: 2em;
 }
+
+
 
 
 
