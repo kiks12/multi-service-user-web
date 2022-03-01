@@ -3,7 +3,7 @@
 
 Multi Services Platform - Provider Create new Service Page
 Created: Feb. 14, 2022
-Last Updated: Feb. 22, 2022
+Last Updated: Mar. 01, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -24,22 +24,27 @@ import React, { useEffect, useMemo, useState } from "react";
 
 
 
+import { useRouter } from "next/router";
 import { useAuthentication } from "../../../../src/custom-hooks/useAuthentication";
 import useSplitArray from "../../../../src/custom-hooks/useSplitArray";
 
 
 
 import Layout from "../../../../src/components/Provider/Layout/ProviderLayout";
-
-
-
-import fetchUserInformation from "../../../../libs/fetchUserInformation";
-import { __backend__ } from "../../../../src/constants";
-import authorizedFetch from "../../../../utils/authorizedFetch";
+import Calendar from 'react-calendar';
 import Modal from "../../../../src/components/Modals/Modal";
+
+
+
+import { __backend__ } from "../../../../src/constants";
+import fetchUserInformation from "../../../../libs/fetchUserInformation";
+import authorizedFetch from "../../../../utils/authorizedFetch";
+import { formatDateToString } from "../../../../utils/formatDate";
+
+
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/router";
 
 
 
@@ -83,6 +88,11 @@ const CreateService: NextPage = ({
     const [lastPrice, setLastPrice] = useState<string>('0');
     const [uploadedImages, setUploadedImages] = useState<any[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
+
+
+    const [dateType, setDateType] = useState<'Single' | 'Range'>('Single');
+    const [date, setDate] = useState<Date>(new Date());
+    const [unavailableDates, setUnavailableDates] = useState<string[]>([]);
 
 
 
@@ -443,6 +453,37 @@ const CreateService: NextPage = ({
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+
+                            <div className="card">
+                                <h2>Unavailable Dates</h2>
+                                <div>
+                                    <Calendar 
+                                        value={date} 
+                                        onChange={setDate}
+                                        selectRange={dateType === 'Single' ? false : true}
+                                        calendarType='US'
+                                        tileDisabled={({date}) => {
+                                            const _date = formatDateToString(date);
+                                            return unavailableDates.includes(_date);
+                                        }}
+                                    />
+                                </div>
+                                <select value={dateType} onChange={(e) => {
+                                    setDateType(e.target.value as 'Single' | 'Range');
+                                }}>
+                                    <option value='Single'>Single</option>
+                                    <option value='Range'>Range</option>
+                                </select>
+                                <button onClick={() => {
+                                    setUnavailableDates(prev => [
+                                        ...prev,
+                                        formatDateToString(date),
+                                    ])
+                                }}>
+                                    click
+                                </button>
                             </div>
 
 

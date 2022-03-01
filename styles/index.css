@@ -93,6 +93,36 @@ td:first-child{
 
 
 
+
+
+
+/* REACT CALENDAR OVERRIDE */
+.react-calendar {
+    width: 65% !important;
+    border: 0.3px solid var(--gray) !important;
+    border-radius: 0.3em !important;
+}
+
+
+
+
+.react-calendar__navigation {
+    background-color: var(--mainPurple);
+}
+
+
+
+.react-calendar__navigation > * {
+    color: var(--white);
+}
+
+
+
+
+
+
+
+
 /* MENUS */
 
 

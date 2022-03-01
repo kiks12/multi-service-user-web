@@ -4,13 +4,14 @@
 
 Multi Service Platform - main App file
 Created: Feb. 07, 2022
-Last Updated: Feb. 17, 2022
+Last Updated: Mar. 01, 2022
 Author: Tolentino, Francis James S.
 
 */
 
 
 import '../styles/index.css';
+import 'react-calendar/dist/Calendar.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 
