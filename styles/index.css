@@ -776,7 +776,7 @@ main {
 
 
 .modal-container {
-    position: absolute;
+    position: fixed;
     padding: 3em;
     top: 0;
     bottom: 0;
@@ -786,6 +786,7 @@ main {
     align-items: center;
     justify-content: center;
     /* background-color: var(--blackModalBg); */
+    z-index: 100;
 }
 
 
