@@ -176,7 +176,8 @@ const CreateService: NextPage = ({
                     categories: categories.join(' | '),
                     type: type,
                     startingPrice: parseInt(startingPrice, 10),
-                    lastPrice: parseInt(lastPrice, 10)
+                    lastPrice: parseInt(lastPrice, 10),
+                    unavailableDates: unavailableDates.join(' | '),
                 }),
                 headers: {
                     'Content-Type': 'application/json',
