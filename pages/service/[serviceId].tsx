@@ -3,7 +3,7 @@
 
 Multi Service Platform - Service Page for Users
 Created: Feb. 23, 2022
-Last Updated: Feb. 24, 2022
+Last Updated: Mar. 01, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -47,7 +47,8 @@ import PricingDetails from "../../src/components/ServicePage/PricingDetails";
 const ServicePage : NextPage = ({
     user,
     service,
-    recommendeds}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    recommendeds,
+    accessToken}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { setSession } = useAuthentication();
 
@@ -104,9 +105,7 @@ const ServicePage : NextPage = ({
 
     return (
         <>
-            <Layout>
-                {/* <pre>{JSON.stringify(service, null, 2)}</pre> */}
-                
+            <Layout accessToken={accessToken}>
                 <MenuBar />
 
 
@@ -206,6 +205,7 @@ export const getServerSideProps: GetServerSideProps = async ({
                     user: {},
                     service: {},
                     recommendeds: [],
+                    accessToken: ''
                 }
             }
         }
@@ -216,7 +216,8 @@ export const getServerSideProps: GetServerSideProps = async ({
             props: {
                 user: userInformation.user,
                 service: jsonRes.service,
-                recommendeds: recommendedServices.services
+                recommendeds: recommendedServices.services,
+                accessToken: req.cookies.accessToken
             }
         }
     }
@@ -227,7 +228,8 @@ export const getServerSideProps: GetServerSideProps = async ({
         props: {
             user: {},
             service: {},
-            recommededs: []
+            recommededs: [],
+            accessToken: ''
         }
     }
 }
