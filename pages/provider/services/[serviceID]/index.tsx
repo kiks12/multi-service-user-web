@@ -3,7 +3,7 @@
 
 Multi Service Platform - per Service Page for provider
 Created: Feb. 23, 2022
-Last Updated: Feb. 23, 2022
+Last Updated: Mar. 01, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -42,6 +42,9 @@ import Layout from "../../../../src/components/Provider/Layout/ProviderLayout";
 
 import { useAuthentication } from "../../../../src/custom-hooks/useAuthentication";
 import DeleteServiceModal from "../../../../src/components/Modals/DeleteServiceModal";
+import Calendar from "react-calendar";
+import useSplitArray from "../../../../src/custom-hooks/useSplitArray";
+import { formatDateToString, formatStringToDate } from "../../../../utils/formatDate";
 
 
 
@@ -58,6 +61,10 @@ const Service : NextPage = ({
     const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
 
 
+    const unavailableDates = useSplitArray({
+        stringToSplit: serviceInformation.unavailableDates,
+        splitter: ' | ',
+    });
 
 
     const formattedInitial = useMemo(() => {
@@ -221,6 +228,20 @@ const Service : NextPage = ({
                             />
                         </div>
                     </div>
+                </div>
+
+
+                <div style={{
+                    margin: '1em 0'
+                }}>
+                    <h2>Unavailable Dates</h2>
+                    <Calendar 
+                        calendarType="US"
+                        tileDisabled={({date}) => {
+                            const _date = formatDateToString(date);
+                            return unavailableDates.includes(_date);
+                        }}
+                    />
                 </div>
 
 
