@@ -107,17 +107,45 @@ td:first-child{
 
 
 .react-calendar__navigation {
-    background-color: var(--mainPurple);
+    /* background-color: var(--mainPurple); */
+    border-bottom: 0.3px solid var(--gray);
 }
 
 
 
 .react-calendar__navigation > * {
-    color: var(--white);
+    color: var(--mainPurple);
 }
 
 
 
+.react-calendar__tile--active {
+    background-color: var(--mainPurple) !important;
+    color: var(--white) !important; 
+}
+
+
+.react-calendar__tile--now {
+    background-color: var(--secondaryPurple) !important;
+}
+
+
+.react-calendar__tile--range {
+    background-color: var(--lightGray) !important;
+    color: var(--mainPurple) !important;
+}
+
+
+.react-calendar__tile--rangeStart,
+.react-calendar__tile--rangeEnd {
+    background-color: var(--mainPurple) !important;
+    color: var(--white) !important;
+}
+
+
+.react-calendar__month-view__weekdays__weekday {
+    font-weight: 400 !important;
+}
 
 
 
