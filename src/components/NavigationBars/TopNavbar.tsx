@@ -4,30 +4,29 @@
 
 Multi Service Platform - Top Navigation Bar Component
 Created: Feb. 09, 2022
-Last Updated: Feb. 23, 2022
+Last Updated: Mar. 01, 2022
 Author: Tolentino, Francis James S.
 
 */
 
 
 
+import { 
+    GetServerSideProps, 
+    GetServerSidePropsContext, 
+    InferGetServerSidePropsType } from 'next';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
 
 
-import { useAuthentication } from '../../custom-hooks/useAuthentication';
 import AccountButton from './AccountButton';
-
-
-
 import TopNavbarPopUp from './TopNavbarPopUp';
 
 
 
-const TopNavbar : React.FC = () => {
+const TopNavbar : React.FC = ({ accessToken }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
-    const { session } = useAuthentication();
     const [showPopup, setShowPopup] = useState<boolean>(false);
 
 
@@ -78,7 +77,7 @@ const TopNavbar : React.FC = () => {
                         }}
                     >
                         {
-                            session ? (  
+                            accessToken ? (  
                                 <>
                                     <AccountButton 
                                         onClick={() => setShowPopup(true)}
@@ -100,6 +99,18 @@ const TopNavbar : React.FC = () => {
 
         </div>
     )
+}
+
+
+
+
+export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
+
+    return {
+        props: {
+            accessToken: req.cookies.accessToken
+        }
+    }
 }
 
 
