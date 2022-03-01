@@ -39,7 +39,7 @@ import Modal from "../../../../src/components/Modals/Modal";
 import { __backend__ } from "../../../../src/constants";
 import fetchUserInformation from "../../../../libs/fetchUserInformation";
 import authorizedFetch from "../../../../utils/authorizedFetch";
-import { formatDateToString } from "../../../../utils/formatDate";
+import { formatDateToString, formatStringToDate } from "../../../../utils/formatDate";
 
 
 
@@ -458,32 +458,87 @@ const CreateService: NextPage = ({
 
                             <div className="card">
                                 <h2>Unavailable Dates</h2>
-                                <div>
-                                    <Calendar 
-                                        value={date} 
-                                        onChange={setDate}
-                                        selectRange={dateType === 'Single' ? false : true}
-                                        calendarType='US'
-                                        tileDisabled={({date}) => {
-                                            const _date = formatDateToString(date);
-                                            return unavailableDates.includes(_date);
-                                        }}
-                                    />
+                                <div style={{
+                                    display: 'flex'
+                                }}>
+                                    <div style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        width: '70%'
+                                    }}>
+                                        <div style={{
+                                            display: 'flex'
+                                        }}> 
+                                            <select 
+                                                value={dateType} 
+                                                onChange={(e) => {
+                                                    setDateType(e.target.value as 'Single' | 'Range');
+                                                }}
+                                                className='form-control'
+                                            >
+                                                <option value='Single'>Single</option>
+                                                <option value='Range'>Range</option>
+                                            </select>
+                                            <button 
+                                                type="button"
+                                                onClick={() => {
+                                                    setUnavailableDates(prev => [
+                                                        ...prev,
+                                                        formatDateToString(date),
+                                                    ])
+                                                    setDate(new Date());
+                                                }}
+                                            >
+                                                Set Unavailable Date
+                                            </button>
+                                        </div>
+                                        <Calendar 
+                                            value={date} 
+                                            onChange={setDate}
+                                            selectRange={dateType === 'Single' ? false : true}
+                                            calendarType='US'
+                                            tileDisabled={({date}) => {
+                                                const _date = formatDateToString(date);
+                                                return unavailableDates.includes(_date);
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div style={{
+                                        width: '30%'
+                                    }}>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setUnavailableDates(prev => {
+                                                    return prev.filter(_date => {
+                                                        return _date !== formatDateToString(date);
+                                                    })
+                                                })
+                                                setDate(new Date());
+                                            }}
+                                        >
+                                            Remove Date
+                                        </button>
+                                        <ul>
+                                            {
+                                                unavailableDates.length !== 0
+                                                ? unavailableDates.map((date, idx) => {
+                                                    return <li 
+                                                                key={idx}
+                                                                onClick={() => {
+                                                                    const _date = formatStringToDate(date);
+                                                                    console.log(_date);
+                                                                    setDate(_date);
+                                                                }}
+                                                            >
+                                                                {date}
+                                                            </li>
+                                                }) : <p>No Unavailable Dates</p>
+                                            }
+                                        </ul>
+                                    </div>
                                 </div>
-                                <select value={dateType} onChange={(e) => {
-                                    setDateType(e.target.value as 'Single' | 'Range');
-                                }}>
-                                    <option value='Single'>Single</option>
-                                    <option value='Range'>Range</option>
-                                </select>
-                                <button onClick={() => {
-                                    setUnavailableDates(prev => [
-                                        ...prev,
-                                        formatDateToString(date),
-                                    ])
-                                }}>
-                                    click
-                                </button>
                             </div>
 
 

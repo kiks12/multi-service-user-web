@@ -98,7 +98,7 @@ td:first-child{
 
 /* REACT CALENDAR OVERRIDE */
 .react-calendar {
-    width: 65% !important;
+    width: 100% !important;
     border: 0.3px solid var(--gray) !important;
     border-radius: 0.3em !important;
 }

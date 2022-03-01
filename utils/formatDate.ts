@@ -16,8 +16,11 @@ export const formatStringToDate = (date: string) => {
     const dateElements = date.split('-');
 
     const year = parseInt(dateElements[0], 10);
-    const month = parseInt(dateElements[1], 10);
-    const _date = parseInt(dateElements[2], 1);
+    const month = parseInt(dateElements[1], 10) - 1;
+    const _date = parseInt(dateElements[2], 10);
 
-    return new Date(year, month, _date); 
+    const thisDate = new Date();
+    thisDate.setFullYear(year, month, _date);
+
+    return thisDate; 
 }
