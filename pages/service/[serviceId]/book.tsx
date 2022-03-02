@@ -110,7 +110,7 @@ const BookService : NextPage = ({
                     serviceProviderId: service.Users.userId,
                     pax: parseInt(pax, 10),
                     date: formatDateToString(date),
-                    price: service.priceInitial,
+                    price: parseInt(service.priceInitial, 10) * parseInt(pax, 10),
                     paymentMethod: paymentMethod,
                     paid: paymentMethod !== 'Cash on Delivery'
                 })
