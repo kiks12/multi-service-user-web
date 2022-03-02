@@ -70,7 +70,7 @@ const BookService : NextPage = ({
         return () => {
             if (typeof setSession === 'function') setSession(null);
         }
-    }, []);
+    }, [setSession, user]);
 
 
 
