@@ -20,7 +20,7 @@ import type {
 
 
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuthentication } from "../../../src/custom-hooks/useAuthentication";
 
 
@@ -31,6 +31,7 @@ import { __backend__ } from "../../../src/constants";
 
 
 import Layout from "../../../src/components/layout/Layout";
+import { formatStartingAndLastPrice } from "../../../utils/formatter";
 
 
 
@@ -41,7 +42,12 @@ const BookService : NextPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
 
-    const {setSession} = useAuthentication();
+    const { setSession } = useAuthentication();
+
+    const { startingPrice, lastPrice } = formatStartingAndLastPrice(service);
+
+
+    const [pax, setPax] = useState<string>('1');
 
 
     useEffect(() => {
@@ -54,9 +60,69 @@ const BookService : NextPage = ({
     }, []);
 
 
-    
+
+    const handlePaxButtonClick = (operation: 'addition' | 'subtraction') => {
+        switch(operation) {
+            case "addition":
+                setPax(prev => (parseInt(prev, 10) + 1).toString());
+                break;
+            case "subtraction": 
+                setPax(prev => (parseInt(prev, 10) - 1).toString());
+                break;
+            default:
+                break;
+        }
+    }
+
+
+
+
     return (
         <Layout accessToken={accessToken}>
+            <h2>Book Service</h2>
+
+            <h2>{service.title}</h2>
+
+
+            <div>
+                <p>Price Type: </p>
+                <p>{service.priceType}</p>
+            </div>
+
+
+            <div className="">
+                <p>Starting Price: </p>
+                <p>{startingPrice}</p>
+            </div>
+
+
+            <div className="">
+                <p>Last Price: </p>
+                <p>{lastPrice}</p>
+            </div>
+
+
+            <div>
+                <form>
+                    <label>Pax / Service</label>
+                    <div>
+                        <button 
+                            type="button" 
+                            onClick={() => handlePaxButtonClick('subtraction')}
+                            disabled={pax === '1'}
+                        >
+                            -
+                        </button>
+                        <input type='number' value={pax} onChange={(e) => setPax(e.target.value)}/>
+                        <button 
+                            type="button"
+                            onClick={() => handlePaxButtonClick('addition')}
+                        >
+                            +
+                        </button>
+                    </div>
+                </form>
+            </div>
 
         </Layout>
     )
