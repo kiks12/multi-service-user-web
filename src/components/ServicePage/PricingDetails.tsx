@@ -1,6 +1,18 @@
 
 
 
+/*
+
+Multi Service Platform - Pricing Details Component for Service Page in users
+Created: Feb. 23, 2022
+Last Updated: Mar. 02, 2022
+Author: Tolentino, Francis James S.
+
+*/
+
+
+
+import Link from 'next/link';
 import React, { useMemo } from 'react';
 
 
@@ -20,6 +32,7 @@ interface PricingDetailsProps {
 
 
 const PricingDetails: React.FC<PricingDetailsProps> = ({ service }) => {
+
 
     const formattedInitial = useMemo(() => {
         return formatter.format(parseInt(service.priceInitial, 10));
@@ -65,9 +78,11 @@ const PricingDetails: React.FC<PricingDetailsProps> = ({ service }) => {
             </table>
 
             <div>
-                <button className='main-button'>
-                    Book Service
-                </button>
+                <Link href={`/service/${service.serviceId}/book`} passHref={true}>
+                    <button className='main-button'>
+                        Book Service
+                    </button>
+                </Link>
                 <button 
                     className='ghost-button'
                     style={{

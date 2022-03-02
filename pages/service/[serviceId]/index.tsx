@@ -3,7 +3,7 @@
 
 Multi Service Platform - Service Page for Users
 Created: Feb. 23, 2022
-Last Updated: Mar. 01, 2022
+Last Updated: Mar. 02, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -18,27 +18,27 @@ import {
 
 
 
-import fetchUserInformation from "../../libs/fetchUserInformation";
-import { __backend__ } from "../../src/constants";
+import fetchUserInformation from "../../../libs/fetchUserInformation";
+import { __backend__ } from "../../../src/constants";
 
 
 
-import { createRef, useEffect, useRef } from "react";
-import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
+import { useEffect, useRef } from "react";
+import { useAuthentication } from "../../../src/custom-hooks/useAuthentication";
 
 
 
-import Layout from "../../src/components/layout/Layout";
-import MenuBar from "../../src/components/ServicePage/MenuBar";
-import useSplitArray from "../../src/custom-hooks/useSplitArray";
-import Overview from "../../src/components/ServicePage/Overview";
+import Layout from "../../../src/components/layout/Layout";
+import MenuBar from "../../../src/components/ServicePage/MenuBar";
+import useSplitArray from "../../../src/custom-hooks/useSplitArray";
+import Overview from "../../../src/components/ServicePage/Overview";
 import Link from "next/link";
-import Description from "../../src/components/ServicePage/Description";
-import AboutProvider from "../../src/components/ServicePage/AboutProvider";
-import Reviews from "../../src/components/ServicePage/Reviews";
-import Recommended from "../../src/components/ServicePage/Recommended";
-import authorizedFetch from "../../utils/authorizedFetch";
-import PricingDetails from "../../src/components/ServicePage/PricingDetails";
+import Description from "../../../src/components/ServicePage/Description";
+import AboutProvider from "../../../src/components/ServicePage/AboutProvider";
+import Reviews from "../../../src/components/ServicePage/Reviews";
+import Recommended from "../../../src/components/ServicePage/Recommended";
+import authorizedFetch from "../../../utils/authorizedFetch";
+import PricingDetails from "../../../src/components/ServicePage/PricingDetails";
 
 
 
