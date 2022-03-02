@@ -32,6 +32,15 @@ import { __backend__ } from "../../../src/constants";
 
 import Layout from "../../../src/components/layout/Layout";
 import { formatStartingAndLastPrice } from "../../../utils/formatter";
+import authorizedFetch from "../../../utils/authorizedFetch";
+import Calendar from "react-calendar";
+import useSplitArray from "../../../src/custom-hooks/useSplitArray";
+import { formatDateToString } from "../../../utils/formatDate";
+
+
+
+type PaymentMethods = 'Cash on Delivery' | 'E-Wallet' | 'GCash';
+
 
 
 
@@ -48,6 +57,10 @@ const BookService : NextPage = ({
 
 
     const [pax, setPax] = useState<string>('1');
+    const [paymentMethod, setPaymentMethod] = useState<PaymentMethods>('Cash on Delivery');
+    const [date, setDate] = useState<Date>(new Date());
+
+
 
 
     useEffect(() => {
@@ -58,6 +71,13 @@ const BookService : NextPage = ({
             if (typeof setSession === 'function') setSession(null);
         }
     }, []);
+
+
+
+    const unavailableDates = useSplitArray({
+        stringToSplit: service.unavailableDates,
+        splitter: ' | '
+    })
 
 
 
@@ -76,9 +96,36 @@ const BookService : NextPage = ({
 
 
 
+    const bookService = async () => {
+        try {
+            authorizedFetch({
+                accessToken: accessToken,
+                method: 'POST',
+                url: `${__backend__}/bookings/book-a-service`,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    serviceId: service.serviceId,
+                    serviceProviderId: service.Users.userId,
+                    pax: parseInt(pax, 10),
+                    date: date,
+                    price: service.priceInitial,
+                    paymentMethod: paymentMethod,
+                    paid: paymentMethod !== 'Cash on Delivery'
+                })
+            })
+        } catch (e) {   
+            console.error(e);
+        }
+    }
+
+
+
 
     return (
         <Layout accessToken={accessToken}>
+            {/* <pre>{JSON.stringify(service, null, 2)}</pre> */}
             <h2>Book Service</h2>
 
             <h2>{service.title}</h2>
@@ -104,23 +151,50 @@ const BookService : NextPage = ({
 
             <div>
                 <form>
-                    <label>Pax / Service</label>
                     <div>
-                        <button 
-                            type="button" 
-                            onClick={() => handlePaxButtonClick('subtraction')}
-                            disabled={pax === '1'}
-                        >
-                            -
-                        </button>
-                        <input type='number' value={pax} onChange={(e) => setPax(e.target.value)}/>
-                        <button 
-                            type="button"
-                            onClick={() => handlePaxButtonClick('addition')}
-                        >
-                            +
-                        </button>
+                        <label>Pax / Service</label>
+                        <div>
+                            <button 
+                                type="button" 
+                                onClick={() => handlePaxButtonClick('subtraction')}
+                                disabled={pax === '1'}
+                            >
+                                -
+                            </button>
+                            <input type='number' value={pax} onChange={(e) => setPax(e.target.value)}/>
+                            <button 
+                                type="button"
+                                onClick={() => handlePaxButtonClick('addition')}
+                            >
+                                +
+                            </button>
+                        </div>
                     </div>
+                    <div>
+                        <label>Payment Method: </label>
+                        <select>
+                            <option>Cash on Delivery</option>
+                            <option>Wallet</option>
+                            <option>GCash</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <Calendar 
+                            calendarType="US"
+                            value={date}
+                            onChange={setDate}
+                            tileDisabled={({date}) => {
+                                const _date = formatDateToString(date);
+                                return unavailableDates.includes(_date);
+                            }}
+                        />
+                    </div>
+
+
+                    <button className="main-button" onClick={bookService}>
+                        Continue
+                    </button>
                 </form>
             </div>
 
