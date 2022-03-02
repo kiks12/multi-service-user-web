@@ -3,7 +3,7 @@
 
 Multi Service Platform - custom hook that handles active li in left navigation bar
 Created: Feb. 09, 2022
-Last Updated: Feb. 14, 2022
+Last Updated: Mar. 02, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -28,7 +28,8 @@ type ActivePage =
     'Provider-Overview' | 
     'Provider-Profile' | 
     'Provider-Services' |
-    'Provider-Settings';
+    'Provider-Settings' | 
+    'Provider-Booked-Services';
 
 
 
@@ -84,6 +85,9 @@ const useActivePage = () => {
                 switch (pathname[2]){
                     case 'services':
                         setActivePage('Provider-Services');
+                        break;
+                    case 'booked-services':
+                        setActivePage('Provider-Booked-Services');
                         break;
                     default:
                         setActivePage('');

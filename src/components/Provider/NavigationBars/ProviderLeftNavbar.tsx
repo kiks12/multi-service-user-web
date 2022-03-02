@@ -1,4 +1,13 @@
 
+/*
+
+Multi Service Platform - Provider Left Navbar Component
+Created: Feb. 2022
+Last Updated: Mar. 02, 2022
+Author: Tolentino, Francis James S.
+
+*/
+
 
 
 import Link from 'next/link';
@@ -34,6 +43,11 @@ const ProviderLeftNavbar: React.FC = () => {
                 <Link href='/provider/services' passHref={true}>
                     <li className={activePage === 'Provider-Services' ? ACTIVE_PAGE : INACTIVE_PAGE}>
                         Services
+                    </li>
+                </Link>
+                <Link href='/provider/booked-services' passHref={true}>
+                    <li className={activePage === 'Provider-Booked-Services' ? ACTIVE_PAGE : INACTIVE_PAGE}>
+                        Booked Services
                     </li>
                 </Link>
 
