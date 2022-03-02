@@ -38,14 +38,18 @@ const Provider : NextPage = ({ user }: InferGetServerSidePropsType<typeof getSer
 
     const { setSession } = useAuthentication();
 
+
     useEffect(() => {
         if (typeof setSession === 'function') setSession(user);
     }, [setSession, user]);
 
 
+    
     return (
         <>
-            <ProviderLayout />
+            <ProviderLayout>
+                asdfasfsdf
+            </ProviderLayout>
         </>
     )
 }
