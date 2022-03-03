@@ -4,7 +4,7 @@
 
 Multi Service Platform - Provider Booked Services Page
 Created: Mar. 02, 2022
-Last Updated: Mar. 02, 2022
+Last Updated: Mar. 03, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -31,6 +31,7 @@ import fetchUserInformation from "../../../libs/fetchUserInformation";
 import Layout from "../../../src/components/Provider/Layout/ProviderLayout";
 import authorizedFetch from "../../../utils/authorizedFetch";
 import { __backend__ } from "../../../src/constants";
+import ProviderBookedServicesMenu from "../../../src/components/Provider/BookedServices/ProviderBookedServicesMenu";
 
 
 
@@ -57,7 +58,11 @@ const BookedServices: NextPage = ({
 
     return (
         <Layout>
-            <pre>{JSON.stringify(bookedServices, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(bookedServices, null, 2)}</pre> */}
+            <ProviderBookedServicesMenu />
+
+            
+
         </Layout>
     )
 }
