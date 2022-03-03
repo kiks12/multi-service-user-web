@@ -19,7 +19,7 @@ import {
 
 
 
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAuthentication } from "../../../src/custom-hooks/useAuthentication";
 
 
@@ -32,6 +32,13 @@ import Layout from "../../../src/components/Provider/Layout/ProviderLayout";
 import authorizedFetch from "../../../utils/authorizedFetch";
 import { __backend__ } from "../../../src/constants";
 import ProviderBookedServicesMenu from "../../../src/components/Provider/BookedServices/ProviderBookedServicesMenu";
+import ProviderBookedService from "../../../src/components/Provider/BookedServices/ProviderBookedService";
+
+
+
+import { Booking, BookedServicesFilter} from "../../../types";
+
+
 
 
 
@@ -45,6 +52,15 @@ const BookedServices: NextPage = ({
     const { setSession } = useAuthentication();
 
 
+    const [bookedServicesFilter, setBookedServicesFilter] = useState<BookedServicesFilter>('To be Approved');
+
+
+    const filteredBookedServices = useMemo(() => {
+        return bookedServices.filter((booking: Booking) => booking.status.toLocaleLowerCase() === bookedServicesFilter.toLocaleLowerCase());
+    }, [bookedServices, bookedServicesFilter]);
+
+
+
 
     useEffect(() => {
         if (typeof setSession === 'function') setSession(user);
@@ -56,12 +72,26 @@ const BookedServices: NextPage = ({
     }, [setSession, user]);
 
 
+
     return (
         <Layout>
             {/* <pre>{JSON.stringify(bookedServices, null, 2)}</pre> */}
-            <ProviderBookedServicesMenu />
+            <ProviderBookedServicesMenu
+                bookedServicesFilter={bookedServicesFilter}
+                setBookedServicesFitler={setBookedServicesFilter}
+            />
 
-            
+
+            <div style={{
+                display: 'grid',
+                gridTemplateRows: 'repeat(auto-fit, minmax(3em, 3.5em))'
+            }}>
+                {
+                    filteredBookedServices.length !== 0 ? filteredBookedServices.map((booking: Booking, idx: number) => {
+                        return <ProviderBookedService booking={booking} key={idx} />
+                    }) : <p>No booked services yet.</p>
+                }
+            </div>
 
         </Layout>
     )
