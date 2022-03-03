@@ -5,7 +5,7 @@
 
 Multi Service Platform - Book Service Page for users
 Created: Mar. 02, 2022
-Last Updated: Mar. 02, 2022
+Last Updated: Mar. 03, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -110,7 +110,8 @@ const BookService : NextPage = ({
                     serviceProviderId: service.Users.userId,
                     pax: parseInt(pax, 10),
                     date: formatDateToString(date),
-                    price: parseInt(service.priceInitial, 10) * parseInt(pax, 10),
+                    price: parseInt(service.priceInitial, 10),
+                    finalPrice: parseInt(service.priceInitial, 10) * parseInt(pax, 10),
                     paymentMethod: paymentMethod,
                     paid: paymentMethod !== 'Cash on Delivery'
                 })
