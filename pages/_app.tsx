@@ -4,7 +4,7 @@
 
 Multi Service Platform - main App file
 Created: Feb. 07, 2022
-Last Updated: Mar. 02, 2022
+Last Updated: Mar. 03, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -29,7 +29,6 @@ import { WebSocketProvider } from '../src/custom-hooks/useWebSocket';
 
 
 import Head from 'next/head';
-
 
 
 

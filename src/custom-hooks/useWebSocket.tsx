@@ -1,7 +1,16 @@
 
+/*
+
+Multi Service Platform - Custom hook to handle web socket connection to server 
+Created: Mar. 03, 2022
+Last Updated: Mar. 03, 2022
+Author: Tolentino, Francis James S.
+
+*/
 
 
-import { createContext, useContext, useEffect } from "react";
+
+import { createContext, useContext, useState } from "react";
 
 
 
@@ -14,27 +23,11 @@ import { DefaultEventsMap } from "socket.io/dist/typed-events";
 const webSocketContext = createContext<Socket<DefaultEventsMap, DefaultEventsMap> | null>(null);
 
 
-let socket : Socket<DefaultEventsMap, DefaultEventsMap> | null;
 
 
 export const WebSocketProvider: React.FC = ({ children }) => {
 
-
-    useEffect(() => {
-        const socketInitializer = async () => {
-            await fetch('/api/socket');
-            socket = io();
-
-
-            socket.on('connect', () => {
-                console.log('io connected');
-            })
-            
-        }
-
-
-        socketInitializer();
-    }, []);
+    const [socket] = useState<Socket<DefaultEventsMap, DefaultEventsMap>>(io('http://localhost:4000'));
     
 
     return (

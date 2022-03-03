@@ -3,7 +3,7 @@
 
 Multi Service Platform - Home Page
 Created: Feb. 07, 2022
-Last Updated: Mar. 02, 2022
+Last Updated: Mar. 03, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -28,7 +28,6 @@ import Layout from '../src/components/layout/Layout';
 
 
 import { useAuthentication } from '../src/custom-hooks/useAuthentication';
-import useWebSocket from '../src/custom-hooks/useWebSocket';
 import fetchUserInformation from '../libs/fetchUserInformation';
 
 
@@ -44,23 +43,15 @@ import Recents from '../src/components/Home/Recents';
 const Home: NextPage = ({ user, accessToken }: InferGetServerSidePropsType<typeof getServerSideProps>) => { 
 
     const { setSession } = useAuthentication();
-    const socket = useWebSocket();
-    const [i, setI] = useState<string>('');
 
 
     useEffect(() => {
         if(typeof setSession === 'function') setSession(user);
     }, [setSession, user]);
 
+
+
     
-    useEffect(() => { 
-
-        socket?.on('try-reply', msg => {
-            setI(msg);
-        })
-        
-    }, [socket]);
-
     return (
         <>
             <Head>
@@ -68,14 +59,6 @@ const Home: NextPage = ({ user, accessToken }: InferGetServerSidePropsType<typeo
             </Head>
 
             <Layout accessToken={accessToken}> 
-                <button onClick={() => {
-                    socket?.emit('try', 'click');
-                }}>
-                    Click
-                </button>
-
-                <input value={i} onChange={(e) => setI(e.target.value)}/>
-
                 <Promos />
 
                 <Categories />
