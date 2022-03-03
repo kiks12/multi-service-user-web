@@ -15,22 +15,83 @@ import React from 'react';
 
 
 import { Booking } from '../../../../types';
+import authorizedFetch from '../../../../utils/authorizedFetch';
 import { formatter } from '../../../../utils/formatter';
+import { __backend__ } from '../../../constants';
 
 
 
 interface ProviderBookedServiceProps {
-    booking: Booking
+    booking: Booking;
+    accessToken: string;
+    setBookedServices: React.Dispatch<React.SetStateAction<Booking[]>>
 }
 
 
 
-const ProviderBookedService: React.FC<ProviderBookedServiceProps> = ({ booking }) => {
+const ProviderBookedService: React.FC<ProviderBookedServiceProps> = ({ booking, accessToken, setBookedServices }) => {
 
     const formattedPrice = formatter.format(booking.price);
     const formattedFinalPrice = formatter.format(booking.finalPrice);
 
 
+
+
+    const acceptBooking = async () => {
+        const res = await authorizedFetch({
+            url: `${__backend__}/bookings/provider/accept-booking?bookId=${booking.bookId}`,
+            accessToken: accessToken,
+            method: 'PUT',
+        });
+
+
+        if (res.status === 200) {
+            setBookedServices(prev => {
+                return prev.map((_booking: Booking) => {
+                    if (_booking.bookId === booking.bookId) {
+                        return res.booking;
+                    }
+
+                    return _booking;
+                })
+            })
+
+            return;
+        } 
+
+
+        alert(res.msg);
+    }
+    
+    
+    
+
+
+    const deleteBooking = async () => {
+        const res = await authorizedFetch({
+            url: `${__backend__}/bookings/provider/delete-booking?bookId=${booking.bookId}`,
+            accessToken: accessToken,
+            method: 'DELETE',
+        });
+
+
+        if (res.status === 200) {
+            setBookedServices(prev => {
+                return prev.filter((_booking: Booking) => _booking.bookId !== booking.bookId)
+            })
+
+            return;
+        } 
+
+
+        alert(res.msg);
+    }
+
+
+
+    
+
+    
     return (
         <div style={{
             backgroundColor: 'var(--lightGray)',
@@ -59,13 +120,24 @@ const ProviderBookedService: React.FC<ProviderBookedServiceProps> = ({ booking }
                         width: '33%'
                     }}>
                         <div style={{flexBasis: '100%'}}>
-                            <button className='main-button'>Accept</button>
+                            <button 
+                                className='main-button'
+                                onClick={acceptBooking}
+                            >
+                                Accept
+                            </button>
                         </div>
                         <div style={{margin: '0 0 0 0.5em', flexBasis: '100%'}}>
-                            <button className='red-button'>Delete</button>
+                            <button 
+                                className='red-button'
+                                onClick={deleteBooking}
+                            >
+                                Delete
+                            </button>
                         </div>
                     </div>
             }
+
         </div>
     )
 }

@@ -45,14 +45,22 @@ import { Booking, BookedServicesFilter} from "../../../types";
 
 const BookedServices: NextPage = ({
     user,
-    bookedServices
+    serverSideBookedServices,
+    accessToken
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
 
     const { setSession } = useAuthentication();
 
-
+    const [bookedServices, setBookedServices] = useState<Booking[]>([]);
     const [bookedServicesFilter, setBookedServicesFilter] = useState<BookedServicesFilter>('To be Approved');
+
+
+
+    useEffect(() => {
+        setBookedServices(serverSideBookedServices);
+    }, [serverSideBookedServices])
+
 
 
     const filteredBookedServices = useMemo(() => {
@@ -76,6 +84,7 @@ const BookedServices: NextPage = ({
 
 
 
+
     return (
         <Layout>
             {/* <pre>{JSON.stringify(bookedServices, null, 2)}</pre> */}
@@ -93,7 +102,12 @@ const BookedServices: NextPage = ({
             }}>
                 {
                     filteredBookedServices.length !== 0 ? filteredBookedServices.map((booking: Booking, idx: number) => {
-                        return <ProviderBookedService booking={booking} key={idx} />
+                        return <ProviderBookedService
+                                    setBookedServices={setBookedServices}
+                                    booking={booking} 
+                                    key={idx}
+                                    accessToken={accessToken}
+                                />
                     }) : <p>No {bookedServicesFilter} bookings yet.</p>
                 }
             </div>
@@ -120,7 +134,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
             return {
                 props: {
                     user: {},
-                    bookedServices: []
+                    serverSideBookedServices: [],
+                    accessToken: ''
                 }
             }
         }
@@ -141,7 +156,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
         return {
             props: {
                 user: userInformation.user,
-                bookedServices: bookedServices.bookings
+                serverSideBookedServices: bookedServices.bookings,
+                accessToken: req.cookies.accessToken
             }
         }
     }
@@ -151,7 +167,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
     return {
         props: {
             user: {},
-            bookedServices: []
+            serverSideBookedServices: [],
+            accessToken: ''
         }
     }
 
