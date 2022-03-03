@@ -3,7 +3,7 @@
 
 Multi Services Platform - Provider Create new Service Page
 Created: Feb. 14, 2022
-Last Updated: Mar. 01, 2022
+Last Updated: Mar. 03, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -84,6 +84,7 @@ const CreateService: NextPage = ({
     const [title, setTitle] = useState<string>('');
     const [details, setDetails] = useState<string>('');
     const [type, setType] = useState<'Flat Rate' | 'Range'>('Flat Rate');
+    const [subType, setSubType] = useState<'Per Pax' | 'Per Service'>('Per Pax');
     const [startingPrice, setStartingPrice] = useState<string>('0');
     const [lastPrice, setLastPrice] = useState<string>('0');
     const [uploadedImages, setUploadedImages] = useState<any[]>([]);
@@ -175,6 +176,7 @@ const CreateService: NextPage = ({
                     details: details,
                     categories: categories.join(' | '),
                     type: type,
+                    subType: subType,
                     startingPrice: parseInt(startingPrice, 10),
                     lastPrice: parseInt(lastPrice, 10),
                     unavailableDates: unavailableDates.join(' | '),
@@ -368,22 +370,47 @@ const CreateService: NextPage = ({
                                 }}
                             >
                                 <h2>Pricing</h2>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        margin: '1em 0'
-                                    }}
-                                >
-                                    <label>Pricing Type</label>
-                                    <select
-                                        className='form-control'
-                                        value={type}
-                                        onChange={(e) => setType(e.target.value as 'Flat Rate' | 'Range')}
+                                <div style={{
+                                    display: 'flex', 
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between'
+                                }}>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            margin: '1em 0',
+                                            flexBasis: '100%'
+                                        }}
                                     >
-                                        <option value='Flat Rate'>Flat rate</option>
-                                        <option value='Range'>Range</option>
-                                    </select>
+                                        <label>Pricing Type</label>
+                                        <select
+                                            className='form-control'
+                                            value={type}
+                                            onChange={(e) => setType(e.target.value as 'Flat Rate' | 'Range')}
+                                        >
+                                            <option value='Flat Rate'>Flat rate</option>
+                                            <option value='Range'>Range</option>
+                                        </select>
+                                    </div>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            margin: '1em 0 1em 1em',
+                                            flexBasis: '100%'
+                                        }}
+                                    >
+                                        <label>Pricing Sub Type</label>
+                                        <select
+                                            className='form-control'
+                                            value={subType}
+                                            onChange={(e) => setSubType(e.target.value as 'Per Pax' | 'Per Service')}
+                                        >
+                                            <option value='Per Pax'>Per Pax</option>
+                                            <option value='Per Service'>Per Service</option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 
