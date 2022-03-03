@@ -56,6 +56,9 @@ const BookedServices: NextPage = ({
 
 
     const filteredBookedServices = useMemo(() => {
+
+        if (bookedServicesFilter === 'All') return bookedServices;
+
         return bookedServices.filter((booking: Booking) => booking.status.toLocaleLowerCase() === bookedServicesFilter.toLocaleLowerCase());
     }, [bookedServices, bookedServicesFilter]);
 
@@ -84,12 +87,13 @@ const BookedServices: NextPage = ({
 
             <div style={{
                 display: 'grid',
-                gridTemplateRows: 'repeat(auto-fit, minmax(3em, 3.5em))'
+                gridTemplateRows: 'repeat(auto-fit, minmax(3.5em, 5em))',
+                margin: '1em 0'
             }}>
                 {
                     filteredBookedServices.length !== 0 ? filteredBookedServices.map((booking: Booking, idx: number) => {
                         return <ProviderBookedService booking={booking} key={idx} />
-                    }) : <p>No booked services yet.</p>
+                    }) : <p>No {bookedServicesFilter} bookings yet.</p>
                 }
             </div>
 
