@@ -28,6 +28,7 @@ interface ProviderBookedServiceProps {
 const ProviderBookedService: React.FC<ProviderBookedServiceProps> = ({ booking }) => {
 
     const formattedPrice = formatter.format(booking.price);
+    const formattedFinalPrice = formatter.format(booking.finalPrice);
 
 
     return (
@@ -37,7 +38,7 @@ const ProviderBookedService: React.FC<ProviderBookedServiceProps> = ({ booking }
             padding: '0.5em',
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
         }}>
             <div>
                 <small>Book Id: {booking.bookId}</small>
@@ -48,21 +49,23 @@ const ProviderBookedService: React.FC<ProviderBookedServiceProps> = ({ booking }
             <div>
                 <p>Price: {formattedPrice}</p>
                 <p>Pax: {booking.pax}</p>
-                <p>Final Price: {formattedPrice}</p>
+                <p>Final Price: {formattedFinalPrice}</p>
             </div>
 
-            <div style={{
-                display: 'flex',
-                width: '33%'
-            }}>
-                <div style={{flexBasis: '100%'}}>
-                    <button className='main-button'>Accept</button>
-                </div>
-                <div style={{margin: '0 0 0 0.5em', flexBasis: '100%'}}>
-                    <button className='red-button'>Delete</button>
-                </div>
-            </div>
-
+            {
+                booking.status === 'To be Approved' &&
+                    <div style={{
+                        display: 'flex',
+                        width: '33%'
+                    }}>
+                        <div style={{flexBasis: '100%'}}>
+                            <button className='main-button'>Accept</button>
+                        </div>
+                        <div style={{margin: '0 0 0 0.5em', flexBasis: '100%'}}>
+                            <button className='red-button'>Delete</button>
+                        </div>
+                    </div>
+            }
         </div>
     )
 }

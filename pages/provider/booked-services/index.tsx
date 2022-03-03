@@ -88,6 +88,7 @@ const BookedServices: NextPage = ({
             <div style={{
                 display: 'grid',
                 gridTemplateRows: 'repeat(auto-fit, minmax(3.5em, 5em))',
+                gridRowGap: '0.5em',
                 margin: '1em 0'
             }}>
                 {
