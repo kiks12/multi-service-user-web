@@ -21,6 +21,19 @@ import useActivePage from '../../custom-hooks/useActivePage';
 
 
 
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faHouse,
+    faMagnifyingGlass,
+    faBookmark,
+    faCalendar,
+    faThumbsUp
+} from '@fortawesome/free-solid-svg-icons';
+
+
+
+
 const ACTIVE_PAGE = 'left-navbar-li-active';
 const INACTIVE_PAGE = 'left-navbar-li';
 
@@ -38,14 +51,21 @@ const LeftNavbar : React.FC = () => {
                 <ul>
                     <Link href='/' passHref={true}>
                         <li className={activePage === 'Home' ? ACTIVE_PAGE : INACTIVE_PAGE}>
-                            Home
+                            <FontAwesomeIcon icon={faHouse} size='lg'/>
+                            <p className='left-navbar-li-text'>Home</p>
                         </li>
                     </Link>
                     <Link href='/explore' passHref={true}>
-                        <li className={activePage === 'Explore' ? ACTIVE_PAGE : INACTIVE_PAGE}>Explore</li>
+                        <li className={activePage === 'Explore' ? ACTIVE_PAGE : INACTIVE_PAGE}>
+                            <FontAwesomeIcon icon={faMagnifyingGlass} size='lg'/>
+                            <p className='left-navbar-li-text'>Explore</p>
+                        </li>
                     </Link>
                     <Link href='/bookings' passHref={true}>
-                        <li className={activePage === 'Bookings' ? ACTIVE_PAGE : INACTIVE_PAGE}>Bookings</li>
+                        <li className={activePage === 'Bookings' ? ACTIVE_PAGE : INACTIVE_PAGE}>
+                            <FontAwesomeIcon icon={faCalendar} size='lg'/>
+                            <p className='left-navbar-li-text'>Bookings</p>
+                        </li>
                     </Link>
                 </ul>
             </div>
@@ -58,9 +78,15 @@ const LeftNavbar : React.FC = () => {
             >
                 <ul>
                     <Link href='/bookmarks' passHref={true}>
-                        <li className={activePage === 'Bookmarks' ? ACTIVE_PAGE : INACTIVE_PAGE}>Bookmarks</li>
+                        <li className={activePage === 'Bookmarks' ? ACTIVE_PAGE : INACTIVE_PAGE}>
+                            <FontAwesomeIcon icon={faBookmark} size='lg'/>
+                            <p className='left-navbar-li-text'>Bookmarks</p>
+                        </li>
                     </Link>
-                    <li className='left-navbar-li'>Liked Services</li>
+                    <li className='left-navbar-li'>
+                        <FontAwesomeIcon icon={faThumbsUp} size='lg'/>
+                        <p className='left-navbar-li-text'>Liked Services</p>
+                    </li>
                 </ul>
             </div>
 

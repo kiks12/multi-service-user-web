@@ -33,8 +33,8 @@ import fetchUserInformation from '../libs/fetchUserInformation';
 
 
 import Categories from '../src/components/Home/Categories';
-// import Promos from '../src/components/Home/Promos';
-// import ForYou from '../src/components/Home/ForYou';
+import Promos from '../src/components/Home/Promos';
+import ForYou from '../src/components/Home/ForYou';
 import Recents from '../src/components/Home/Recents';
 
 
@@ -59,11 +59,11 @@ const Home: NextPage = ({ user, accessToken }: InferGetServerSidePropsType<typeo
             </Head>
 
             <Layout accessToken={accessToken}> 
-                {/* <Promos /> */}
+                <Promos />
 
                 <Categories />
 
-                {/* <ForYou /> */}
+                <ForYou />
 
                 <Recents />
             </Layout>
