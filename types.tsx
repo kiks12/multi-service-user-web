@@ -44,7 +44,7 @@ export type Service = {
 
 
 
-export type BookedServicesFilter = 'To be Approved' | 'To be Rendered' | 'To be Rated' | 'Cancelled' | 'All'; 
+export type BookedServicesFilter = 'To be Approved' | 'To be Rendered' | 'To be Rated' | 'Cancelled' | 'All' | 'Completed'; 
 
 
 export type Booking = {

@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Booked Services Menu Component
 Created: Mar. 03, 2022
-Last Updated: Mar. 03, 2022
+Last Updated: Mar. 04, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -14,7 +14,7 @@ import React from 'react';
 
 
 
-import { BookedServicesFilter } from '../../../../types';
+import { BookedServicesFilter } from '../../../../../types';
 
 
 
@@ -60,6 +60,12 @@ const ProviderBookedServicesMenu: React.FC<ProviderBookedServiceMenuProps> = ({
                     onClick={handleClickEvent}
                 >
                     To be Rated
+                </li>
+                <li 
+                    className={bookedServicesFilter === 'Completed' ? 'menu-li-active' : 'menu-li'}
+                    onClick={handleClickEvent}
+                >
+                    Completed
                 </li>
                 <li 
                     className={bookedServicesFilter === 'Cancelled' ? 'menu-li-active' : 'menu-li'}
