@@ -1,4 +1,13 @@
 
+/*
+
+Multi Service Platform - Modal Left Navbar for User Component
+Created: Mar. 04, 2022
+Last Updated: Mar. 04, 2022
+Author: Tolentino, Francis James S.
+
+*/
+
 
 
 import React from 'react';

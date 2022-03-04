@@ -16,10 +16,11 @@ import React, { useState } from 'react';
 
 
 
-import AccountButton from './AccountButton';
-import TopNavbarPopUp from './TopNavbarPopUp';
-import ModalLeftNavbar from './LeftNavbar/ModalLeftNavbar';
-
+import AccountButton from '../AccountButton';
+import TopNavbarPopUp from '../TopNavbarPopUp';
+import ModalLeftNavbar from '../LeftNavbar/ModalLeftNavbar';
+import SearchBar from './SearchBar';
+import PopupSearchBar from './SearchBar/Popup';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,6 +33,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 
+
 interface TopNavbarProps {
     accessToken: string;
 }
@@ -41,6 +43,7 @@ const TopNavbar : React.FC <TopNavbarProps> = ({ accessToken }) => {
 
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const [showMenu, setShowMenu] = useState<boolean>(false); 
+    const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
 
 
 
@@ -49,11 +52,19 @@ const TopNavbar : React.FC <TopNavbarProps> = ({ accessToken }) => {
     }
 
 
+    const closeSearchBar = () => {
+        setShowSearchBar(false);
+    }
+
+
 
     return (
         <>
             {
                 showMenu && <ModalLeftNavbar closeMenu={closeMenu}/>
+            }
+            {
+                showSearchBar && <PopupSearchBar closeSearchBar={closeSearchBar}/>
             }
             <div className='top-navbar'>
 
@@ -70,37 +81,20 @@ const TopNavbar : React.FC <TopNavbarProps> = ({ accessToken }) => {
                 </div>
 
                 <div className='top-navbar-search-form-container'>
-                    <form className='top-navbar-search-form'>
-                        <input 
-                            type='text'
-                            placeholder='Search for Services'
-                            className='form-control'
-                        />
-                        <div 
-                            style={{
-                                width: '20%'
-                            }}
-                        >
-                            <button
-                                type='submit'
-                                className='button'
-                                >
-                                <FontAwesomeIcon 
-                                    icon={faMagnifyingGlass}
-                                    style={{
-                                        color: 'var(--secondaryPurple)',
-                                    }}
-                                />
-                            </button>
-                        </div>
-                    </form>
+                    <SearchBar />
                 </div>
 
 
                 <div className='top-navbar-ul-container'>
                     <ul className='top-navbar-ul'>
                         <li className='top-navbar-li'>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} size='lg'/>
+                            <FontAwesomeIcon 
+                                icon={faMagnifyingGlass} 
+                                size='lg'
+                                onClick={() => {
+                                    setShowSearchBar(true);
+                                }}
+                            />
                         </li>
                         <li className='top-navbar-li'>
                             <FontAwesomeIcon icon={faMessage} size='lg' />
