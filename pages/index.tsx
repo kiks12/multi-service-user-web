@@ -10,7 +10,7 @@ Author: Tolentino, Francis James S.
 
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 
 
