@@ -3,10 +3,14 @@
 
 Multi Service Platform - Service Page Menu Bar COmponent
 Created: Feb. 24, 2022
-Last Updated: Mar. 01, 2022
+Last Updated: Mar. 04, 2022
 Author: Tolentino, Francis James S.
 
 */
+
+
+
+import styles from './MenuBar.module.css';
 
 
 
@@ -14,7 +18,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBookmark,
     faFlag,
-    faHeart
 } from '@fortawesome/free-regular-svg-icons'
 import { 
     faShare
@@ -37,17 +40,9 @@ const MenuBar: React.FC = () => {
 
     return (
         <div
-            style={{
-                backgroundColor: 'var(--white)',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                borderBottom: '0.3px solid var(--gray)',
-                position: 'sticky',
-                top: '3.05em'
-            }}
+            className={styles.menuContainer}
         >
-            <ul className='menu-ul'>
+            <ul className={styles.menuUl}>
                 <li className={activePart === 'Overview' ? 'menu-li-active' : 'menu-li'}>Overview</li>
                 <li className={activePart === 'Description' ? 'menu-li-active' : 'menu-li'}>Description</li>
                 <li className={activePart === 'AboutProvider' ? 'menu-li-active' : 'menu-li'}>About the Provider</li>
@@ -56,45 +51,24 @@ const MenuBar: React.FC = () => {
             </ul>
 
 
-            <div style={{
-                display: 'flex',
-                width: '16%'
-            }}>
-                {/* <button 
-                    style={{
-                        flex: '1',
-                        margin: '0 0.5em'
-                    }}
-                >
-                    <FontAwesomeIcon 
-                        icon={faHeart}
-                    />
-                </button> */}
-                <button 
-                    style={{
-                        flex: '1',
-                        margin: '0 0.5em'
-                    }}
-                >
+            <div className={styles.controlsContainer}>
+                <button>
                     <FontAwesomeIcon 
                         icon={faBookmark}
                     />
+                    <p>Add to bookmarks</p>
                 </button>
-                <button style={{
-                    flex: '1',
-                    margin: '0 0.5em'
-                }}>
+                <button>
                     <FontAwesomeIcon 
                         icon={faFlag}
                     />
+                    <p>Report</p>
                 </button>
-                <button style={{
-                    flex: '1',
-                    margin: '0 0.5em'
-                }}>
+                <button>
                     <FontAwesomeIcon 
                         icon={faShare}
                     />
+                    <p>Share Service</p>
                 </button>
             </div>
         </div>
