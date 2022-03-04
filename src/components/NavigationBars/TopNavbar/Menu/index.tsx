@@ -16,8 +16,8 @@ import Link from 'next/link';
 
 
 
-import useClickOutsideElement from '../../custom-hooks/useClickOutsideElement';
-import { useAuthentication } from '../../custom-hooks/useAuthentication';
+import useClickOutsideElement from '../../../../custom-hooks/useClickOutsideElement';
+import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
 
 
 

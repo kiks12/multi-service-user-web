@@ -17,7 +17,7 @@ import React, { useState } from 'react';
 
 
 import AccountButton from '../AccountButton';
-import TopNavbarPopUp from '../TopNavbarPopUp';
+import TopNavbarPopUp from './Menu';
 import ModalLeftNavbar from '../LeftNavbar/ModalLeftNavbar';
 import SearchBar from './SearchBar';
 import PopupSearchBar from './SearchBar/Popup';
