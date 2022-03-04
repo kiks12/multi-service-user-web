@@ -22,6 +22,7 @@ import {
 
 
 import LeftNavbar from '..';
+import { motion } from 'framer-motion';
 
 
 
@@ -50,7 +51,17 @@ const ModalLeftNavbar: React.FC<ModalLeftNavbarProps> = ({ closeMenu }) => {
             backgroundColor: 'rgba(10, 10, 10, 0.7)',
             zIndex: '100'
         }}>
-            <div 
+            <motion.div 
+                animate={{
+                    x: [-400, 0],
+                }}
+                exit={{
+                    x: [0, -400]
+                }}
+                transition={{
+                    ease: 'easeOut',
+                    duration: 0.3
+                }}
                 style={{
                     backgroundColor: 'var(--white)',
                     width: '70%',
@@ -70,7 +81,7 @@ const ModalLeftNavbar: React.FC<ModalLeftNavbarProps> = ({ closeMenu }) => {
                     />
                 </div>
                 <LeftNavbar />
-            </div>
+            </motion.div>
         </div>
     )
 }

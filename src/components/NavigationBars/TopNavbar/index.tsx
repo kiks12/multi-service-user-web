@@ -31,6 +31,7 @@ import {
     faMagnifyingGlass,
     faBars
 } from '@fortawesome/free-solid-svg-icons';
+import { AnimatePresence } from 'framer-motion';
 
 
 
@@ -60,9 +61,11 @@ const TopNavbar : React.FC <TopNavbarProps> = ({ accessToken }) => {
 
     return (
         <>
-            {
-                showMenu && <ModalLeftNavbar closeMenu={closeMenu}/>
-            }
+            <AnimatePresence>
+                {
+                    showMenu && <ModalLeftNavbar closeMenu={closeMenu}/>
+                }
+            </AnimatePresence>
             {
                 showSearchBar && <PopupSearchBar closeSearchBar={closeSearchBar}/>
             }
