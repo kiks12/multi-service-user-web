@@ -3,10 +3,14 @@
 
 Multi Service Platform - Service Page for Users
 Created: Feb. 23, 2022
-Last Updated: Mar. 02, 2022
+Last Updated: Mar. 04, 2022
 Author: Tolentino, Francis James S.
 
 */
+
+
+
+import styles from './ServiceId.module.css';
 
 
 
@@ -136,10 +140,9 @@ const ServicePage : NextPage = ({
                     }
                 </ul>
 
-                <div className="split">
-                    <div style={{
-                        flexBasis: '65%'
-                    }}>
+
+                <div className={styles.informationSplitter}>
+                    <div className={styles.leftSide}>
                         <Overview service={service}/>
                         <Description service={service} ref={descriptionRef}/>
                         <AboutProvider user={service.Users}/>
@@ -147,20 +150,10 @@ const ServicePage : NextPage = ({
                         <Recommended services={recommendeds} currentServiceID={service.serviceId}/>
                     </div>
                     
-                    <div style={{
-                        flexBasis: '35%'
-                    }}>
+                    <div className={styles.rightSide}>
                         <PricingDetails service={service}/>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
 
 
 

@@ -1,0 +1,32 @@
+.informationSplitter {
+    display: flex;   
+}
+
+
+.leftSide {
+    flex-basis: 65%;
+}
+
+
+.rightSide {
+    flex-basis: 35%;
+}
+
+
+@media (max-width: 70em) {
+    .leftSide {
+        flex-basis: 60%;
+    }
+
+    .rightSide {
+        flex-basis: 40%;
+    }
+}
+
+
+@media (max-width: 40em) {
+    .informationSplitter {
+        flex-direction: column;
+    }
+
+}

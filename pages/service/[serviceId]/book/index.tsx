@@ -21,21 +21,21 @@ import type {
 
 
 import { useEffect, useState } from "react";
-import { useAuthentication } from "../../../src/custom-hooks/useAuthentication";
+import { useAuthentication } from "../../../../src/custom-hooks/useAuthentication";
 
 
 
-import fetchUserInformation from "../../../libs/fetchUserInformation";
-import { __backend__ } from "../../../src/constants";
+import fetchUserInformation from "../../../../libs/fetchUserInformation";
+import { __backend__ } from "../../../../src/constants";
 
 
 
-import Layout from "../../../src/components/layout/Layout";
-import { formatStartingAndLastPrice } from "../../../utils/formatter";
-import authorizedFetch from "../../../utils/authorizedFetch";
+import Layout from "../../../../src/components/layout/Layout";
+import { formatStartingAndLastPrice } from "../../../../utils/formatter";
+import authorizedFetch from "../../../../utils/authorizedFetch";
 import Calendar from "react-calendar";
-import useSplitArray from "../../../src/custom-hooks/useSplitArray";
-import { formatDateToString } from "../../../utils/formatDate";
+import useSplitArray from "../../../../src/custom-hooks/useSplitArray";
+import { formatDateToString } from "../../../../utils/formatDate";
 
 
 
