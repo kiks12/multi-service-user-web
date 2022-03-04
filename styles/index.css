@@ -698,6 +698,12 @@ main {
 }
 
 
+.top-navbar-logo {
+    display: flex;
+    align-items: center;
+}
+
+
 .top-navbar-search-form-container {
     flex-basis: 100%;
     width: 100%;
@@ -711,6 +717,7 @@ main {
     width: 80%;
     display: flex;
 }
+
 
 
 .top-navbar-ul-container {
@@ -737,6 +744,18 @@ main {
 }
 
 
+.top-navbar-li:first-child {
+    display: none;
+}
+
+
+.top-navbar-menu {
+    display: none !important;
+    cursor: pointer;
+}
+
+
+
 .account-circle {
     height: 2.3em;
     width: 2.3em;
@@ -748,12 +767,44 @@ main {
 
 .top-navbar-popup {
     position: absolute;
-    right: 2em;
+    right: 1em;
     top: 1em;
     background-color: var(--white);
     border: 1px solid var(--gray);
     width: 14vw;
 }
+
+
+
+@media (max-width: 70em) {
+    .top-navbar-popup {
+        width: 20vw;
+    }
+}
+
+
+@media (max-width: 40em) {
+    .top-navbar-popup {
+        width: 30vw;
+    }
+    
+    .top-navbar-search-form-container {
+        display: none;
+    }
+
+    .top-navbar-menu {
+        display: block !important;
+    }
+
+    .top-navbar-logo > * {
+        margin: 0 0 0 0.5em;
+    }
+
+    .top-navbar-li:first-child {
+        display: block;
+    }
+}
+
 
 
 .top-navbar-popup-ul {
