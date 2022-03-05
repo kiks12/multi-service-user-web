@@ -3,7 +3,7 @@
 
 Multi Service Platform - Service Page for Users
 Created: Feb. 23, 2022
-Last Updated: Mar. 04, 2022
+Last Updated: Mar. 05, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -62,6 +62,7 @@ const ServicePage : NextPage = ({
 
 
 
+    // const categories: any[] = [];
     const categories = useSplitArray({
         stringToSplit: service.category,
         splitter: ' | ',
@@ -77,7 +78,7 @@ const ServicePage : NextPage = ({
         return () => {
             if (typeof setSession === 'function') setSession(null);
         }
-    }, [setSession, user]);
+    }, [service, setSession, user]);
 
 
 
@@ -188,7 +189,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 
     
-    if (req.cookies.accessToken) {
+    if (typeof req.cookies.accessToken !== 'undefined') {
         const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
 
@@ -196,8 +197,8 @@ export const getServerSideProps: GetServerSideProps = async ({
             return {
                 props: {
                     user: {},
-                    service: {},
-                    recommendeds: [],
+                    service: jsonRes.service,
+                    recommendeds: recommendedServices.services,
                     accessToken: ''
                 }
             }
@@ -220,8 +221,8 @@ export const getServerSideProps: GetServerSideProps = async ({
     return {
         props: {
             user: {},
-            service: {},
-            recommededs: [],
+            service: jsonRes.service,
+            recommendeds: recommendedServices.services,
             accessToken: ''
         }
     }

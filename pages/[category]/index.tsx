@@ -16,18 +16,18 @@ import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsT
 
 
 import { Key, useEffect } from "react";
-import { useAuthentication } from "../src/custom-hooks/useAuthentication";
+import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 
 
 
-import fetchUserInformation from "../libs/fetchUserInformation";
+import fetchUserInformation from "../../libs/fetchUserInformation";
 
 
 
-import Layout from "../src/components/layout/Layout";
-import authorizedFetch from "../utils/authorizedFetch";
-import { __backend__ } from "../src/constants";
-import Service from "../src/components/Services/Service";
+import Layout from "../../src/components/layout/Layout";
+import authorizedFetch from "../../utils/authorizedFetch";
+import { __backend__ } from "../../src/constants";
+import Service from "../../src/components/Services/Service";
 
 
 
@@ -70,7 +70,8 @@ const CategoryPage: NextPage = ({
 
 export const getServerSideProps: GetServerSideProps = async ({
     req, 
-    query}: GetServerSidePropsContext) => {
+    query
+}: GetServerSidePropsContext) => {
 
 
     const category = query.category;
@@ -81,9 +82,6 @@ export const getServerSideProps: GetServerSideProps = async ({
         method: 'GET',
         accessToken: req.cookies.accessToken,
     });
-
-
-    console.log(res);
 
 
     
@@ -119,7 +117,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     return {
         props: {
             user: {},
-            services: [],
+            services: res.services,
             category: category,
             accessToken: '',
         }
