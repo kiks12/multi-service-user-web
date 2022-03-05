@@ -23,7 +23,7 @@ import {
 
 
 import React from 'react';
-import { __backend__ } from '../../../constants';
+import { __backend__ } from '../../../../constants';
 import Link from 'next/link';
 
 
