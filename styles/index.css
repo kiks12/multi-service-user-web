@@ -283,64 +283,6 @@ td:first-child{
 
 
 
-
-/* SERVICES in PROVIDER PAGE */
-
-
-.services-container {
-    display: grid;
-    margin: 1em 0;
-    grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
-    column-gap: 1em;
-    row-gap: 1em;
-}
-
-
-
-.service-container {
-    border: 0.3px solid var(--gray);
-    border-radius: 0.5em;
-    position: relative;
-    cursor: pointer;
-}
-
-
-.service-triple-dot-container {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 10;
-    border-radius: 0.5em 0.5em 0 0;
-    height: 20%;
-    padding: 0 0.5em;
-    display: flex;
-    justify-content: flex-end;
-}
-
-
-.service-image-container {
-    width: 100%;
-    background-color: var(--gray);
-    border-radius: 0.5em;
-    overflow: hidden;
-    height: 22vh;
-}
-
-.service-text-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5em;
-}
-
-
-/* SERVICES in PROVIDER PAGE */
-
-
-
-
-
 /* RESPONSIVE TEXTS */
 
 @media (max-width: 70em) {

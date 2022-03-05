@@ -3,15 +3,18 @@
 
 Multi Service Platform - Provider Service Component in Services Content Section
 Created: Feb. 14, 2022
-Last Updated: Feb. 23, 2022
+Last Updated: Mar. 05, 2022
 Author: Tolentino, Francis James S.
 
 */
 
 
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styles from './Service.module.css';
 
+
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faEllipsis
 } from '@fortawesome/free-solid-svg-icons';
@@ -23,8 +26,15 @@ import {
 
 
 import React from 'react';
-import { __backend__ } from '../../../../constants';
 import Link from 'next/link';
+
+
+
+import { __backend__ } from '../../../../constants';
+
+
+
+
 
 
 
@@ -53,8 +63,8 @@ const Service: React.FC<ServiceProps> = ({ service }) => {
 
     return (
         <Link href={`/provider/services/${service.serviceId}`} passHref={true}>
-            <div className='service-container'>
-                <div className='service-triple-dot-container'>
+            <div className={styles.serviceContainer}>
+                <div className={styles.serviceTripleDotContainer}>
                     <FontAwesomeIcon 
                         icon={faEllipsis}
                         style={{
@@ -63,7 +73,7 @@ const Service: React.FC<ServiceProps> = ({ service }) => {
                         }}
                     />
                 </div>
-                <div className='service-image-container'>
+                <div className={styles.serviceImageContainer}>
                     {/* <Image 
                         // src='http://localhost:4000/public/HomeScreen.PNG'
                         // alt={service.Images[0].filename}
@@ -73,7 +83,7 @@ const Service: React.FC<ServiceProps> = ({ service }) => {
                     /> */}
                 </div>
 
-                <div className='service-text-container'>
+                <div className={styles.serviceTextContainer}>
                     <p>{service.title}</p>
                     <p className='main-purple-text'>
                         {service.priceType === 'Range' ? `Starting at P${service.priceInitial}` : `Price: P${service.priceInitial}`}

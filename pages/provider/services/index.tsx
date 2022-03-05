@@ -3,10 +3,14 @@
 
 Multi Service Platform - Provider Services Page
 Created: Feb. 12, 2022
-Last Updated: Feb. 23, 2022
+Last Updated: Mar. 05, 2022
 Author: Tolentino, Francis James S.
 
 */
+
+
+
+import styles from './Services.module.css';
 
 
 
@@ -32,7 +36,7 @@ import { __backend__ } from '../../../src/constants';
 import Layout from '../../../src/components/Provider/Layout/ProviderLayout';
 import ServicesMenu from '../../../src/components/Provider/Services/ServicesMenu';
 import Service from '../../../src/components/Provider/Services/Service';
-import CreateNewServiceComponent from '../../../src/components/Provider/Services/Create/CreateNewServiceComponent';
+import CreateNewServiceComponent from '../../../src/components/Provider/Services/CreateNewServiceButton';
 
 
 
@@ -87,7 +91,7 @@ const ProviderServices : NextPage = ({
                     setActivePrompt(value);
                 }}
                 />
-                <div className='services-container'>
+                <div className={styles.servicesContainer}>
                     
                     {
                         (filteredServices.length !== 0) && filteredServices.map((service, idx) => {
