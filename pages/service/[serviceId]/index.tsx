@@ -100,9 +100,9 @@ const ServicePage : NextPage = ({
 
 
 
-    useEffect(() => {
-        console.log(descriptionRef.current?.getBoundingClientRect());
-    }, []);
+    // useEffect(() => {
+    //     console.log(descriptionRef.current?.getBoundingClientRect());
+    // }, []);
 
 
 
