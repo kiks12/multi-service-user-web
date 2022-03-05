@@ -37,6 +37,7 @@ import Layout from '../../../src/components/Provider/Layout/ProviderLayout';
 import ServicesMenu from '../../../src/components/Provider/Services/ServicesMenu';
 import Service from '../../../src/components/Provider/Services/Service';
 import CreateNewServiceComponent from '../../../src/components/Provider/Services/CreateNewServiceButton';
+import type { Service as _services } from '../../../types';
 
 
 
@@ -52,7 +53,7 @@ const ProviderServices : NextPage = ({
 
     const { setSession } = useAuthentication();
     const [activePrompt, setActivePrompt] = useState<Prompts>('active');
-    const [myServices, setMyServices] = useState<any[]>(() => services);
+    const [myServices, setMyServices] = useState<_services[]>(() => services);
 
 
     useEffect(() => {
@@ -99,6 +100,7 @@ const ProviderServices : NextPage = ({
                                 <Service 
                                     service={service}
                                     key={idx}
+                                    setServices={setMyServices}
                                 />
                             )
                         }) 
