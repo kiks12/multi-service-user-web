@@ -3,7 +3,7 @@
 
 Multi Service Platform - Home Page
 Created: Feb. 07, 2022
-Last Updated: Mar. 04, 2022
+Last Updated: Mar. 05, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -76,7 +76,8 @@ const Home: NextPage = ({ user, accessToken }: InferGetServerSidePropsType<typeo
 
 export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
     
-    if (req.cookies.accessToken) {
+
+    if (typeof req.cookies.accessToken !== 'undefined') {
         const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
 

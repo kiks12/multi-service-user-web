@@ -3,7 +3,7 @@
 
 Multi Service Platform - Category Page
 Created: Feb. 22, 2022
-Last Updated: Mar. 01, 2022
+Last Updated: Mar. 05, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -79,8 +79,8 @@ export const getServerSideProps: GetServerSideProps = async ({
     const res = await authorizedFetch({
         url: `${__backend__}/services?category=${category}`,
         method: 'GET',
-        accessToken: req.cookies?.accessToken,
-    })
+        accessToken: req.cookies.accessToken,
+    });
 
 
     
