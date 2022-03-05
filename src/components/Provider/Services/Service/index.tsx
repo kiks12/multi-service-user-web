@@ -43,11 +43,12 @@ import { Service } from '../../../../../types';
 interface ServiceProps {
     service: Service;
     setServices: React.Dispatch<React.SetStateAction<Service[]>>;
+    accessToken: string;
 }
 
 
 
-const Service: React.FC<ServiceProps> = ({ service, setServices}) => {
+const Service: React.FC<ServiceProps> = ({ service, setServices, accessToken}) => {
 
 
     const [showPopup, setShowPopup] = useState<boolean>(false);
@@ -80,6 +81,7 @@ const Service: React.FC<ServiceProps> = ({ service, setServices}) => {
                     showPopup && <ServicePopup 
                                     {...service} 
                                     closePopup={closePopup}
+                                    accessToken={accessToken}
                                     setServices={setServices}
                                 />
                 }

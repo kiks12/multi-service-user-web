@@ -47,7 +47,8 @@ type Prompts = 'active' | 'inactive' | 'all'
 
 const ProviderServices : NextPage = ({
     user,
-    services
+    services,
+    accessToken
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
 
@@ -98,6 +99,7 @@ const ProviderServices : NextPage = ({
                         (filteredServices.length !== 0) && filteredServices.map((service, idx) => {
                             return (
                                 <Service 
+                                    accessToken={accessToken}
                                     service={service}
                                     key={idx}
                                     setServices={setMyServices}
@@ -139,7 +141,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
             return {
                 props: {
                     user: {},
-                    services: []
+                    services: [],
+                    accessToken: req.cookies.accessToken,
                 }
             }
         }
@@ -161,6 +164,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
             props: {
                 user: userInformation.user,
                 services: servicesFetchResults.services,
+                accessToken: req.cookies.accessToken,
             }
         }
     }
@@ -170,7 +174,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
     return {
         props: {
             user: {},
-            services: servicesFetchResults.services
+            services: servicesFetchResults.services,
+            accessToken: req.cookies.accessToken,
         }
     }
 
