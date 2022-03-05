@@ -3,13 +3,15 @@
 
 Multi Service Platform - Provider Page Top Navigation Bar Component
 Created: Feb. 12, 2022
-Last Updated: Feb. 16, 2022
+Last Updated: Mar. 05, 2022
 Author: Tolentino, Francis James S.
 
 */
 
 
 
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 
 
@@ -18,7 +20,7 @@ import React from 'react';
 
 
 
-import AccountButton from '../../NavigationBars/AccountButton';
+import AccountButton from '../../../NavigationBars/AccountButton';
 
 
 
@@ -32,8 +34,15 @@ const ProviderTopNavbar: React.FC = () => {
 
             <ul className='top-navbar-ul'
             >
+                <li className='top-navbar-li'>
+                    <FontAwesomeIcon 
+                        icon={faMagnifyingGlass}
+                    />
+                </li>
                 <Link href='/' passHref={true} >
-                    <li className='top-navbar-li'>Switch to buying</li>
+                    <li className='top-navbar-li'>
+                        <p>Switch to buying</p>
+                    </li>
                 </Link>
                 <li className='top-navbar-li'>
                     <AccountButton 

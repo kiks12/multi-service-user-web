@@ -4,7 +4,7 @@
 
 Multi Service Platform - main App file
 Created: Feb. 07, 2022
-Last Updated: Mar. 03, 2022
+Last Updated: Mar. 05, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -20,6 +20,7 @@ config.autoAddCss = false;
 
 
 import type { AppProps } from 'next/app';
+import React from 'react';
 
 
 
@@ -29,6 +30,10 @@ import { WebSocketProvider } from '../src/custom-hooks/useWebSocket';
 
 
 import Head from 'next/head';
+
+
+
+React.useLayoutEffect = React.useEffect;
 
 
 
