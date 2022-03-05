@@ -83,6 +83,9 @@ export const getServerSideProps: GetServerSideProps = async ({
     });
 
 
+    console.log(res);
+
+
     
     if (req.cookies.accessToken) {
         const userInformation = await fetchUserInformation(req.cookies?.accessToken);

@@ -3,7 +3,7 @@
 
 Multi Service Platform - Custom hook to handle web socket connection to server 
 Created: Mar. 03, 2022
-Last Updated: Mar. 04, 2022
+Last Updated: Mar. 05, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -31,7 +31,11 @@ export const WebSocketProvider: React.FC = ({ children }) => {
     
 
     useEffect(() => {
-        setSocket(io('http://localhost:4000'));
+        // setSocket(io('http://localhost:4000'));
+        const ioConnection = io('http://localhost:4000');
+        if (ioConnection.connected) {
+            setSocket(ioConnection);
+        } 
     }, []);
 
 
