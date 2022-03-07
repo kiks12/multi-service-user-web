@@ -39,12 +39,14 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins';
+    scrollbar-width: thin;
 }
 
 
 
 body {
     background-color: var(--white);
+    scroll-behavior: smooth;
 }
 
 
@@ -88,6 +90,28 @@ td {
 td:first-child{
     border-left: none;
     padding-left: 0;
+}
+
+
+
+*::-webkit-scrollbar {
+    width: 0.3em;
+}
+
+
+*::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--mainPurple);
+    border-radius: 10em;
+}
+
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: var(--secondaryPurple);
 }
 
 

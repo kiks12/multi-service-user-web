@@ -12,7 +12,6 @@
 
 .menuScrollWrapper {
     width: 100%;
-    overflow-x: scroll;
 }
 
 
@@ -81,5 +80,13 @@
 
     .controlsContainer > * > p {
         display: block;
+    }
+}
+
+
+
+@media (max-width: 40em) {
+    .menuScrollWrapper {
+        overflow-x: scroll;
     }
 }
