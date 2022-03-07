@@ -4,7 +4,7 @@
 
 Multi Service Platform - main App file
 Created: Feb. 07, 2022
-Last Updated: Mar. 05, 2022
+Last Updated: Mar. 07, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -25,7 +25,7 @@ import React from 'react';
 
 
 import { AuthProvider } from '../src/custom-hooks/useAuthentication';
-import { WebSocketProvider } from '../src/custom-hooks/useWebSocket';
+// import { WebSocketProvider } from '../src/custom-hooks/useWebSocket';
 
 
 
@@ -45,11 +45,11 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) =>
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
-            <WebSocketProvider>
+            {/* <WebSocketProvider> */}
                 <AuthProvider>
                     <Component {...pageProps}/>
                 </AuthProvider>
-            </WebSocketProvider>
+            {/* </WebSocketProvider> */}
         </>
     )
 }
