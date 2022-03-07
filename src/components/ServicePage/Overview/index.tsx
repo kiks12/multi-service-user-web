@@ -3,7 +3,7 @@
 
 Multi Service Platform - Service Page Overview Component
 Created: Feb. 24, 2022
-Last Updated: Feb. 24, 2022
+Last Updated: Mar. 07, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -15,13 +15,14 @@ import React from 'react';
 
 
 import Image from 'next/image';
+import { Service } from '../../../../types';
 
 
 
 
 
 interface OverviewProps {
-    service: any
+    service: Service
 }
 
 
@@ -48,8 +49,8 @@ const Overview : React.FC<OverviewProps> = ({ service }) => {
                     }}
                 >
                     <Image 
-                        src={service.Users.image}
-                        alt={service.Users.username}
+                        src={service?.Users?.image as string}
+                        alt={service?.Users?.shopName as string}
                         width={70}
                         height={70}
                         objectFit='fill'
@@ -59,7 +60,7 @@ const Overview : React.FC<OverviewProps> = ({ service }) => {
                     display: 'flex',
                     alignItems: 'center'
                 }}>
-                    <h4>{service.Users.username}</h4>
+                    <h4>{service.Users?.shopName}</h4>
                     <p style={{margin: '0 1em'}}> | {service.ratings} ratings</p>
                 </div>
             </div>

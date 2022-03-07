@@ -37,7 +37,8 @@ export type Service = {
     dislikes: number, 
     likes: number, 
     ratings: number, 
-    category: string
+    category: string,
+    Users?: User,
 }
 
 
