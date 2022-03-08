@@ -94,7 +94,7 @@ const RegisterGetStarted: NextPage = () => {
 
 
             <h1>Multi Service Platform</h1>
-            <h3>Registration - Get Started</h3>
+            <h3 className='secondary-purple-text'>Registration - Get Started</h3>
             <div
                 className=''
                 style={{
