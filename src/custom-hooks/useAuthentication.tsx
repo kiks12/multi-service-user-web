@@ -3,7 +3,7 @@
 
 Multi Service Platform - custom hook to handle user information
 Created: Feb. 09, 2022
-Last Updated: Feb. 18, 2022
+Last Updated: Mar. 08, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -86,6 +86,9 @@ export const AuthProvider: React.FC = ({ children }) => {
     const clearSession = () => setSession(null);
 
 
+
+
+
     // this callback hook resets the error/success messages on router change to /login, /register
     const resetMessage = useCallback(() => {
         if (router.pathname === '/login' || router.pathname === '/register'){
@@ -95,6 +98,8 @@ export const AuthProvider: React.FC = ({ children }) => {
             })
         }
     }, [router]);
+
+
 
 
 
@@ -113,6 +118,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         return result;
     }
+
+
 
 
 
@@ -164,6 +171,9 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
 
+
+
+
     // This function handles the register with google flow 
     const registerWithGoogle = async () => {
         // get UserCredentials from popup sign in with google
@@ -178,13 +188,14 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
         try {
+            // set localstorage item loggedIn and persist google popup login information
             localStorage.setItem('loggedIn', JSON.stringify({
                 email, 
                 image: photoURL,
                 provider: providerId
             }));
 
-
+            // continue to get registration - get started page 
             router.push('/register/get-started/');
         } catch (e) {
             console.error(e);
@@ -194,8 +205,13 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
 
+
+
+    // this function is the base function to handle registration in the frontend
+    // it sends a POSt request to the server (http://localhost:4000/auth/signup/) with body 
     const completeRegistration = async (body: string) => {
         try {
+            // send a POST request to the server
             const res = await fetch(`${__backend__}/auth/signup`, {
                 body: body,
                 headers: {
@@ -208,7 +224,10 @@ export const AuthProvider: React.FC = ({ children }) => {
 
             const resJson = await res.json();
 
+            // if server response status is error != 200
             if (resJson.status !== 200) {
+                // handle error
+                // set the error message
                 setMessage({
                     msg: resJson.msg,
                     status: resJson.status
@@ -217,14 +236,16 @@ export const AuthProvider: React.FC = ({ children }) => {
                 return;
             }
 
-            // console.log(resJson);
+            // otherwise remove the loggedIn data in localstorage 
             localStorage.removeItem('loggedIn');
+            // redirect to homepage
             router.push('/');
         } catch (e) {
             console.error(e);
             // handle error
         }
     }
+
 
 
 
