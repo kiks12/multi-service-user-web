@@ -22,7 +22,8 @@ import type { User } from '../../types';
 
 
 
-import Router from "../components/router";
+import { useRouter } from 'next/router';
+import { __backend__ } from "../constants";
 
 
 
@@ -45,6 +46,7 @@ interface AuthenticationProps {
     loginWithGoogle: (type: LoginType) => void;
     registerWithGoogle: () => void;
     loginWithFacebook: () => void;
+    completeRegistration: (body: string) => void;
     logout: () => void;
 }
 
@@ -62,6 +64,7 @@ const authContext = createContext<AuthenticationProps>({
     loginWithGoogle: () => {},
     registerWithGoogle: () => {},
     loginWithFacebook: () => {},
+    completeRegistration: (body: string) => {},
     logout: () => {}
 });
 
@@ -77,7 +80,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 
 
-    const router = Router();
+    const router = useRouter();
     
 
     const clearSession = () => setSession(null);
@@ -171,33 +174,58 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         // get needed information from signed in account
         const { providerId, user } = result;
-        const { email, photoURL, displayName } = user;
+        const { email, photoURL } = user;
 
 
         try {
-            // register account using API POST fetching to /api/auth/signup/ 
-            const res = await fetch('http://localhost:4000/auth/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email, 
-                    image: photoURL, 
-                    provider: providerId,
-                    username: displayName,
-                })
-            })
+            localStorage.setItem('loggedIn', JSON.stringify({
+                email, 
+                image: photoURL,
+                provider: providerId
+            }));
 
 
-            const jsonRes = await res.json();
-
-
-            setMessage({msg: jsonRes.msg, status: jsonRes.status});
+            router.push('/register/get-started/');
         } catch (e) {
             console.error(e);
         }
     }
+
+
+
+
+    const completeRegistration = async (body: string) => {
+        try {
+            const res = await fetch(`${__backend__}/auth/signup`, {
+                body: body,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+                credentials: "include"
+            });
+
+
+            const resJson = await res.json();
+
+            if (resJson.status !== 200) {
+                setMessage({
+                    msg: resJson.msg,
+                    status: resJson.status
+                });
+
+                return;
+            }
+
+            // console.log(resJson);
+            localStorage.removeItem('loggedIn');
+            router.push('/');
+        } catch (e) {
+            console.error(e);
+            // handle error
+        }
+    }
+
 
 
 
@@ -234,6 +262,7 @@ export const AuthProvider: React.FC = ({ children }) => {
                 loginWithGoogle,
                 loginWithFacebook,
                 registerWithGoogle,
+                completeRegistration,
                 logout
             }}
         >
