@@ -1,0 +1,27 @@
+
+.getStartedCardContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
+
+.getStartedCard {
+    width: min(90%, 35em);
+    height: min(90%, 15em);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2em;
+    border: 0.3px solid var(--gray);
+    border-radius: 0.5em;
+}
+
+
+.getStartedContent {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em 0;
+}

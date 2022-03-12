@@ -24,6 +24,10 @@ import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 
 
 
+import styles from './GetStarted.module.css';
+
+
+
 import fetchUserInformation from "../../libs/fetchUserInformation";
 
 
@@ -95,24 +99,8 @@ const GetStarted: NextPage = ({user, accessToken}: InferGetServerSidePropsType<t
                 {
                     !startProcess && (
 
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                height: '100%'
-                            }}
-                        >
-                            <div 
-                                className='card'
-                                style={{
-                                    width: '50%',
-                                    height: '50%',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'space-around'
-                                }}
-                            >
+                        <div className={styles.getStartedCardContainer}>
+                            <div className={styles.getStartedCard}>
                                 <div>
                                     <h1>Get Started as a Provider</h1>
                                     <p>In order to proceed as a provider, you need to finish the process</p>
@@ -133,13 +121,7 @@ const GetStarted: NextPage = ({user, accessToken}: InferGetServerSidePropsType<t
                 {
                     startProcess && (
                         <>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center'
-                                }}
-                            >
+                            <div className={styles.getStartedContent}>
                                 <h2>Get Started</h2>
                                 <button
                                     className='red-button'
