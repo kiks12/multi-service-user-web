@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Skills Content
 Created: Feb. 12, 2022
-Last Updated: Feb. 14, 2022
+Last Updated: Mar. 16, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -11,9 +11,13 @@ Author: Tolentino, Francis James S.
 
 
 import React, { useState } from 'react';
-import { useAuthentication } from '../../../custom-hooks/useAuthentication';
-import useClickOutsideElement from '../../../custom-hooks/useClickOutsideElement';
-import useSplitArray from '../../../custom-hooks/useSplitArray';
+import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
+import useClickOutsideElement from '../../../../custom-hooks/useClickOutsideElement';
+import useSplitArray from '../../../../custom-hooks/useSplitArray';
+
+
+
+import styles from './Skills.module.css';
 
 
 
@@ -102,8 +106,8 @@ const Skills: React.FC = () => {
 
 
             <form onSubmit={addNewSkill}>
-                <div style={{display:'flex'}}>
-                    <div style={{width: '80%',}}>
+                <div className={styles.container}>
+                    <div className={styles.inputContainer}>
                         <input 
                             value={skill}
                             onChange={(e) => setSkill(e.target.value)}
@@ -111,22 +115,19 @@ const Skills: React.FC = () => {
                             placeholder='Plumbing, Laundry, etc.'
                             />
                     </div>
-                    <div 
-                        style={{
-                            width: '20%',
-                            display: 'flex'
-                        }}
-                    >
+                    <div className={styles.buttonsContainer}>
                         <button
                             type='submit'
                             onSubmit={addNewSkill}
-                            >
+                            className='main-button'
+                        >
                             Add
                         </button> 
                         <button
                             type='button'
                             onClick={removeSkill}
                             disabled={!activeLi ? true : false}
+                            className='red-button'
                         >
                             Remove Skill
                         </button>

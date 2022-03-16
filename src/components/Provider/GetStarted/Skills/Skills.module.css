@@ -1,0 +1,52 @@
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.inputContainer {
+    width: 60%;
+}
+
+
+.buttonsContainer {
+    display: flex;
+    width: 40%;
+    margin: 0 0 0 1em;
+}
+
+
+.buttonsContainer > * {
+    flex-basis: 100%;
+}
+
+
+.buttonsContainer > * + * {
+    margin-left: 1em;
+}
+
+
+@media (max-width: 70em) {
+    .buttonsContainer {
+        width: 50%;
+    }
+
+
+    .inputContainer {
+        width: 50%;
+    }
+}
+
+
+@media (max-width: 40em) {
+    .container {
+        flex-direction: column;
+    }
+
+    .container > * {
+        width: 100%;
+        margin: 0.5em 0;
+    }
+}
