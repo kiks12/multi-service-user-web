@@ -120,14 +120,11 @@ const GetStarted: NextPage = ({user, accessToken}: InferGetServerSidePropsType<t
 
                 {
                     startProcess && (
-                        <>
-                            <div className={styles.getStartedContent}>
+                        <div className={styles.getStartedContent}>
+                            <div className={styles.getStartedHeader}>
                                 <h2>Get Started</h2>
                                 <button
                                     className='red-button'
-                                    style={{
-                                        width: '10%'
-                                    }}
                                     onClick={cancelProcessHandler}
                                 >
                                     Cancel
@@ -169,7 +166,7 @@ const GetStarted: NextPage = ({user, accessToken}: InferGetServerSidePropsType<t
                                 setActivePrompt={setActivePrompt}
                                 accessToken={accessToken}
                             />
-                        </>
+                        </div>
                     )
                 }
             </Layout>

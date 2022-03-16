@@ -21,7 +21,25 @@
 
 
 .getStartedContent {
+    width: 100%;
+}
+
+
+.getStartedHeader {
     display: flex;
     justify-content: space-between;
     padding: 1em 0;
+    width: 100%;
+}
+
+
+.getStartedHeader > *{
+    flex-basis: 20%;
+}
+
+
+@media (max-width: 40em) {
+    .getStartedHeader > * {
+        flex-basis: 30%;
+    }
 }

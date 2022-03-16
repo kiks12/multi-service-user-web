@@ -1,0 +1,25 @@
+
+.textarea {
+    width: 100%;
+    border: 0.3px solid var(--gray);
+    height: 50vh;
+    font-size: large;
+    resize: none;
+}
+
+
+.container {
+    margin: 1em 0;
+}
+
+
+.text {
+    margin: 1em 0;
+}
+
+
+@media (max-width: 40em) {
+    .textarea {
+        margin: 0 auto;
+    }
+}
