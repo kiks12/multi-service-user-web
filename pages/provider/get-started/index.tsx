@@ -20,7 +20,7 @@ import Head from "next/head";
 
 
 import { useEffect, useState } from "react";
-import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
+import { useAuthentication } from "../../../src/custom-hooks/useAuthentication";
 
 
 
@@ -28,17 +28,17 @@ import styles from './GetStarted.module.css';
 
 
 
-import fetchUserInformation from "../../libs/fetchUserInformation";
+import fetchUserInformation from "../../../libs/fetchUserInformation";
 
 
 
-import Layout from "../../src/components/Provider/Layout/ProviderLayout";
-import GetStartedBar from "../../src/components/Provider/GetStarted/GetStartedBar";
-import BasicInformation from "../../src/components/Provider/GetStarted/BasicInformation";
-import ShopDescription from "../../src/components/Provider/GetStarted/ShopDescription";
-import Skills from "../../src/components/Provider/GetStarted/Skills";
-import Finalization from "../../src/components/Provider/GetStarted/Finalization";
-import BackNext from "../../src/components/Provider/GetStarted/BackNext";
+import Layout from "../../../src/components/Provider/Layout/ProviderLayout";
+import GetStartedBar from "../../../src/components/Provider/GetStarted/GetStartedBar";
+import BasicInformation from "../../../src/components/Provider/GetStarted/BasicInformation";
+import ShopDescription from "../../../src/components/Provider/GetStarted/ShopDescription";
+import Skills from "../../../src/components/Provider/GetStarted/Skills";
+import Finalization from "../../../src/components/Provider/GetStarted/Finalization";
+import BackNext from "../../../src/components/Provider/GetStarted/BackNext";
 
 
 

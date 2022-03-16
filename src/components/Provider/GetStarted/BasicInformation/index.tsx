@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Basic Information Content
 Created: Feb. 12, 2022
-Last Updated: Feb. 21, 2022
+Last Updated: Mar. 16, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -11,7 +11,7 @@ Author: Tolentino, Francis James S.
 
 
 import React from 'react';
-import { useAuthentication } from '../../../custom-hooks/useAuthentication';
+import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
 
 
 
@@ -88,25 +88,6 @@ const BasicInformation: React.FC = () => {
                         margin: '1em 0 0 0'
                     }}
                 >
-                    <label>Shop Name</label>
-                    <input
-                        name='shopName'
-                        className='form-control' 
-                        placeholder='Enter your shop Name'
-                        value={!session?.shopName ? '' : session?.shopName as string}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-
-
-                <div 
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        margin: '1em 0 0 0'
-                    }}
-                >
                     <label>Address</label>
                     <input
                         name='address'
@@ -114,7 +95,11 @@ const BasicInformation: React.FC = () => {
                         className='form-control' 
                         value={!session?.address ? '' : session?.address as string}
                         onChange={handleInputChange}
+                        style={{
+                            cursor: 'not-allowed'
+                        }}
                         required
+                        disabled
                     />
                 </div>
 
@@ -132,6 +117,31 @@ const BasicInformation: React.FC = () => {
                         placeholder='0000 000 0000'
                         className='form-control' 
                         value={!session?.contact ? '' : session?.contact as string}
+                        onChange={handleInputChange}
+                        style={{
+                            cursor: 'not-allowed'
+                        }}
+                        required
+                        disabled
+                    />
+                </div>
+                
+                
+                
+                
+                <div 
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        margin: '1em 0 0 0'
+                    }}
+                >
+                    <label>Shop Name</label>
+                    <input
+                        name='shopName'
+                        className='form-control' 
+                        placeholder='Enter your shop Name'
+                        value={!session?.shopName ? '' : session?.shopName as string}
                         onChange={handleInputChange}
                         required
                     />
