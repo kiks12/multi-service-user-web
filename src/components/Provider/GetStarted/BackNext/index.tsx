@@ -16,17 +16,17 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 
 import React, { useState } from 'react';
-import authorizedFetch from '../../../../utils/authorizedFetch';
-import { __backend__ } from '../../../constants';
+import authorizedFetch from '../../../../../utils/authorizedFetch';
+import { __backend__ } from '../../../../constants';
 
 
 
-import { useAuthentication } from '../../../custom-hooks/useAuthentication';
+import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
 import { useRouter } from 'next/router';
 
 
 
-import Modal from '../../Modals/Modal';
+import Modal from '../../../Modals/Modal';
 
 
 
@@ -118,11 +118,7 @@ const BackNext: React.FC<BackNextProps> = ({ activePrompt, setActivePrompt, acce
             margin: '3em 0 0 0'
         }}>
 
-            <div 
-                style={{
-                    width: '5%'
-                }}
-            >
+            <div>
                 {
                     activePrompt !== 'Basic' &&
                         <button 
@@ -135,11 +131,7 @@ const BackNext: React.FC<BackNextProps> = ({ activePrompt, setActivePrompt, acce
             </div>
 
 
-            <div 
-                style={{
-                    width: '5%'
-                }}
-            >
+            <div>
                 {
                     activePrompt !== 'Final' ? (
                         <button 
