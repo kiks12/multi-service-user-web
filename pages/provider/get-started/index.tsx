@@ -33,7 +33,7 @@ import fetchUserInformation from "../../../libs/fetchUserInformation";
 
 
 import Layout from "../../../src/components/Provider/Layout/ProviderLayout";
-import GetStartedBar from "../../../src/components/Provider/GetStarted/GetStartedBar";
+import GetStartedBar from "../../../src/components/Provider/GetStarted/MenuBar";
 import BasicInformation from "../../../src/components/Provider/GetStarted/BasicInformation";
 import ShopDescription from "../../../src/components/Provider/GetStarted/ShopDescription";
 import Skills from "../../../src/components/Provider/GetStarted/Skills";

@@ -3,7 +3,7 @@
 
 Mutli Service Platform - Provider Get Started Bar (Basic Information -> Skills -> Description -> Finalization)
 Created: Feb. 12, 2022
-Last Updated: Feb. 12, 2022
+Last Updated: Mar. 16, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -11,32 +11,6 @@ Author: Tolentino, Francis James S.
 
 
 import React from 'react'; 
-
-
-
-// Styling
-
-
-const UL = {
-    display: 'flex',
-    listStyle: 'none',
-}
-
-
-const LI = {
-    padding: '1em 2em',
-    cursor: 'pointer'
-}
-
-
-const ACTIVE_LI = {
-    padding: '1em 2em',
-    cursor: 'pointer',
-    borderBottom: '3px solid var(--mainPurple)'
-}
-
-
-// Styling
 
 
 
@@ -63,39 +37,37 @@ const GetStartedBar: React.FC<GetStartedBarProps> = ({activePrompt, setActivePro
 
     return (
         <div>
-            <ul style={UL}>
-
-
+            <ul className='menu-ul'>
                 <li 
-                    style={activePrompt === 'Basic' ? ACTIVE_LI : LI}
+                    className={activePrompt === 'Basic' ? 'menu-li-active' : 'menu-li'}
                     onClick={() => changeActivePromptHandler('Basic')}    
                 >
                     Basic Information
                 </li>
 
                 <li 
-                    style={activePrompt === 'Desc' ? ACTIVE_LI : LI}
+                    className={activePrompt === 'Desc' ? 'menu-li-active' : 'menu-li'}
                     onClick={() => changeActivePromptHandler('Desc')}    
                 >
                     Shop Description
                 </li>
 
                 <li 
-                    style={activePrompt === 'Skills' ? ACTIVE_LI : LI}
+                    className={activePrompt === 'Skills' ? 'menu-li-active' : 'menu-li'}
                     onClick={() => changeActivePromptHandler('Skills')}    
                 >
                     Skills
                 </li>
 
                 <li 
-                    style={activePrompt === 'Upload' ? ACTIVE_LI : LI}
+                    className={activePrompt === 'Upload' ? 'menu-li-active' : 'menu-li'}
                     onClick={() => changeActivePromptHandler('Upload')}    
                 >
                     Upload Images/Videos
                 </li>
 
                 <li 
-                    style={activePrompt === 'Final' ? ACTIVE_LI : LI}
+                    className={activePrompt === 'Final' ? 'menu-li-active' : 'menu-li'}
                     onClick={() => changeActivePromptHandler('Final')}    
                 >
                     Finalization
