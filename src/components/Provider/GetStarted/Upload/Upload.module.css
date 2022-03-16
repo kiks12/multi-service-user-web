@@ -73,6 +73,20 @@
 }
 
 
+.imagesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15em, 15em));
+    gap: 0.5em;
+    margin: 1em 0;
+}
+
+
+.videos {
+    margin: 2em 0 0 0;
+    width: 100%;
+}
+
+
 @media (max-width: 40em) {
     .profile {
         width: 8em;

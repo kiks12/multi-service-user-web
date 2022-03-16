@@ -1,7 +1,8 @@
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
+import { encode, decode } from 'js-base64';
 
 
 
@@ -14,6 +15,9 @@ import {
 
 import styles from './Upload.module.css';
 import Image from 'next/image';
+import AddImageButton from './AddImageButton';
+import ImageComponent from './ImageComponent';
+
 
 
 
@@ -22,7 +26,7 @@ const UploadImages : React.FC = () => {
     const { session } = useAuthentication();
     const [profile, setProfile] = useState<any>(null);
     const [cover, setCover] = useState<any>('');
-    const [images, setImages] = useState<any[]>([]);
+    const [images, setImages] = useState<File[]>([]);
     const [videos, setVideos] = useState<any[]>([]);
 
 
@@ -34,6 +38,26 @@ const UploadImages : React.FC = () => {
     const handleProfileChange = (e: any) => {
         setProfile(e.target.files[0]);
     }
+
+
+    const handleImagesChange = async (e: any) => {
+        for (let i=0; i<e.target.files.length; i++){
+            setImages(prev => [...prev, e.target.files[i]]);
+        }
+    }
+
+
+    useEffect(() => {
+        console.log(localStorage.getItem('images'));
+    }, []);
+
+
+    useEffect(() => {
+        const imagesFiles = images.map((file: File) => {
+            return URL.createObjectURL(file);
+        })
+        localStorage.setItem('images', JSON.stringify(imagesFiles));
+    }, [images]);
 
 
     return (
@@ -98,9 +122,25 @@ const UploadImages : React.FC = () => {
 
             <div className={styles.images}>
                 <h2>Images</h2>
-                {
-
-                }
+                <div className={styles.imagesGrid}> 
+                    {
+                        images.length !== 0 &&
+                        images.map((imageFile: File, idx: number) => {
+                            return <ImageComponent key={idx} file={imageFile}/>
+                        })
+                    }
+                    <AddImageButton 
+                        onChange={handleImagesChange}
+                    />
+                </div>
+            </div>
+            <div className={styles.videos}>
+                <h2>Videos</h2>
+                <div>
+                    {
+                        
+                    }
+                </div>
             </div>
         </div>
     )

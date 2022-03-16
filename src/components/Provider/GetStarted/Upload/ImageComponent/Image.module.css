@@ -1,0 +1,15 @@
+
+
+.container {
+    border-radius: 0.3em;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.3px solid transparent;
+}
+
+
+.container:hover {
+    border: 0.3px solid var(--gray);
+}
