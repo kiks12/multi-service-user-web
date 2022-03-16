@@ -1,0 +1,81 @@
+
+
+.container {
+    margin: 1em 0;
+}
+
+
+.coverContainer {
+    width: 100%;
+    background-color:var(--gray);
+    height: 30vh;
+    position: relative;
+}
+
+
+.cover {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+}
+
+
+.coverContainer input[type=file] {
+    opacity: 0;
+    position: absolute;
+    top: -100em;
+}
+
+
+.profile {
+    width: 10em;
+    height: 10em;
+    background-color: var(--lightGray);
+    border-radius: 50%;
+    position: relative;
+    border: 4px solid var(--white);
+    overflow: hidden;
+}
+
+
+.coverContainer label, .profile > * {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    border: none;
+}
+
+
+.profileContainer { 
+    width: 80%;
+    margin: 0 auto;
+    height: 20vh;
+    bottom: -13em;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+.profileContainer p {
+    margin: 1em;
+    font-size: large;
+}
+
+
+.images {
+    margin: 8em 0 0 0;
+    width: 100%;
+}
+
+
+@media (max-width: 40em) {
+    .profile {
+        width: 8em;
+        height: 8em;
+    }
+}

@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Page
 Created: Feb. 21, 2022
-Last Updated: Feb. 21, 2022
+Last Updated: Mar. 16, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -39,6 +39,7 @@ import ShopDescription from "../../../src/components/Provider/GetStarted/ShopDes
 import Skills from "../../../src/components/Provider/GetStarted/Skills";
 import Finalization from "../../../src/components/Provider/GetStarted/Finalization";
 import BackNext from "../../../src/components/Provider/GetStarted/BackNext";
+import UploadImages from "../../../src/components/Provider/GetStarted/Upload";
 
 
 
@@ -152,7 +153,7 @@ const GetStarted: NextPage = ({user, accessToken}: InferGetServerSidePropsType<t
                             }
                             {
                                 activePrompt === 'Upload' && ( 
-                                    <p>Upload</p>
+                                    <UploadImages />
                                 )
                             }
                             {
