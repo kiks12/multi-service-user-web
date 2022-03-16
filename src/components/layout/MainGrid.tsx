@@ -24,7 +24,7 @@ const MainGrid : React.FC<MainGridProps> = ({ leftNavbar, topNavbar, children })
         <>
             <header>
                 <div className='top-navbar-container'>
-                    <div className='container'>
+                    <div className='top-navbar-container-2'>
                         {topNavbar}
                     </div>
                 </div>
