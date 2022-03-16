@@ -27,6 +27,7 @@ const UploadImages : React.FC = () => {
     const [profile, setProfile] = useState<any>(null);
     const [cover, setCover] = useState<any>('');
     const [images, setImages] = useState<File[]>([]);
+    const [proxyImages, setProxyImages] = useState<any[]>([]);
     const [videos, setVideos] = useState<any[]>([]);
 
 
@@ -40,10 +41,36 @@ const UploadImages : React.FC = () => {
     }
 
 
-    const handleImagesChange = async (e: any) => {
+    const setImagesFiles = async (e: any) => {
+        let imagesFiles = [];
         for (let i=0; i<e.target.files.length; i++){
-            setImages(prev => [...prev, e.target.files[i]]);
+            imagesFiles.push(e.target.files[i]);
         }
+        setImages(imagesFiles);
+        return Promise.resolve(imagesFiles);
+    }
+
+
+    const persistImages = async (images: any[]) => {
+        let imagesData : any[] = [];
+        images.forEach((file: File) => {
+            const reader = new FileReader();
+            reader.addEventListener('load', () => {
+                imagesData.push(reader.result?.toString());
+            })
+            reader.readAsDataURL(file);
+        })
+        console.log('data: ', imagesData);
+        localStorage.setItem('images', JSON.stringify(imagesData));
+        return Promise.resolve();
+    }
+
+
+    const handleImagesChange = async (e: any) => {
+        await setImagesFiles(e).then(async (images) => {
+            console.log(images);
+            await persistImages(images);
+        });
     }
 
 
@@ -51,13 +78,6 @@ const UploadImages : React.FC = () => {
         console.log(localStorage.getItem('images'));
     }, []);
 
-
-    useEffect(() => {
-        const imagesFiles = images.map((file: File) => {
-            return URL.createObjectURL(file);
-        })
-        localStorage.setItem('images', JSON.stringify(imagesFiles));
-    }, [images]);
 
 
     return (
@@ -129,6 +149,19 @@ const UploadImages : React.FC = () => {
                             return <ImageComponent key={idx} file={imageFile}/>
                         })
                     }
+                    {/* {
+                        proxyImages.length !== 0 &&
+                        proxyImages.map((src: any, idx: number) => {
+                            return <Image 
+                                src={`${src}`}
+                                alt='image'
+                                key={idx}
+                                objectFit='cover'
+                                height={150}
+                                width={150}
+                            />
+                        })
+                    } */}
                     <AddImageButton 
                         onChange={handleImagesChange}
                     />
