@@ -33,7 +33,13 @@ const UploadImages : React.FC = () => {
 
 
     const handleCoverChange = (e: any) => {
-        setCover(e.target.files[0]);
+        const file : File = e.target.files[0];
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+            sessionStorage.setItem('cover', reader.result as string);
+        })
+        reader.readAsDataURL(file);
+        setCover(file);
     }
 
 
@@ -79,19 +85,29 @@ const UploadImages : React.FC = () => {
 
 
 
+
+    const getPersistedCoverPicture = useCallback(() => {
+        const file : any = sessionStorage.getItem('cover');
+        const coverData = dataURLtoFile(file as string, 'cover');
+        setCover(coverData);
+    }, []);
+
+
+
     const getPersistedImages = useCallback(() => {
-        let images = [];
+        let images :any[] = [];
         for (let i=0; i<sessionStorage.length; i++) {
             const file: any = sessionStorage.getItem(sessionStorage.key(i) as string);
             const imageData = dataURLtoFile(file as string, sessionStorage.key(i) as string);
             images.push(imageData);
         }
-        setImages(images);
+        setImages(prev => prev = images );
     }, []);
 
 
 
     const dataURLtoFile = (dataUrl: string, fileName: string) => {
+        if (!dataUrl) return null;
         const arr:any = dataUrl.split(',')
         const mime = arr[0].match(/:(.*?);/)[1];
         const bstr = atob(arr[1]);
@@ -106,10 +122,10 @@ const UploadImages : React.FC = () => {
 
 
 
-
     useEffect(() => {
         getPersistedImages();
-    }, [getPersistedImages]);
+        getPersistedCoverPicture();
+    }, [getPersistedImages, getPersistedCoverPicture]);
 
 
 
