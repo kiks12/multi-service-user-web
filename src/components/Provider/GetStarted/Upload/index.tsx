@@ -1,8 +1,7 @@
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useAuthentication } from '../../../../custom-hooks/useAuthentication';
-import { encode, decode } from 'js-base64';
 
 
 
@@ -14,7 +13,7 @@ import {
 
 
 import styles from './Upload.module.css';
-import Image from 'next/image';
+import NextImage from 'next/image';
 import AddImageButton from './AddImageButton';
 import ImageComponent from './ImageComponent';
 
@@ -26,9 +25,11 @@ const UploadImages : React.FC = () => {
     const { session } = useAuthentication();
     const [profile, setProfile] = useState<any>(null);
     const [cover, setCover] = useState<any>('');
-    const [images, setImages] = useState<File[]>([]);
+    const [images, setImages] = useState<File[]|string[]>([]);
     const [proxyImages, setProxyImages] = useState<any[]>([]);
     const [videos, setVideos] = useState<any[]>([]);
+
+
 
 
     const handleCoverChange = (e: any) => {
@@ -36,9 +37,13 @@ const UploadImages : React.FC = () => {
     }
 
 
+
+
     const handleProfileChange = (e: any) => {
         setProfile(e.target.files[0]);
     }
+
+
 
 
     const setImagesFiles = async (e: any) => {
@@ -51,32 +56,66 @@ const UploadImages : React.FC = () => {
     }
 
 
+
+
     const persistImages = async (images: any[]) => {
-        let imagesData : any[] = [];
         images.forEach((file: File) => {
             const reader = new FileReader();
             reader.addEventListener('load', () => {
-                imagesData.push(reader.result?.toString());
+                sessionStorage.setItem(file.name, reader.result as string);
             })
             reader.readAsDataURL(file);
         })
-        console.log('data: ', imagesData);
-        localStorage.setItem('images', JSON.stringify(imagesData));
         return Promise.resolve();
     }
 
 
+
+
     const handleImagesChange = async (e: any) => {
-        await setImagesFiles(e).then(async (images) => {
-            console.log(images);
-            await persistImages(images);
-        });
+        const images = await setImagesFiles(e)
+        await persistImages(images);
     }
 
 
-    useEffect(() => {
-        console.log(localStorage.getItem('images'));
+
+    const getPersistedImages = useCallback(() => {
+        let images = [];
+        for (let i=0; i<sessionStorage.length; i++) {
+            const file: any = sessionStorage.getItem(sessionStorage.key(i) as string);
+            const imageData = dataURLtoFile(file as string, sessionStorage.key(i) as string);
+            images.push(imageData);
+        }
+        setImages(images);
     }, []);
+
+
+
+    const dataURLtoFile = (dataUrl: string, fileName: string) => {
+        const arr:any = dataUrl.split(',')
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new File([u8arr], fileName, {type:mime});
+    }
+
+
+
+
+    useEffect(() => {
+        getPersistedImages();
+    }, [getPersistedImages]);
+
+
+
+    useEffect(() => {
+        console.log('images: ', images);
+    }, [images]);
 
 
 
@@ -101,7 +140,7 @@ const UploadImages : React.FC = () => {
                             />
                         </> 
                         : 
-                        <Image 
+                        <NextImage 
                             src={`${URL.createObjectURL(cover)}`} 
                             alt='cover' 
                             objectFit='fill' 
@@ -127,7 +166,7 @@ const UploadImages : React.FC = () => {
                                 />    
                             </>
                             :
-                            <Image 
+                            <NextImage 
                                 src={`${URL.createObjectURL(profile)}`}
                                 alt='profile'
                                 objectFit='fill'
@@ -145,20 +184,20 @@ const UploadImages : React.FC = () => {
                 <div className={styles.imagesGrid}> 
                     {
                         images.length !== 0 &&
-                        images.map((imageFile: File, idx: number) => {
+                        images.map((imageFile: string | File, idx: number) => {
                             return <ImageComponent key={idx} file={imageFile}/>
                         })
                     }
                     {/* {
-                        proxyImages.length !== 0 &&
-                        proxyImages.map((src: any, idx: number) => {
-                            return <Image 
+                        (proxyImages.length !== 0 && images.length === 0) &&
+                        proxyImages.map((src: string, idx: number) => {
+                            return <NextImage 
                                 src={`${src}`}
                                 alt='image'
                                 key={idx}
                                 objectFit='cover'
-                                height={150}
-                                width={150}
+                                height={250}
+                                width={250}
                             />
                         })
                     } */}
