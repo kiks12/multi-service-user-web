@@ -22,6 +22,8 @@ import ImageComponent from './ImageComponent';
 
 const UploadImages : React.FC = () => {
 
+
+    
     const { session } = useAuthentication();
     const [profile, setProfile] = useState<any>(null);
     const [cover, setCover] = useState<any>('');
@@ -46,7 +48,13 @@ const UploadImages : React.FC = () => {
 
 
     const handleProfileChange = (e: any) => {
-        setProfile(e.target.files[0]);
+        const file : File = e.target.files[0];
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+            sessionStorage.setItem('profile', reader.result as string);
+        })
+        reader.readAsDataURL(file);
+        setProfile(file);
     }
 
 
@@ -86,7 +94,7 @@ const UploadImages : React.FC = () => {
 
 
 
-    const getPersistedCoverPicture = useCallback(() => {
+    const getPersistedCoverPhoto = useCallback(() => {
         const file : any = sessionStorage.getItem('cover');
         const coverData = dataURLtoFile(file as string, 'cover');
         setCover(coverData);
@@ -94,11 +102,21 @@ const UploadImages : React.FC = () => {
 
 
 
+    const getPersistedProfilePicture = useCallback(() => {
+        const file : any = sessionStorage.getItem('profile');
+        const profilePictureData = dataURLtoFile(file as string, 'profile');
+        setProfile(profilePictureData);
+    }, []);
+
+
+
     const getPersistedImages = useCallback(() => {
         let images :any[] = [];
         for (let i=0; i<sessionStorage.length; i++) {
-            const file: any = sessionStorage.getItem(sessionStorage.key(i) as string);
-            const imageData = dataURLtoFile(file as string, sessionStorage.key(i) as string);
+            const imageName = sessionStorage.key(i) as string;
+            if (imageName === 'cover' || imageName === 'profile') continue; 
+            const file: any = sessionStorage.getItem(imageName);
+            const imageData = dataURLtoFile(file as string, imageName);
             images.push(imageData);
         }
         setImages(prev => prev = images );
@@ -124,8 +142,9 @@ const UploadImages : React.FC = () => {
 
     useEffect(() => {
         getPersistedImages();
-        getPersistedCoverPicture();
-    }, [getPersistedImages, getPersistedCoverPicture]);
+        getPersistedCoverPhoto();
+        getPersistedProfilePicture()
+    }, [getPersistedImages, getPersistedCoverPhoto, getPersistedProfilePicture]);
 
 
 
