@@ -23,12 +23,11 @@ import ImageComponent from './ImageComponent';
 const UploadImages : React.FC = () => {
 
 
-    
+
     const { session } = useAuthentication();
     const [profile, setProfile] = useState<any>(null);
     const [cover, setCover] = useState<any>('');
     const [images, setImages] = useState<File[]|string[]>([]);
-    const [proxyImages, setProxyImages] = useState<any[]>([]);
     const [videos, setVideos] = useState<any[]>([]);
 
 
