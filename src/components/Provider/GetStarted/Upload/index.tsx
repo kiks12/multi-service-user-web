@@ -20,6 +20,7 @@ import ImageComponent from './ImageComponent';
 
 
 
+
 const UploadImages : React.FC = () => {
 
 
@@ -33,13 +34,19 @@ const UploadImages : React.FC = () => {
 
 
 
-    const handleCoverChange = (e: any) => {
-        const file : File = e.target.files[0];
+    const saveImageToSessionStorage = (key: string, file: File) => {
         const reader = new FileReader();
         reader.addEventListener('load', () => {
-            sessionStorage.setItem('cover', reader.result as string);
+            sessionStorage.setItem(key, reader.result as string);
         })
         reader.readAsDataURL(file);
+    }
+
+
+
+    const handleCoverChange = (e: any) => {
+        const file : File = e.target.files[0];
+        saveImageToSessionStorage('cover', file);
         setCover(file);
     }
 
@@ -48,11 +55,7 @@ const UploadImages : React.FC = () => {
 
     const handleProfileChange = (e: any) => {
         const file : File = e.target.files[0];
-        const reader = new FileReader();
-        reader.addEventListener('load', () => {
-            sessionStorage.setItem('profile', reader.result as string);
-        })
-        reader.readAsDataURL(file);
+        saveImageToSessionStorage('profile', file);
         setProfile(file);
     }
 
@@ -70,24 +73,17 @@ const UploadImages : React.FC = () => {
 
 
 
-
-    const persistImages = async (images: any[]) => {
+    const persistImages = (images: any[]) => {
         images.forEach((file: File) => {
-            const reader = new FileReader();
-            reader.addEventListener('load', () => {
-                sessionStorage.setItem(file.name, reader.result as string);
-            })
-            reader.readAsDataURL(file);
+            saveImageToSessionStorage(file.name, file);
         })
-        return Promise.resolve();
     }
-
 
 
 
     const handleImagesChange = async (e: any) => {
         const images = await setImagesFiles(e)
-        await persistImages(images);
+        persistImages(images);
     }
 
 
@@ -101,11 +97,13 @@ const UploadImages : React.FC = () => {
 
 
 
+
     const getPersistedProfilePicture = useCallback(() => {
         const file : any = sessionStorage.getItem('profile');
         const profilePictureData = dataURLtoFile(file as string, 'profile');
         setProfile(profilePictureData);
     }, []);
+
 
 
 
@@ -120,6 +118,8 @@ const UploadImages : React.FC = () => {
         }
         setImages(prev => prev = images );
     }, []);
+
+
 
 
 
@@ -139,17 +139,13 @@ const UploadImages : React.FC = () => {
 
 
 
+
+    
     useEffect(() => {
         getPersistedImages();
         getPersistedCoverPhoto();
         getPersistedProfilePicture()
     }, [getPersistedImages, getPersistedCoverPhoto, getPersistedProfilePicture]);
-
-
-
-    useEffect(() => {
-        console.log('images: ', images);
-    }, [images]);
 
 
 
@@ -222,19 +218,6 @@ const UploadImages : React.FC = () => {
                             return <ImageComponent key={idx} file={imageFile}/>
                         })
                     }
-                    {/* {
-                        (proxyImages.length !== 0 && images.length === 0) &&
-                        proxyImages.map((src: string, idx: number) => {
-                            return <NextImage 
-                                src={`${src}`}
-                                alt='image'
-                                key={idx}
-                                objectFit='cover'
-                                height={250}
-                                width={250}
-                            />
-                        })
-                    } */}
                     <AddImageButton 
                         onChange={handleImagesChange}
                     />
