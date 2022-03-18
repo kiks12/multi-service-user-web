@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Page
 Created: Feb. 21, 2022
-Last Updated: Mar. 16, 2022
+Last Updated: Mar. 19, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -19,7 +19,11 @@ import Head from "next/head";
 
 
 
-import { useEffect, useState } from "react";
+import CryptoJS from "crypto-js";
+
+
+
+import { useCallback, useEffect, useState } from "react";
 import { useAuthentication } from "../../../src/custom-hooks/useAuthentication";
 
 
@@ -52,13 +56,42 @@ type ActivePrompt = 'Basic' | 'Desc' | 'Skills' | 'Upload' | 'Final';
 const GetStarted: NextPage = ({user, accessToken}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
 
-    const { setSession } = useAuthentication();
+    const { session, setSession } = useAuthentication();
     const [startProcess, setStartProcess] = useState<boolean>(false);
     const [activePrompt, setActivePrompt] = useState<ActivePrompt>('Basic');
     const [profile, setProfile] = useState<any>('');
     const [cover, setCover] = useState<any>('');
     const [images, setImages] = useState<File[]|string[]>([]);
     const [videos, setVideos] = useState<any[]>([]);
+
+
+
+    const secretKey = accessToken;
+
+
+
+    const persistUserInputs = useCallback(() => {
+        const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(session), secretKey).toString();
+        localStorage.setItem('session-persist', encryptedData);
+    }, [secretKey, session]);
+
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            const persistedData = localStorage.getItem('session-persist') as string;
+            if (!persistedData) return;
+            const decryptedData = CryptoJS.AES.decrypt(persistedData, secretKey).toString(CryptoJS.enc.Utf8);
+            console.log(decryptedData);
+            if (typeof setSession === 'function') setSession(JSON.parse(decryptedData));
+        }, 3000);
+    }, [secretKey, setSession]);
+
+
+
+    useEffect(() => {
+        persistUserInputs();
+    }, [persistUserInputs]);
 
 
 
