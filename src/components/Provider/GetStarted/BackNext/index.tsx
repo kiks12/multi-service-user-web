@@ -38,6 +38,12 @@ interface BackNextProps {
     activePrompt: ActivePrompt;
     setActivePrompt: React.Dispatch<React.SetStateAction<ActivePrompt>>;
     accessToken: string;
+    images: {
+        cover: any;
+        profile: any;
+        videos: any[];
+        images: any[];
+    }
 }
 
 
@@ -53,7 +59,12 @@ const BACK_NEXT_PROMPTS = {
 
 
 
-const BackNext: React.FC<BackNextProps> = ({ activePrompt, setActivePrompt, accessToken }) => {
+const BackNext: React.FC<BackNextProps> = ({ 
+    activePrompt, 
+    setActivePrompt,
+    accessToken,
+    images
+ }) => {
 
     const { session, setSession } = useAuthentication();
     const [message, setMessage] = useState<string>('');
@@ -83,10 +94,26 @@ const BackNext: React.FC<BackNextProps> = ({ activePrompt, setActivePrompt, acce
     
 
 
+
     // on click handler of finish button
     const finalizationLogicHandler = async () => {
         // create a post request to Provider Information Update API Route
-        console.log(session);
+        // console.log(session);
+        console.log(images.cover);
+        try {
+            const formData = new FormData();
+            formData.append('files', images.cover);
+            const res = await authorizedFetch({
+                url: `${__backend__}/provider/upload-cover-photo`,
+                accessToken,
+                body: formData,
+                method: 'POST',
+            })
+
+            console.log(res);
+        } catch (e) {
+            console.error(e);
+        }
         // try {
         //     const res = await authorizedFetch({
         //         url:`${__backend__}/provider/update-information?firstVerifiedLogin=0`,

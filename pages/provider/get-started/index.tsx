@@ -179,6 +179,12 @@ const GetStarted: NextPage = ({user, accessToken}: InferGetServerSidePropsType<t
                                 activePrompt={activePrompt}
                                 setActivePrompt={setActivePrompt}
                                 accessToken={accessToken}
+                                images={{
+                                    cover,
+                                    profile,
+                                    images,
+                                    videos,
+                                }}
                             />
                         </div>
                     )
