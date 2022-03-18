@@ -73,8 +73,10 @@ const UploadImages : React.FC<UploadImagesProps> = ({
     // this is the controller of cover input 
     const handleCoverChange = (e: any) => {
         const file : File = e.target.files[0];
+        // set localStorage item cover with value of the filename to persist the filename
+        localStorage.setItem('cover', file.name);
         // persist cover photo in session storage
-        saveImageToSessionStorage('cover', file);
+        saveImageToSessionStorage(`cover-${file.name}`, file);
         setCover(file);
     }
 
@@ -83,8 +85,10 @@ const UploadImages : React.FC<UploadImagesProps> = ({
     // this is the controller of the profile picture input
     const handleProfileChange = (e: any) => {
         const file : File = e.target.files[0];
+        // set localStorage item profile with the value of the filename to persist the filename
+        localStorage.setItem('profile', file.name);
         // persist profile picture in session storage
-        saveImageToSessionStorage('profile', file);
+        saveImageToSessionStorage(`profile-${file.name}`, file);
         setProfile(file);
     }
 
@@ -135,8 +139,12 @@ const UploadImages : React.FC<UploadImagesProps> = ({
 
     // This function is the getter of persisted cover photo
     const getPersistedCoverPhoto = useCallback(() => {
-        const file : any = sessionStorage.getItem('cover');
-        const coverData = dataURLtoFile(file as string, 'cover');
+        // get the sessionStorage key from localstorage using the key 'cover'
+        const key = localStorage.getItem('cover');
+        // get the data URL from sessionStorage
+        const file : any = sessionStorage.getItem(`cover-${key as string}`);
+        // convert the data URL to File object
+        const coverData = dataURLtoFile(file as string, key as string);
         setCover(coverData);
     }, [setCover]);
 
@@ -145,8 +153,12 @@ const UploadImages : React.FC<UploadImagesProps> = ({
 
     // This function is the getter of persisted profile picture
     const getPersistedProfilePicture = useCallback(() => {
-        const file : any = sessionStorage.getItem('profile');
-        const profilePictureData = dataURLtoFile(file as string, 'profile');
+        // get the sessionStorage key from localstorage using the key 'profile'
+        const key = localStorage.getItem('profile');
+        // get the data URL from sessionStorage
+        const file : any = sessionStorage.getItem(`profile-${key as string}`);
+        // convert the data URL to File Object
+        const profilePictureData = dataURLtoFile(file as string, key as string);
         setProfile(profilePictureData);
     }, [setProfile]);
 
@@ -162,7 +174,7 @@ const UploadImages : React.FC<UploadImagesProps> = ({
             const imageName = sessionStorage.key(i) as string;
             // check if current image file name is cover or profile 
             // then do nothing 
-            if (imageName === 'cover' || imageName === 'profile') continue; 
+            if (imageName.includes('cover-' || imageName.includes('profile-'))) continue; 
             // otherwise fetch the file in sessionStorage 
             const file: any = sessionStorage.getItem(imageName);
             // convert the data URL to File object

@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Page Finalization Content
 Created: Feb. 14, 2022
-Last Updated: Feb. 14, 2022
+Last Updated: Mar. 19, 2022
 Author: Tolentino, Francis James S.
 
 */
