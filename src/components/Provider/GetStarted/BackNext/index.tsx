@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Back Next Component
 Created: Feb. 12, 2022
-Last Updated: Feb. 21, 2022
+Last Updated: Mar. 19, 2022
 Auhtor: Tolentino, Francis James S.
 
 */
@@ -91,15 +91,10 @@ const BackNext: React.FC<BackNextProps> = ({
             return prev;
         })
     }
-    
 
 
 
-    // on click handler of finish button
-    const finalizationLogicHandler = async () => {
-        // create a post request to Provider Information Update API Route
-        // console.log(session);
-        console.log(images.cover);
+    const handleCoverPhotoUpload = async () => {
         try {
             const formData = new FormData();
             formData.append('files', images.cover);
@@ -109,31 +104,96 @@ const BackNext: React.FC<BackNextProps> = ({
                 body: formData,
                 method: 'POST',
             })
+            return Promise.resolve(res);
+        } catch (e) {
+            // handle errors
+            console.error(e);
+        }
+    }
 
-            console.log(res);
+
+
+
+    const handleProfilePictureUpload = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('files', images.profile);
+            const res = await authorizedFetch({
+                url: `${__backend__}/provider/upload-profile-picture`,
+                accessToken,
+                body: formData,
+                method: 'POST',
+            })
+            return Promise.resolve(res);
+        } catch (e) {
+            // handle errors
+            console.error(e);
+        }
+    }
+
+
+
+
+    const handleImagesUpload = async () => {
+        try {
+            const formData = new FormData();
+
+            for (let i=0; i<images.images.length; i++) {
+                formData.append('files', images.images[i]);
+            }
+
+            const res = await authorizedFetch({
+                url: `${__backend__}/provider/upload-images`,
+                accessToken,
+                body: formData,
+                method: 'POST',
+            })
+            return Promise.resolve(res);
+        } catch (e) {
+            // handle errors 
+            console.error(e);
+        }
+    }
+
+
+
+
+    const handleProviderInformationUpdate = async () => {
+        try {
+            const res = await authorizedFetch({
+                url:`${__backend__}/provider/update-information?firstVerifiedLogin=0`,
+                method: 'PUT',
+                accessToken: accessToken,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(session),
+            });
+
+
+            if (typeof setSession === 'function') setSession(res.user);
+
+            return Promise.resolve(res);
         } catch (e) {
             console.error(e);
         }
-        // try {
-        //     const res = await authorizedFetch({
-        //         url:`${__backend__}/provider/update-information?firstVerifiedLogin=0`,
-        //         method: 'PUT',
-        //         accessToken: accessToken,
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(session),
-        //     });
+    }
 
 
-        //     setMessage(res.msg);
-        //     setOpenModal(true);
+
+    
 
 
-        //     if (typeof setSession === 'function') setSession(res.user);
-        // } catch (e) {
-        //     console.error(e);
-        // }
+
+    // on click handler of finish button
+    const finalizationLogicHandler = async () => {
+        // create a post request to Provider Information Update API Route
+        const { msg } = await handleProviderInformationUpdate();
+        const { msg:msg2 } = await handleProfilePictureUpload();
+        const { msg:msg3 } = await handleCoverPhotoUpload();
+        const {msg:msg4 } = await handleImagesUpload();
+        setMessage(`${msg}, ${msg2}, ${msg3}, and ${msg4}`);
+        setOpenModal(true);
     }
 
 
