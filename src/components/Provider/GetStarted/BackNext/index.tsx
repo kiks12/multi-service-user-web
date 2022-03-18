@@ -86,26 +86,27 @@ const BackNext: React.FC<BackNextProps> = ({ activePrompt, setActivePrompt, acce
     // on click handler of finish button
     const finalizationLogicHandler = async () => {
         // create a post request to Provider Information Update API Route
-        try {
-            const res = await authorizedFetch({
-                url:`${__backend__}/provider/update-information?firstVerifiedLogin=0`,
-                method: 'PUT',
-                accessToken: accessToken,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(session),
-            });
+        console.log(session);
+        // try {
+        //     const res = await authorizedFetch({
+        //         url:`${__backend__}/provider/update-information?firstVerifiedLogin=0`,
+        //         method: 'PUT',
+        //         accessToken: accessToken,
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(session),
+        //     });
 
 
-            setMessage(res.msg);
-            setOpenModal(true);
+        //     setMessage(res.msg);
+        //     setOpenModal(true);
 
 
-            if (typeof setSession === 'function') setSession(res.user);
-        } catch (e) {
-            console.error(e);
-        }
+        //     if (typeof setSession === 'function') setSession(res.user);
+        // } catch (e) {
+        //     console.error(e);
+        // }
     }
 
 

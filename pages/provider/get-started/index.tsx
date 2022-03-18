@@ -55,6 +55,10 @@ const GetStarted: NextPage = ({user, accessToken}: InferGetServerSidePropsType<t
     const { setSession } = useAuthentication();
     const [startProcess, setStartProcess] = useState<boolean>(false);
     const [activePrompt, setActivePrompt] = useState<ActivePrompt>('Basic');
+    const [profile, setProfile] = useState<any>('');
+    const [cover, setCover] = useState<any>('');
+    const [images, setImages] = useState<File[]|string[]>([]);
+    const [videos, setVideos] = useState<any[]>([]);
 
 
 
@@ -153,7 +157,16 @@ const GetStarted: NextPage = ({user, accessToken}: InferGetServerSidePropsType<t
                             }
                             {
                                 activePrompt === 'Upload' && ( 
-                                    <UploadImages />
+                                    <UploadImages 
+                                        cover={cover}
+                                        setCover={setCover}
+                                        images={images}
+                                        setImages={setImages}
+                                        profile={profile}
+                                        setProfile={setProfile}
+                                        videos={videos}
+                                        setVideos={setVideos}
+                                    />
                                 )
                             }
                             {

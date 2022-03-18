@@ -20,16 +20,35 @@ import ImageComponent from './ImageComponent';
 
 
 
+interface UploadImagesProps {
+    cover: any;
+    setCover: React.Dispatch<any>;
+    profile: any;
+    setProfile: React.Dispatch<any>;
+    images: File[] | string[];
+    setImages: React.Dispatch<React.SetStateAction<File[] | string[]>>;
+    videos: File[] | string[];
+    setVideos:  React.Dispatch<React.SetStateAction<File[] | string[]>>;
+}
 
-const UploadImages : React.FC = () => {
+
+
+
+const UploadImages : React.FC<UploadImagesProps> = ({
+    cover,
+    setCover,
+    images, 
+    setImages, 
+    profile,
+    setProfile,
+    videos,
+    setVideos
+}) => {
 
 
 
     const { session } = useAuthentication();
-    const [profile, setProfile] = useState<any>(null);
-    const [cover, setCover] = useState<any>('');
-    const [images, setImages] = useState<File[]|string[]>([]);
-    const [videos, setVideos] = useState<any[]>([]);
+    
 
 
 
@@ -119,7 +138,7 @@ const UploadImages : React.FC = () => {
         const file : any = sessionStorage.getItem('cover');
         const coverData = dataURLtoFile(file as string, 'cover');
         setCover(coverData);
-    }, []);
+    }, [setCover]);
 
 
 
@@ -129,7 +148,7 @@ const UploadImages : React.FC = () => {
         const file : any = sessionStorage.getItem('profile');
         const profilePictureData = dataURLtoFile(file as string, 'profile');
         setProfile(profilePictureData);
-    }, []);
+    }, [setProfile]);
 
 
 
@@ -152,7 +171,7 @@ const UploadImages : React.FC = () => {
         }
         // set images state
         setImages(images);
-    }, []);
+    }, [setImages]);
 
 
 
