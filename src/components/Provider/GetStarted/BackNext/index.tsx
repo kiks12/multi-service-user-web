@@ -94,16 +94,27 @@ const BackNext: React.FC<BackNextProps> = ({
 
 
 
+
+
+    // this function is making the POST request for the cover photo
+    // this returns a promise with the result of the POST request to 
+    // /provider/upload-cover-photo
+    // this will be later called in the main finalization
     const handleCoverPhotoUpload = async () => {
         try {
+            // prepare the form data
             const formData = new FormData();
             formData.append('files', images.cover);
+
+            // create the request
             const res = await authorizedFetch({
                 url: `${__backend__}/provider/upload-cover-photo`,
                 accessToken,
                 body: formData,
                 method: 'POST',
             })
+
+
             return Promise.resolve(res);
         } catch (e) {
             // handle errors
@@ -114,16 +125,25 @@ const BackNext: React.FC<BackNextProps> = ({
 
 
 
+    // this function sends a POST API request to /provider/upload-profile-picture
+    // to upload the profile picture from user information
+    // returns a promise with the result of the request
+    // this will be later called in the main finalization
     const handleProfilePictureUpload = async () => {
         try {
+            // prepare the form data
             const formData = new FormData();
             formData.append('files', images.profile);
+
+            // send the request
             const res = await authorizedFetch({
                 url: `${__backend__}/provider/upload-profile-picture`,
                 accessToken,
                 body: formData,
                 method: 'POST',
             })
+
+
             return Promise.resolve(res);
         } catch (e) {
             // handle errors
@@ -134,20 +154,32 @@ const BackNext: React.FC<BackNextProps> = ({
 
 
 
+
+    // similar to the previous 2 functions, this also
+    // sends a POST API request to the server in /provider/upload-images route
+    // to handle the uploads of the images
+    // returns a promise with the result of the request
+    // this will be later called in the main finalization
     const handleImagesUpload = async () => {
         try {
+            // create the form data
             const formData = new FormData();
 
             for (let i=0; i<images.images.length; i++) {
+                // iterate through the images and append each
+                // image file to formdata
                 formData.append('files', images.images[i]);
             }
 
+            // create the request
             const res = await authorizedFetch({
                 url: `${__backend__}/provider/upload-images`,
                 accessToken,
                 body: formData,
                 method: 'POST',
             })
+
+
             return Promise.resolve(res);
         } catch (e) {
             // handle errors 
@@ -158,10 +190,15 @@ const BackNext: React.FC<BackNextProps> = ({
 
 
 
+    // this function will create a PUT API request 
+    // to /provider/update-information
+    // and will return a promise with a value of the result
+    // this will be later called in the main finalization
     const handleProviderInformationUpdate = async () => {
         try {
+            // create the request
             const res = await authorizedFetch({
-                url:`${__backend__}/provider/update-information?firstVerifiedLogin=0`,
+                url:`${__backend__}/provider/update-information`,
                 method: 'PUT',
                 accessToken: accessToken,
                 headers: {
@@ -169,7 +206,6 @@ const BackNext: React.FC<BackNextProps> = ({
                 },
                 body: JSON.stringify(session),
             });
-
 
             if (typeof setSession === 'function') setSession(res.user);
 
@@ -185,14 +221,19 @@ const BackNext: React.FC<BackNextProps> = ({
 
 
 
-    // on click handler of finish button
+    // this is the main finalization logic binded to the finish button component
+    // in the DOM, this function calls 4 other functions created above.
+    // this will handle all upload and update logic of the get started process
     const finalizationLogicHandler = async () => {
         // create a post request to Provider Information Update API Route
         const { msg } = await handleProviderInformationUpdate();
         const { msg:msg2 } = await handleProfilePictureUpload();
         const { msg:msg3 } = await handleCoverPhotoUpload();
         const {msg:msg4 } = await handleImagesUpload();
+
+        // combine all messages through all 4 requests and set it to the message state
         setMessage(`${msg}, ${msg2}, ${msg3}, and ${msg4}`);
+        // then open the modal
         setOpenModal(true);
     }
 
