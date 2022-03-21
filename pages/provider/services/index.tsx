@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Services Page
 Created: Feb. 12, 2022
-Last Updated: Mar. 05, 2022
+Last Updated: Mar. 21, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -41,7 +41,9 @@ import type { Service as _services } from '../../../types';
 
 
 
+
 type Prompts = 'active' | 'inactive' | 'all'
+
 
 
 
@@ -57,29 +59,30 @@ const ProviderServices : NextPage = ({
     const [myServices, setMyServices] = useState<_services[]>(() => services);
 
 
+
     useEffect(() => {
         if (typeof setSession === 'function') setSession(user);
     }, [setSession, user]);
 
     
 
+
+    // this useMemo function handles the filtering of the service based on 
+    // status, i.e. active, inactive, or all
     const filteredServices = useMemo(() => {
         if (activePrompt === 'active') {
+            // if active prompt from menu is active then filter to services that are active
             return myServices.filter(service => service.status === 'active');
         }
 
         if (activePrompt === 'inactive') {
+            // if active prompt from menu is inactive then filter to services that are inactive
             return myServices.filter(service => service.status === 'inactive');
         }
-
+ 
+        // otherwise return unfiltered services
         return myServices;
     }, [activePrompt, myServices]);
-
-
-
-    useEffect(() => {
-        console.log(filteredServices);
-    }, [filteredServices]);
 
 
 
@@ -87,12 +90,16 @@ const ProviderServices : NextPage = ({
     return (
         <>
             <Layout>
+
+
                 <ServicesMenu 
                     activePrompt={activePrompt}
                     onClick={(value: Prompts) => {
-                    setActivePrompt(value);
-                }}
+                       setActivePrompt(value);
+                    }}
                 />
+
+
                 <div className={styles.servicesContainer}>
                     
                     {
@@ -114,6 +121,7 @@ const ProviderServices : NextPage = ({
                         (activePrompt === 'active' || activePrompt === 'all') && <CreateNewServiceComponent />
                     }
 
+
                 </div>
             </Layout>
         </>
@@ -125,19 +133,26 @@ const ProviderServices : NextPage = ({
 
 export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
 
+    // server side fetch the services from the external server
+    // using authorized fetch utility function
     const servicesFetchResults = await authorizedFetch({
-        url: `${__backend__}/provider/services/fetch`,
+        url: `${__backend__}/provider/services/get-services`,
         accessToken: req.cookies.accessToken as string,
         method: 'GET',
     })
 
 
 
+
+
     if (req.cookies.accessToken) {
+        // fetch user information if accesstoken is not null/undefined
         const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
 
-        if (!userInformation) {
+        if (!userInformation.user) {
+            // if user information not fetched properly
+            // return only accesstoken
             return {
                 props: {
                     user: {},
@@ -150,6 +165,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
 
 
         if (userInformation.user.firstProviderLogin) {
+            // redirect to /provider/get-started if user firstProviderLogin 
+            // property is set to true
             return {
                 redirect: {
                     permanent: false,
@@ -159,7 +176,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
         }
 
 
-
+        // if all conditions are inapplicable 
+        // then return user, services, and accessToken
         return {
             props: {
                 user: userInformation.user,
@@ -170,7 +188,8 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
     }
 
 
-
+    
+    // otherwise return all except user information
     return {
         props: {
             user: {},
