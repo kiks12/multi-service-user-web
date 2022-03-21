@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Get Started Page
 Created: Feb. 21, 2022
-Last Updated: Mar. 19, 2022
+Last Updated: Mar. 21, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -70,28 +70,28 @@ const GetStarted: NextPage = ({user, accessToken}: InferGetServerSidePropsType<t
 
 
 
-    const persistUserInputs = useCallback(() => {
-        const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(session), secretKey).toString();
-        localStorage.setItem('session-persist', encryptedData);
-    }, [secretKey, session]);
+    // const persistUserInputs = useCallback(() => {
+    //     const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(session), secretKey).toString();
+    //     localStorage.setItem('session-persist', encryptedData);
+    // }, [secretKey, session]);
 
 
 
-    useEffect(() => {
-        setTimeout(() => {
-            const persistedData = localStorage.getItem('session-persist') as string;
-            if (!persistedData) return;
-            const decryptedData = CryptoJS.AES.decrypt(persistedData, secretKey).toString(CryptoJS.enc.Utf8);
-            console.log(decryptedData);
-            if (typeof setSession === 'function') setSession(JSON.parse(decryptedData));
-        }, 3000);
-    }, [secretKey, setSession]);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         const persistedData = localStorage.getItem('session-persist') as string;
+    //         if (!persistedData) return;
+    //         const decryptedData = CryptoJS.AES.decrypt(persistedData, secretKey).toString(CryptoJS.enc.Utf8);
+    //         console.log(decryptedData);
+    //         if (typeof setSession === 'function') setSession(JSON.parse(decryptedData));
+    //     }, 3000);
+    // }, [secretKey, setSession]);
 
 
 
-    useEffect(() => {
-        persistUserInputs();
-    }, [persistUserInputs]);
+    // useEffect(() => {
+    //     persistUserInputs();
+    // }, [persistUserInputs]);
 
 
 
