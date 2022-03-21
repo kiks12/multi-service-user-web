@@ -1,7 +1,7 @@
 .servicesContainer {
     display: grid;
     margin: 1em 0;
-    grid-template-columns: repeat(auto-fit, minmax(15em, 20em));
+    grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
     column-gap: 1em;
     row-gap: 1em;
 }
