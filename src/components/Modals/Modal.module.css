@@ -1,0 +1,28 @@
+.card {
+    width: min(100%, 35em);
+}
+
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.card > p {
+    margin: 1em 0;
+    user-select: none;
+}
+
+
+
+.buttonContainer {
+    margin: 1em 0;
+    display: flex;
+}
+
+
+.buttonContainer > * + * {
+    margin: 0 0 0 1em;
+}
