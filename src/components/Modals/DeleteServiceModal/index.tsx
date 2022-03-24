@@ -3,7 +3,7 @@
 
 Multi Service Platform - Delete Service Modal component for Provider
 Created: Feb. 23, 2022
-Last Updated: Feb. 23, 2022
+Last Updated: Mar. 24, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -12,6 +12,7 @@ Author: Tolentino, Francis James S.
 
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styles from '../Modal.module.css';
 
 
 
@@ -23,12 +24,12 @@ import React, { useState } from 'react';
 
 
 
-import authorizedFetch from '../../../utils/authorizedFetch';
-import { __backend__ } from '../../constants';
+import authorizedFetch from '../../../../utils/authorizedFetch';
+import { __backend__ } from '../../../constants';
 
 
 
-import Modal from './Modal';
+import Modal from '../Modal';
 
 
 
@@ -42,6 +43,7 @@ interface DeleteServiceModalProps {
 
 const DeleteServiceModal: React.FC<DeleteServiceModalProps> = ({ service, accessToken, setOpenDeleteModal }) => {
 
+
     const key = service.Users.username + '-' + service.title;
     const [input, setInput] = useState<string>('');
     const [message, setMessage] = useState<string>('');
@@ -54,8 +56,11 @@ const DeleteServiceModal: React.FC<DeleteServiceModalProps> = ({ service, access
 
 
     const deleteService = async () => {
+        // create an Authorize Request to endpoint
+        // /provider/service/delete-service?serviceId={}
+        // to delete a service
         const deleted = await authorizedFetch({
-            url: `${__backend__}/provider/services/delete?serviceId=${service.serviceId}`,
+            url: `${__backend__}/provider/services/delete-service?serviceId=${service.serviceId}`,
             accessToken: accessToken,
             method: 'DELETE'
         })
@@ -71,12 +76,7 @@ const DeleteServiceModal: React.FC<DeleteServiceModalProps> = ({ service, access
             {
                 openMessageModal && 
                 <Modal>
-                    <div 
-                        className='card'
-                        style={{
-                            width: '40%'
-                        }}
-                    >
+                    <div className={`card ${styles.card}`}>
                         <h2>Message</h2>
 
                         <p>{message}</p>
@@ -95,17 +95,8 @@ const DeleteServiceModal: React.FC<DeleteServiceModalProps> = ({ service, access
             {
                 openMainModal &&
                 <Modal>
-                    <div 
-                        className='card'
-                        style={{
-                            width: '40%'
-                        }}
-                    >
-                        <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between'
-                        }}>
+                    <div className={`card ${styles.card}`}>
+                        <div className={styles.header}>
                             <h2>Confirm</h2>
                             <FontAwesomeIcon 
                                 icon={faClose}
@@ -133,9 +124,7 @@ const DeleteServiceModal: React.FC<DeleteServiceModalProps> = ({ service, access
                             placeholder='Enter the key'
                         />
 
-                        <div style={{
-                            display: 'flex'
-                        }}>
+                        <div className={styles.buttonContainer}>
                             <button
                                 onClick={() => setOpenDeleteModal(false)}
                             >
