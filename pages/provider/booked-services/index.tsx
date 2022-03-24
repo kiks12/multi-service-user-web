@@ -123,10 +123,14 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
 
     if (req.cookies.accessToken) {
         const userInformation = await fetchUserInformation(req.cookies?.accessToken);
+
+        // get provider bookings from server
+        // create an Authorized GET Request to endpoint 
+        // /provider/bookings/get-bookings?includedProperties={}
         const bookedServices = await authorizedFetch({
             accessToken: req.cookies.accessToken,
             method: 'GET',
-            url: `${__backend__}/bookings/provider/fetch-bookings`,
+            url: `${__backend__}/provider/bookings/get-bookings?includedProperties=Services-Users`,
         })
 
 
