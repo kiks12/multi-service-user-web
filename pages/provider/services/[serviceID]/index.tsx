@@ -274,12 +274,12 @@ export const getServerSideProps: GetServerSideProps = async ({req, query}: GetSe
         // get service information from server 
         // send an Authorized GET Request to /provider/services/get-service-information
         const serviceInformationResponse = await authorizedFetch({
-            url: `${__backend__}/provider/services/get-service-information?serviceId=${serviceID}`,
+            url: `${__backend__}/provider/services/get-service-information?serviceId=${serviceID}&includedProperty=Users-Images`,
             accessToken: req.cookies.accessToken,
             method: 'GET',
         });
 
-        
+
 
         if (!userInformation || !serviceInformationResponse) {
             return {
