@@ -1,9 +1,9 @@
 
 /*
 
-Multi Services Platform - Provider Edit existing Service Page
-Created: Feb. 23, 2022
-Last Updated: Feb. 23, 2022
+Multi Services Platform - Provider Create new Service Page
+Created: Feb. 14, 2022
+Last Updated: Mar. 24, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -24,41 +24,38 @@ import React, { useEffect, useMemo, useState } from "react";
 
 
 
+import { useRouter } from "next/router";
 import { useAuthentication } from "../../../../src/custom-hooks/useAuthentication";
 import useSplitArray from "../../../../src/custom-hooks/useSplitArray";
 
 
 
 import Layout from "../../../../src/components/Provider/Layout/ProviderLayout";
-
-
-
-import fetchUserInformation from "../../../../libs/fetchUserInformation";
-import { __backend__ } from "../../../../src/constants";
-import authorizedFetch from "../../../../utils/authorizedFetch";
+import Calendar from 'react-calendar';
 import Modal from "../../../../src/components/Modals/Modal";
+
+
+
+import { __backend__ } from "../../../../src/constants";
+import fetchUserInformation from "../../../../libs/fetchUserInformation";
+import authorizedFetch from "../../../../utils/authorizedFetch";
+import { formatDateToString, formatStringToDate } from "../../../../utils/formatDate";
+import { formatter } from "../../../../utils/formatter";
+
+
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/router";
 
 
 
 
 
 
-const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'PHP'
-})
-
-
-
-
-
-
-const CreateService: NextPage = ({
+const EditService: NextPage = ({
     user,
-    accessToken
+    accessToken,
+    service
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { session, setSession } = useAuthentication();
@@ -77,21 +74,39 @@ const CreateService: NextPage = ({
 
 
     const [title, setTitle] = useState<string>('');
-    const [details, setDetails] = useState<string>('');
-    const [type, setType] = useState<'Flat Rate' | 'Range'>('Flat Rate');
-    const [startingPrice, setStartingPrice] = useState<string>('0');
-    const [lastPrice, setLastPrice] = useState<string>('0');
+    const [serviceDetails, setServiceDetails] = useState<string>('');
+    const [priceType, setPriceType] = useState<'Flat Rate' | 'Range'>('Flat Rate');
+    const [priceSubType, setPriceSubType] = useState<'Per Pax' | 'Per Service'>('Per Pax');
+    const [priceInitial, setPriceInitial] = useState<string>('0');
+    const [priceFinal, setPriceFinal] = useState<string>('0');
     const [uploadedImages, setUploadedImages] = useState<any[]>([]);
-    const [categories, setCategories] = useState<any[]>([]);
+    const [category, setCategory] = useState<any[]>([]);
 
 
+    const [dateType, setDateType] = useState<'Single' | 'Range'>('Single');
+    const [date, setDate] = useState<Date>(new Date());
+    const [unavailableDates, setUnavailableDates] = useState<string[]>([]);
 
+
+    useEffect(() => {
+        setTitle(service.title);
+        setServiceDetails(service.serviceDetails);
+        setCategory(service.category.split('|'));
+        setPriceType(service.priceType);
+        setPriceSubType(service.priceSubType);
+        setPriceInitial(service.priceInitial);
+        setPriceFinal(service.priceFinal);
+        setUnavailableDates(service.unavailableDates);
+    }, [service]);
+
+
+    // this is the skills array that will be used in categories later 
+    // in the user interface.
     const [skillsArrayIndex, setSkillsArrayIndex] = useState<number>(0);
     const skillsArray = useSplitArray({
         stringToSplit: session?.skills ? session.skills as string : '',
         splitter: '|',
     });
-
 
 
 
@@ -103,25 +118,71 @@ const CreateService: NextPage = ({
 
 
     const formattedStartingPrice = useMemo(() => {
-        return formatter.format(parseInt(startingPrice, 10));
-    }, [startingPrice]);
+        return formatter.format(parseInt(priceInitial, 10));
+    }, [priceInitial]);
 
 
 
 
     const formattedLastPrice = useMemo(() => {
-        return formatter.format(parseInt(lastPrice, 10));
-    }, [lastPrice]);
+        return formatter.format(parseInt(priceFinal, 10));
+    }, [priceFinal]);
 
 
 
 
 
+    // this function will be used to send a POST request to the server
+    // at route /provider/services/create-new-service
+    // this will be used in the main logic function - publishServiceToDatabase
+    // return a promise with value of the response of the request
+    const sendCreateNewServiceRequest = async () => {
+        try {
+            // send an authorized POST request
+            // with JSON body of title, serviceDetails, category, 
+            // priceType, priceSubType, priceInitial, priceFinal, and unavailableDates
+            const res = await authorizedFetch({
+                url: `${__backend__}/provider/services/create-new-service`,
+                method: 'POST',
+                accessToken: accessToken,
+                body: JSON.stringify({
+                    title,
+                    serviceDetails,
+                    category: category.join('|'),
+                    priceType,
+                    priceSubType,
+                    priceInitial: parseInt(priceInitial, 10),
+                    priceFinal: parseInt(priceFinal, 10),
+                    unavailableDates: unavailableDates.join('|'),
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            return Promise.resolve(res);
+        } catch (e) {
+            // handle errors
+            console.error(e);                            
+        }
+    }
+
+
+
+    
+
+    // this function creates the images form data
+    // that will be send to the server through post request
+    // form data will consist of uploadedImages files
+    // returns the created form data
     const imagesFormData = () => {
         const formData = new FormData();
 
         if (uploadedImages){
             for (let i=0; i < uploadedImages.length; i++) {
+                // append each uploadedImages file to form data with key files
+                // each file will be inside an array called files
+                // i.e [file, file, file]
                 formData.append('files', uploadedImages[i]);
             }
         }
@@ -132,21 +193,26 @@ const CreateService: NextPage = ({
 
 
 
-    const uploadImages = async (serviceId: number) => {
-
+    // this function creates a POST request to the server in the route
+    // /provider/servies/upload-images-to-new-service with request parameter of serviceId - which 
+    // we will get later as we call create service function
+    // this function takes serviceId as a parameter
+    const uploadImagesToServerAndDatabase = async (serviceId: number) => {
+        // prepare the form data
         const formData = imagesFormData();
         try {
-
+            // send an authorized POST request to the server
+            // route: /provider/services/upload/images-to-new-service?serviceId=
             const res = await authorizedFetch({
-                url: `${__backend__}/provider/services/upload-images?serviceId=${serviceId}/`,
+                url: `${__backend__}/provider/services/upload-images-to-new-service?serviceId=${serviceId}/`,
                 accessToken: accessToken,
                 body: formData,
                 method: 'POST',
             })
 
-
-            return res;
+            return Promise.resolve(res);
         } catch (e) {
+            // handle errors
             console.error(e);
         }
     }
@@ -154,39 +220,18 @@ const CreateService: NextPage = ({
 
 
 
-    const postNewService = async () => {
-        try {
-            const res = await authorizedFetch({
-                url: `${__backend__}/provider/services/create`,
-                method: 'POST',
-                accessToken: accessToken,
-                body: JSON.stringify({
-                    title: title,
-                    details: details,
-                    categories: categories.join(' | '),
-                    type: type,
-                    startingPrice: parseInt(startingPrice, 10),
-                    lastPrice: parseInt(lastPrice, 10)
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            return res;
-        } catch (e) {
-            console.error(e);                            
-        }
-    }
-
-
-
-
-
+    // this is the main logic function that will be called in the
+    // on click event of the submit button of the form
+    // takes an mouse click event as a parameter
     const publishServiceToDatabase = async (e:any) => {
         e.preventDefault();
-        const { serviceId, msg } = await postNewService();
-        const { msg: msg2 } = await uploadImages(serviceId);
+        // invoke sendCreateNewServiceRequest function
+        // get the message and serviceId from the response
+        const { serviceId, msg } = await sendCreateNewServiceRequest();
+        // use the serviceId to invoke uploadImagesToServerAndDatabase
+        // destructure the message and set to msg2 variable
+        const { msg: msg2 } = await uploadImagesToServerAndDatabase(serviceId);
+        // set the message to both messages
         setMessage(msg + " and " + msg2);
         setOpenModal(true);
     }
@@ -195,10 +240,15 @@ const CreateService: NextPage = ({
 
 
 
+    // this function handles the changes in the input(Images) type file in the 
+    // User Interface, this will set the uploadedImages state to files found in the
+    // input 
     const imageInputOnchangeHandler = (e: any) => {
         e.preventDefault();
+        // validation
         if (e.target.files){
             for (let i = 0; i < e.target.files?.length; i++){
+                // add each file from input to uploadedImages state
                 setUploadedImages(prev => {
                     if (e.target.files){
                         return [
@@ -224,7 +274,7 @@ const CreateService: NextPage = ({
                     margin: '1em 0'
                 }}>
                     <div className='card'>
-                        <h2>Create new Service</h2>
+                        <h2>Edit Service</h2>
                     </div>    
                     <div>
                         <form>
@@ -269,8 +319,8 @@ const CreateService: NextPage = ({
                                             height: '30vh',
                                             resize: 'none'
                                         }}
-                                        value={details}
-                                        onChange={(e) => setDetails(e.target.value)}
+                                        value={serviceDetails}
+                                        onChange={(e) => setServiceDetails(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -284,7 +334,7 @@ const CreateService: NextPage = ({
                                 }}>
                             
                                     {
-                                        categories.length !== 0 && categories.map((category, idx) => {
+                                        category.length !== 0 && category.map((category, idx) => {
                                             return (
                                                 <div 
                                                     key={idx}
@@ -311,7 +361,7 @@ const CreateService: NextPage = ({
                                                             marginLeft: '1em'
                                                         }}
                                                         onClick={() => {
-                                                            setCategories((prev) => {
+                                                            setCategory((prev) => {
                                                                 return prev.filter((_cat, idxCat) => idx !== idxCat);
                                                             })
                                                             setSkillsArrayIndex(prev => prev -= 1);
@@ -337,7 +387,7 @@ const CreateService: NextPage = ({
                                                 width: '10%'
                                             }}
                                             onClick={() => {
-                                                setCategories(prev => [...prev, skillsArray[skillsArrayIndex]])
+                                                setCategory(prev => [...prev, skillsArray[skillsArrayIndex]])
                                                 setSkillsArrayIndex(prev => prev += 1)
                                             }}
                                             disabled={skillsArrayIndex === skillsArray.length}
@@ -357,22 +407,47 @@ const CreateService: NextPage = ({
                                 }}
                             >
                                 <h2>Pricing</h2>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        margin: '1em 0'
-                                    }}
-                                >
-                                    <label>Pricing Type</label>
-                                    <select
-                                        className='form-control'
-                                        value={type}
-                                        onChange={(e) => setType(e.target.value as 'Flat Rate' | 'Range')}
+                                <div style={{
+                                    display: 'flex', 
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between'
+                                }}>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            margin: '1em 0',
+                                            flexBasis: '100%'
+                                        }}
                                     >
-                                        <option value='Flat Rate'>Flat rate</option>
-                                        <option value='Range'>Range</option>
-                                    </select>
+                                        <label>Pricing Type</label>
+                                        <select
+                                            className='form-control'
+                                            value={priceType}
+                                            onChange={(e) => setPriceType(e.target.value as 'Flat Rate' | 'Range')}
+                                        >
+                                            <option value='Flat Rate'>Flat rate</option>
+                                            <option value='Range'>Range</option>
+                                        </select>
+                                    </div>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            margin: '1em 0 1em 1em',
+                                            flexBasis: '100%'
+                                        }}
+                                    >
+                                        <label>Pricing Sub Type</label>
+                                        <select
+                                            className='form-control'
+                                            value={priceSubType}
+                                            onChange={(e) => setPriceSubType(e.target.value as 'Per Pax' | 'Per Service')}
+                                        >
+                                            <option value='Per Pax'>Per Pax</option>
+                                            <option value='Per Service'>Per Service</option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 
@@ -391,8 +466,8 @@ const CreateService: NextPage = ({
                                         <input
                                             className='form-control'
                                             type='number'
-                                            value={startingPrice}
-                                            onChange={(e) => setStartingPrice(e.target.value)} 
+                                            value={priceInitial}
+                                            onChange={(e) => setPriceInitial(e.target.value)} 
                                             required
                                         />
                                         <div style={{
@@ -428,9 +503,9 @@ const CreateService: NextPage = ({
                                         <input 
                                             className='form-control'
                                             type='number'
-                                            value={lastPrice}
-                                            onChange={(e) => setLastPrice(e.target.value)}
-                                            disabled={type === 'Flat Rate'}
+                                            value={priceFinal}
+                                            onChange={(e) => setPriceFinal(e.target.value)}
+                                            disabled={priceType === 'Flat Rate'}
                                         />
                                         <div style={{
                                             margin: '0 1em',
@@ -441,6 +516,92 @@ const CreateService: NextPage = ({
                                         }}>
                                             <h3>{formattedLastPrice}</h3>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className="card">
+                                <h2>Unavailable Dates</h2>
+                                <div style={{
+                                    display: 'flex'
+                                }}>
+                                    <div style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        width: '70%'
+                                    }}>
+                                        <div style={{
+                                            display: 'flex'
+                                        }}> 
+                                            <select 
+                                                value={dateType} 
+                                                onChange={(e) => {
+                                                    setDateType(e.target.value as 'Single' | 'Range');
+                                                }}
+                                                className='form-control'
+                                            >
+                                                <option value='Single'>Single</option>
+                                                <option value='Range'>Range</option>
+                                            </select>
+                                            <button 
+                                                type="button"
+                                                onClick={() => {
+                                                    setUnavailableDates(prev => [
+                                                        ...prev,
+                                                        formatDateToString(date),
+                                                    ])
+                                                    setDate(new Date());
+                                                }}
+                                            >
+                                                Set Unavailable Date
+                                            </button>
+                                        </div>
+                                        <Calendar 
+                                            value={date} 
+                                            onChange={setDate}
+                                            selectRange={dateType === 'Single' ? false : true}
+                                            calendarType='US'
+                                            tileDisabled={({date}) => {
+                                                const _date = formatDateToString(date);
+                                                return unavailableDates.includes(_date);
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div style={{
+                                        width: '30%'
+                                    }}>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setUnavailableDates(prev => {
+                                                    return prev.filter(_date => {
+                                                        return _date !== formatDateToString(date);
+                                                    })
+                                                })
+                                                setDate(new Date());
+                                            }}
+                                        >
+                                            Remove Date
+                                        </button>
+                                        <ul>
+                                            {
+                                                unavailableDates.length !== 0
+                                                ? unavailableDates.map((date, idx) => {
+                                                    return <li 
+                                                                key={idx}
+                                                                onClick={() => {
+                                                                    const _date = formatStringToDate(date);
+                                                                    console.log(_date);
+                                                                    setDate(_date);
+                                                                }}
+                                                            >
+                                                                {date}
+                                                            </li>
+                                                }) : <p>No Unavailable Dates</p>
+                                            }
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -560,16 +721,28 @@ const CreateService: NextPage = ({
 
 
 
-export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async ({
+    req, query }: GetServerSidePropsContext) => {
+
+    const { serviceID } = query;
 
     if (req.cookies.accessToken) {
         const userInformation = await fetchUserInformation(req.cookies?.accessToken);
+
+        // get service information from server 
+        // send an Authorized GET Request to /provider/services/get-service-information
+        const serviceInformationResponse = await authorizedFetch({
+            url: `${__backend__}/provider/services/get-service-information?serviceId=${serviceID}&includedProperty=Images`,
+            accessToken: req.cookies.accessToken,
+            method: 'GET',
+        });
 
 
         if (!userInformation) {
             return {
                 props: {
                     user: {},
+                    service: {},
                     accessToken: req.cookies.accessToken
                 }
             }
@@ -580,6 +753,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
         return {
             props: {
                 user: userInformation.user,
+                service: serviceInformationResponse.service,
                 accessToken: req.cookies.accessToken,
             }
         }
@@ -590,6 +764,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
     return {
         props: {
             user: {},
+            service: {},
             accessToken: req.cookies.accessToken
         }
     }
@@ -597,4 +772,4 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
 
 
 
-export default CreateService;
+export default EditService;
