@@ -3,7 +3,7 @@
 
 Multi Service Platform - per Service Page for provider
 Created: Feb. 23, 2022
-Last Updated: Mar. 01, 2022
+Last Updated: Mar. 24, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -45,6 +45,7 @@ import DeleteServiceModal from "../../../../src/components/Modals/DeleteServiceM
 import Calendar from "react-calendar";
 import useSplitArray from "../../../../src/custom-hooks/useSplitArray";
 import { formatDateToString, formatStringToDate } from "../../../../utils/formatDate";
+import authorizedFetch from "../../../../utils/authorizedFetch";
 
 
 
@@ -270,13 +271,17 @@ export const getServerSideProps: GetServerSideProps = async ({req, query}: GetSe
         const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
 
-        const serviceInformationResponse = await fetch(`${__backend__}/services/service-information?serviceID=${serviceID}`, {
+        // get service information from server 
+        // send an Authorized GET Request to /provider/services/get-service-information
+        const serviceInformationResponse = await authorizedFetch({
+            url: `${__backend__}/provider/services/get-service-information?serviceId=${serviceID}`,
+            accessToken: req.cookies.accessToken,
             method: 'GET',
-        })
-        const serviceInformationJson = await serviceInformationResponse.json(); 
+        });
 
+        
 
-        if (!userInformation || !serviceInformationJson) {
+        if (!userInformation || !serviceInformationResponse) {
             return {
                 props: {
                     user: {},
@@ -291,7 +296,7 @@ export const getServerSideProps: GetServerSideProps = async ({req, query}: GetSe
         return {
             props: {
                 user: userInformation.user,
-                serviceInformation: serviceInformationJson.service,
+                serviceInformation: serviceInformationResponse.service,
                 accessToken: req.cookies.accessToken
             }
         }
