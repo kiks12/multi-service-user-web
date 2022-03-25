@@ -77,7 +77,7 @@ const ServicePopup: React.FC<ServicePopupProps> = ({
 
     // this function calls the first variation (set to inactive) of the base function 
     // serviceStatusToggle. This function will be called inside the UI.
-    const setServiceAsInactive = async () => {
+    const toggleServiceStatusToInactive = async () => {
         // toggle service status to inactive
         const { msg } = await serviceStatusToggle('inactive');
         setOpenMessageModal(true);
@@ -90,7 +90,7 @@ const ServicePopup: React.FC<ServicePopupProps> = ({
 
     // this function calls the second variation (set to active) of the base function  
     // serviceStatusToggle. This function will be called inside the UI.
-    const setServiceAsActive = async () => {
+    const toggleServiceStatusToActive = async () => {
         const { msg } = await serviceStatusToggle('active');
         setOpenMessageModal(true);
         setMessage(msg);
@@ -161,7 +161,7 @@ const ServicePopup: React.FC<ServicePopupProps> = ({
                     <li className={styles.li}>Delete</li>
                     <li 
                         className={styles.li}
-                        onClick={status === 'active' ? setServiceAsInactive : setServiceAsActive}
+                        onClick={status === 'active' ? toggleServiceStatusToInactive : toggleServiceStatusToActive}
                     >
                         Set as {status === 'active' ? 'Inactive' : 'Active'}
                     </li>
