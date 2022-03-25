@@ -2,7 +2,7 @@
 
 interface AuthorizedFetchParameters {
     url: string,
-    method: 'GET' | 'POST' | 'PUT' | 'DELETE',  
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',  
     body?: any, 
     accessToken: string,
     headers?: any

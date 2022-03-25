@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Service Popup Right corner component
 Created: Mar. 05, 2022
-Last Updated: Mar. 05, 2022
+Last Updated: Mar. 25, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -23,7 +23,7 @@ import useClickOutsideElement from '../../../../../custom-hooks/useClickOutsideE
 
 
 
-import { Service } from '../../../../../../types';
+import { Service, ServiceStatus } from '../../../../../../types';
 import authorizedFetch from '../../../../../../utils/authorizedFetch';
 import { __backend__ } from '../../../../../constants';
 import Modal from '../../../../Modals/Modal';
@@ -32,9 +32,10 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 
 
+
 interface ServicePopupProps {
     serviceId: number;
-    status: 'active' | 'inactive';
+    status: ServiceStatus;
     accessToken: string;
     closePopup: () => void;
     setServices: React.Dispatch<React.SetStateAction<Service[]>>;
@@ -56,13 +57,15 @@ const ServicePopup: React.FC<ServicePopupProps> = ({
     
 
 
-
-
-    const handleActiveInactiveToggle = async (status: 'active' | 'inactive') => {
+    // this is the base function to toggle service status from active to inactive
+    // and vice versa. This function creates an Authorized PATCH API request to Server
+    // endpoint /provider/services/set-service-status?serviceId={}&status={}
+    // returns the json response of the request
+    const serviceStatusToggle = async (status: ServiceStatus) => {
         const res = await authorizedFetch({
-            url: `${__backend__}/provider/services/set-as-${status}?serviceId=${serviceId}`,
+            url: `${__backend__}/provider/services/set-service-status?serviceId=${serviceId}&status=${status}`,
             accessToken: accessToken, 
-            method: 'PUT',
+            method: 'PATCH',
         })
 
         return res;
@@ -71,26 +74,33 @@ const ServicePopup: React.FC<ServicePopupProps> = ({
 
 
 
+
+    // this function calls the first variation (set to inactive) of the base function 
+    // serviceStatusToggle. This function will be called inside the UI.
     const setServiceAsInactive = async () => {
-        const res = await handleActiveInactiveToggle('inactive');
+        // toggle service status to inactive
+        const { msg } = await serviceStatusToggle('inactive');
         setOpenMessageModal(true);
-        setMessage(res.msg);
+        setMessage(msg);
     }
 
 
 
 
 
+    // this function calls the second variation (set to active) of the base function  
+    // serviceStatusToggle. This function will be called inside the UI.
     const setServiceAsActive = async () => {
-        const res = await handleActiveInactiveToggle('active');
+        const { msg } = await serviceStatusToggle('active');
         setOpenMessageModal(true);
-        setMessage(res.msg);
+        setMessage(msg);
     }
 
 
 
 
-
+    // After the service status toggle, the message modal will be open and
+    // this function will handle the closure of the message modal.
     const closeMessageModal = () => {
         setServices(prev => prev.map((service: Service) => {
             if (service.serviceId === serviceId) {

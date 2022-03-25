@@ -22,13 +22,15 @@ export type User = {
 }
 
 
+export type ServiceStatus = 'active' | 'inactive';
+
 
 export type Service = {
     serviceId: number, 
     userId: string, 
     title: string, 
     serviceDetails: string, 
-    status: 'active' | 'inactive',
+    status: ServiceStatus,
     priceType: 'Flat Rate' | 'Range',
     priceSubType: 'Per Pax' | 'Per Service',
     priceInitial: number, 
@@ -63,3 +65,4 @@ export type Booking = {
     Users: User,
     Service: Service
 }
+
