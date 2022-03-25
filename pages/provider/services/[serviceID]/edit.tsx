@@ -142,8 +142,8 @@ const EditService: NextPage = ({
             // with JSON body of title, serviceDetails, category, 
             // priceType, priceSubType, priceInitial, priceFinal, and unavailableDates
             const res = await authorizedFetch({
-                url: `${__backend__}/provider/services/create-new-service`,
-                method: 'POST',
+                url: `${__backend__}/provider/services/update-service-information?serviceId=${service.serviceId}`,
+                method: 'PUT',
                 accessToken: accessToken,
                 body: JSON.stringify({
                     title,
@@ -159,6 +159,7 @@ const EditService: NextPage = ({
                     'Content-Type': 'application/json',
                 }
             });
+            console.log(res);
 
             return Promise.resolve(res);
         } catch (e) {
@@ -227,12 +228,12 @@ const EditService: NextPage = ({
         e.preventDefault();
         // invoke sendCreateNewServiceRequest function
         // get the message and serviceId from the response
-        const { serviceId, msg } = await sendCreateNewServiceRequest();
+        const { msg } = await sendCreateNewServiceRequest();
         // use the serviceId to invoke uploadImagesToServerAndDatabase
         // destructure the message and set to msg2 variable
-        const { msg: msg2 } = await uploadImagesToServerAndDatabase(serviceId);
+        // const { msg: msg2 } = await uploadImagesToServerAndDatabase(serviceId);
         // set the message to both messages
-        setMessage(msg + " and " + msg2);
+        setMessage(msg + " and ");
         setOpenModal(true);
     }
 
