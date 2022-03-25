@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Service Component in Services Content Section
 Created: Feb. 14, 2022
-Last Updated: Mar. 05, 2022
+Last Updated: Mar. 25, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -79,7 +79,7 @@ const Service: React.FC<ServiceProps> = ({ service, setServices, accessToken}) =
 
                 {
                     showPopup && <ServicePopup 
-                                    {...service} 
+                                    service={service}
                                     closePopup={closePopup}
                                     accessToken={accessToken}
                                     setServices={setServices}

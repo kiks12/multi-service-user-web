@@ -3,7 +3,7 @@
 
 Multi Service Platform - Provider Services Page
 Created: Feb. 12, 2022
-Last Updated: Mar. 21, 2022
+Last Updated: Mar. 25, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -136,7 +136,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
     // server side fetch the services from the external server
     // using authorized fetch utility function
     const servicesFetchResults = await authorizedFetch({
-        url: `${__backend__}/provider/services/get-services`,
+        url: `${__backend__}/provider/services/get-services?includedProperty=Users-Images`,
         accessToken: req.cookies.accessToken as string,
         method: 'GET',
     })

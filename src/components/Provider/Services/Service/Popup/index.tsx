@@ -26,16 +26,22 @@ import useClickOutsideElement from '../../../../../custom-hooks/useClickOutsideE
 import { Service, ServiceStatus } from '../../../../../../types';
 import authorizedFetch from '../../../../../../utils/authorizedFetch';
 import { __backend__ } from '../../../../../constants';
-import Modal from '../../../../Modals/Modal';
+
+
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 
 
+import Modal from '../../../../Modals/Modal';
+import DeleteServiceModal from '../../../../Modals/DeleteServiceModal';
+
+
+
 
 interface ServicePopupProps {
-    serviceId: number;
-    status: ServiceStatus;
+    service: Service;
     accessToken: string;
     closePopup: () => void;
     setServices: React.Dispatch<React.SetStateAction<Service[]>>;
@@ -44,16 +50,22 @@ interface ServicePopupProps {
 
 
 const ServicePopup: React.FC<ServicePopupProps> = ({ 
-    serviceId, status, closePopup, setServices, accessToken 
+    service, closePopup, setServices, accessToken 
 }) => {
+
+    const { serviceId, status } = service;
 
 
     const [message, setMessage] = useState<string>('');
     const [openMessageModal, setOpenMessageModal] = useState<boolean>(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
 
 
 
-    const popupRef = useClickOutsideElement(closePopup);
+    const popupRef = useClickOutsideElement(() => {
+        closePopup();
+        closeMessageModal();
+    });
     
 
 
@@ -153,12 +165,25 @@ const ServicePopup: React.FC<ServicePopupProps> = ({
                     </div>
                 </Modal>
             }
+            {
+                openDeleteModal && 
+                <DeleteServiceModal 
+                    accessToken={accessToken}
+                    service={service}
+                    setOpenDeleteModal={setOpenDeleteModal}
+                />
+            }
             <div className={styles.popupContainer} ref={popupRef}>
                 <ul className={styles.ul}>
                     <Link href={`/provider/services/${serviceId}/edit`} passHref={true}>
                         <li className={styles.li}>Edit</li>
                     </Link>
-                    <li className={styles.li}>Delete</li>
+                    <li 
+                        className={styles.li}
+                        onClick={() => setOpenDeleteModal(true)}
+                    >
+                        Delete
+                    </li>
                     <li 
                         className={styles.li}
                         onClick={status === 'active' ? toggleServiceStatusToInactive : toggleServiceStatusToActive}
