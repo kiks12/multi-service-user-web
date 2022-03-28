@@ -78,7 +78,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 
     const res = await authorizedFetch({
-        url: `${__backend__}/services?category=${category}`,
+        url: `${__backend__}/services/get-services-from-category?category=${category}`,
         method: 'GET',
         accessToken: req.cookies.accessToken,
     });
