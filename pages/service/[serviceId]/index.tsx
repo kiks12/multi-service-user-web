@@ -148,7 +148,7 @@ const ServicePage : NextPage = ({
                         <Description service={service} ref={descriptionRef}/>
                         <AboutProvider user={service.Users}/>
                         <Reviews />
-                        <Recommended services={recommendeds} currentServiceID={service.serviceId}/>
+                        {/* <Recommended services={recommendeds} currentServiceID={service.serviceId}/> */}
                     </div>
                     
                     <div className={styles.rightSide}>
@@ -174,7 +174,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     const { serviceId } = query;
 
 
-    const res = await fetch(`${__backend__}/services/get-service-information?serviceID=${serviceId}`, {
+    const res = await fetch(`${__backend__}/services/get-service-information?serviceId=${serviceId}`, {
         method: 'GET'
     });
 
@@ -198,7 +198,7 @@ export const getServerSideProps: GetServerSideProps = async ({
                 props: {
                     user: {},
                     service: jsonRes.service,
-                    recommendeds: recommendedServices.services,
+                    // recommendeds: recommendedServices.services,
                     accessToken: ''
                 }
             }
@@ -210,7 +210,7 @@ export const getServerSideProps: GetServerSideProps = async ({
             props: {
                 user: userInformation.user,
                 service: jsonRes.service,
-                recommendeds: recommendedServices.services,
+                // recommendeds: recommendedServices.services,
                 accessToken: req.cookies.accessToken
             }
         }
@@ -222,7 +222,7 @@ export const getServerSideProps: GetServerSideProps = async ({
         props: {
             user: {},
             service: jsonRes.service,
-            recommendeds: recommendedServices.services,
+            // recommendeds: recommendedServices.services,
             accessToken: ''
         }
     }
