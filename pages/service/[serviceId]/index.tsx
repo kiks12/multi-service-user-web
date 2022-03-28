@@ -174,7 +174,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     const { serviceId } = query;
 
 
-    const res = await fetch(`${__backend__}/services/service-information?serviceID=${serviceId}`, {
+    const res = await fetch(`${__backend__}/services/get-service-information?serviceID=${serviceId}`, {
         method: 'GET'
     });
 
