@@ -181,11 +181,11 @@ export const getServerSideProps: GetServerSideProps = async ({
     const jsonRes = await res.json();
 
 
-    const recommendedServices = await authorizedFetch({
-        method: 'GET',
-        accessToken: req.cookies.accessToken,
-        url: `${__backend__}/services?category=${jsonRes.service.category}`
-    })
+    // const recommendedServices = await authorizedFetch({
+    //     method: 'GET',
+    //     accessToken: req.cookies.accessToken,
+    //     url: `${__backend__}/services?category=${jsonRes.service.category}`
+    // })
 
 
     
