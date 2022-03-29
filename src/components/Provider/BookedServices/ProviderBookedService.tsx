@@ -69,7 +69,7 @@ const ProviderBookedService: React.FC<ProviderBookedServiceProps> = ({ booking, 
 
     const deleteBooking = async () => {
         const res = await authorizedFetch({
-            url: `${__backend__}/bookings/provider/delete-booking?bookId=${booking.bookId}`,
+            url: `${__backend__}/provider/bookings/delete-booking?bookId=${booking.bookId}`,
             accessToken: accessToken,
             method: 'DELETE',
         });
