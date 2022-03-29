@@ -39,9 +39,9 @@ const ProviderBookedService: React.FC<ProviderBookedServiceProps> = ({ booking, 
 
     const acceptBooking = async () => {
         const res = await authorizedFetch({
-            url: `${__backend__}/bookings/provider/accept-booking?bookId=${booking.bookId}`,
+            url: `${__backend__}/provider/bookings/accept-booking?bookId=${booking.bookId}`,
             accessToken: accessToken,
-            method: 'PUT',
+            method: 'PATCH',
         });
 
 
