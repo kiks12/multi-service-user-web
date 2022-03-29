@@ -96,12 +96,13 @@ const BookService : NextPage = ({
 
 
 
-    const bookService = async () => {
+    const bookService = async (e: any) => {
+        e.preventDefault();
         try {
             authorizedFetch({
                 accessToken: accessToken,
                 method: 'POST',
-                url: `${__backend__}/bookings/book-a-service`,
+                url: `${__backend__}/user/bookings/book-a-service`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -151,7 +152,7 @@ const BookService : NextPage = ({
 
 
             <div>
-                <form>
+                <form onSubmit={bookService}>
                     <div>
                         <label>Pax / Service</label>
                         <div>
