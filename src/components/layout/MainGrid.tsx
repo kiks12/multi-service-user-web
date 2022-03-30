@@ -34,9 +34,7 @@ const MainGrid : React.FC<MainGridProps> = ({ leftNavbar, topNavbar, children })
                     {leftNavbar}
                 </div>
                 <div className='content-section-container'>
-                    <div className='container'>
-                        {children}
-                    </div>
+                    {children}
                 </div>
             </main>
         </>
