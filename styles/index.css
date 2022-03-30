@@ -652,12 +652,12 @@ main {
 
 
 .left-navbar-li-active {
-    background-color: var(--gray);
+    background-color: var(--lightGray);
 }
 
 
 .left-navbar-li:hover{
-    background-color: var(--gray);
+    background-color: var(--lightGray);
 }
 
 
