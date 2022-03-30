@@ -62,6 +62,7 @@ export type Booking = {
     paid: boolean,
     date: string, 
     status: BookedServicesFilter,
+    cancelReason?: string;
     Users: User,
     Service: Service
 }
