@@ -16,6 +16,7 @@ import type {
     InferGetServerSidePropsType, 
     NextPage } from "next";
 import Link from "next/link";
+import styles from './Bookings.module.css';
 
 
 
@@ -24,6 +25,7 @@ import { useEffect, useMemo, useState } from "react";
 
 
 import fetchUserInformation from "../../libs/fetchUserInformation";
+import Booking from "../../src/components/Bookings/Booking";
 import BookingsMenu from "../../src/components/Bookings/Menu";
 
 
@@ -31,7 +33,7 @@ import BookingsMenu from "../../src/components/Bookings/Menu";
 import Layout from "../../src/components/layout/Layout";
 import { __backend__ } from "../../src/constants";
 import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
-import { BookedServicesFilter, Booking } from "../../types";
+import { BookedServicesFilter, Booking as BookingType } from "../../types";
 import authorizedFetch from "../../utils/authorizedFetch";
 
 
@@ -44,12 +46,12 @@ const Bookings: NextPage = ({
     const [bookedServicesFilter, setBookedServicesFilter] = useState<BookedServicesFilter>('To be Approved');
 
 
-    
+
 
     const filteredBookings = useMemo(() => {
         if (bookedServicesFilter === 'All') return bookings;
 
-        return bookings.filter((booking: Booking) => booking.status.toLocaleLowerCase() === bookedServicesFilter.toLocaleLowerCase());
+        return bookings.filter((booking: BookingType) => booking.status.toLocaleLowerCase() === bookedServicesFilter.toLocaleLowerCase());
     }, [bookings, bookedServicesFilter]);
 
 
@@ -68,12 +70,17 @@ const Bookings: NextPage = ({
             />
             {
                 accessToken && (       
-                    filteredBookings.length !== 0 ? 
-                        filteredBookings.map((booking: Booking, idx: number) => {
-                            return (
-                                <p key={idx}>{booking.bookId}</p>
-                            )
-                        }) 
+                    filteredBookings.length !== 0 ? (
+                        <div className={styles.containerGrid}>
+                            {
+                            filteredBookings.map((booking: BookingType, idx: number) => {
+                                return (
+                                    <Booking key={idx} booking={booking}/>
+                                )
+                            }) 
+                            }
+                        </div>
+                        )
                         : 
                         <p>No {bookedServicesFilter} Bookings Found!</p>
                 )
@@ -103,7 +110,7 @@ export const getServerSideProps: GetServerSideProps = async ({req}: GetServerSid
 
 
         const bookingsResponse = await authorizedFetch({
-            url: `${__backend__}/user/bookings/get-all-bookings`,
+            url: `${__backend__}/user/bookings/get-all-bookings?includedProperty=Service-Provider`,
             accessToken: req.cookies.accessToken as string,
             method: 'GET',
         })

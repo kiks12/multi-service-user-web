@@ -64,6 +64,7 @@ export type Booking = {
     status: BookedServicesFilter,
     cancelReason?: string;
     Users: User,
-    Service: Service
+    Service: Service,
+    ServiceProviders: User,
 }
 
