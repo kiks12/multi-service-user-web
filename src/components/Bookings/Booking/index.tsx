@@ -23,6 +23,14 @@ interface BookingProps {
 }
 
 
+const TO_BE_APPROVED = '0.3em solid var(--mainBlue)';
+const TO_BE_RENDERED = '0.3em solid var(--mainPurple)';
+const TO_BE_RATED = '0.3em solid var(--secondaryPurple)';
+const COMPLETED = '0.3em solid var(--lightGreen)';
+const CANCELLED = '0.3em solid var(--errorRed)';
+
+
+
 const Booking : React.FC<BookingProps> = ({ booking, accessToken }) => {
 
     const [openActionButton, setOpenActionButton] = useState<boolean>(false);    
@@ -45,7 +53,12 @@ const Booking : React.FC<BookingProps> = ({ booking, accessToken }) => {
 
 
     return (
-        <div className={styles.container}>
+        <div 
+            className={styles.container}
+            style={{
+                borderLeft: booking.status === 'To be Approved' ? TO_BE_APPROVED : booking.status === 'To be Rendered' ? TO_BE_RENDERED : booking.status === 'To be Rated' ?TO_BE_RATED : booking.status === 'Cancelled' ? CANCELLED : COMPLETED
+            }}
+        >
             <table style={{width: '100%'}}>
                 <tbody>
                     <tr className={styles.tr}>
