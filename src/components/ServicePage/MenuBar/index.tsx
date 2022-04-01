@@ -35,15 +35,17 @@ type ActivePart = 'Overview' | 'Description' | 'AboutProvider' | 'Reviews' | 'FA
 
 const MenuBar: React.FC = () => {
 
-    const [activePart, setActivePart] = useState<ActivePart>('Overview');
+    const [activePart] = useState<ActivePart>('Overview');
 
 
     return (
         <div
             className={styles.menuContainer}
         >
-            <div className={styles.menuScrollWrapper}>
-                <ul className='menu-ul'>
+            <div>
+                <ul className='menu-ul' style={{
+                    border: 'None'
+                }}>
                     <li className={activePart === 'Overview' ? 'menu-li-active' : 'menu-li'}>Overview</li>
                     <li className={activePart === 'Description' ? 'menu-li-active' : 'menu-li'}>Description</li>
                     <li className={activePart === 'AboutProvider' ? 'menu-li-active' : 'menu-li'}>About the Provider</li>
