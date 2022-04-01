@@ -97,7 +97,7 @@ td:first-child{
 
 *::-webkit-scrollbar {
     width: 0.3em;
-    height: 0.1em;
+    height: 0;
 }
 
 

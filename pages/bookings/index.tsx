@@ -74,6 +74,19 @@ const Bookings: NextPage = ({
                 accessToken && (       
                     filteredBookings.length !== 0 ? (
                         <div className={styles.containerGrid}>
+
+                            <div style={{
+                                border: '0.3px solid var(--gray)',
+                                margin: '0 0 1em 0',
+                            }}>
+                                <tr className={styles.tr}>
+                                    <td className={styles.td}>Service</td>
+                                    <td className={styles.td}>Service Price</td>
+                                    <td className={styles.td}>Quantity</td>
+                                    <td className={styles.td}>Total Price</td>
+                                </tr>
+                            </div>
+
                             {
                             filteredBookings.map((booking: BookingType, idx: number) => {
                                 return (

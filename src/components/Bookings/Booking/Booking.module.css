@@ -1,11 +1,30 @@
 
 .container {
-    margin: 1em 1em 0 1em;
-    border: 0.3px solid var(--lightGray);
+    border: 0.3px solid var(--gray);
 }
 
 
 .image {
     height: 10vh;
     background-color: var(--lightGray);
+}
+
+
+.tr {
+    display: flex;
+    align-items: center;
+}
+
+
+.td {
+    border: none;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    padding: 0.5em;
+}
+
+
+.td:last-child {
+    color: var(--mainPurple)
 }

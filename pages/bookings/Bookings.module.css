@@ -1,7 +1,8 @@
 
 .containerGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10em, 20em));
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
 }
 
 
@@ -10,6 +11,19 @@
     position: absolute;
     top: 50%;
     left: 50%;
+}
+
+
+.tr {
+    display: flex;
+    align-items: center;
+}
+
+
+.td {
+    display: flex;
+    justify-content: center;
+    border: none;
 }
 
 
