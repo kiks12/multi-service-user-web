@@ -13,17 +13,23 @@ import styles from './Booking.module.css';
 import Link from 'next/link';
 import Actions from './Action';
 import CancelModal from './CancelModal';
+import MessageModal from './MessageModal';
+
 
 
 interface BookingProps {
-    booking: Booking
+    booking: Booking;
+    accessToken: string;
 }
 
 
-const Booking : React.FC<BookingProps> = ({ booking }) => {
+const Booking : React.FC<BookingProps> = ({ booking, accessToken }) => {
 
     const [openActionButton, setOpenActionButton] = useState<boolean>(false);    
     const [openCancelModal, setOpenCancelModal] = useState<boolean>(false);
+    const [openMessageModal, setOpenMessageModal] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>('');
+
 
 
     const formattedPrice = useMemo(() => {
@@ -109,7 +115,18 @@ const Booking : React.FC<BookingProps> = ({ booking }) => {
             {
                 openCancelModal &&
                     <CancelModal 
+                        setMessage={setMessage}
+                        setOpenMessageModal={setOpenMessageModal}
                         setOpenCancelModal={setOpenCancelModal}
+                        accessToken={accessToken}
+                        bookId={booking.bookId}
+                    />
+            }
+            {
+                openMessageModal &&
+                    <MessageModal 
+                        message={message}
+                        setOpenMessageModal={setOpenMessageModal}
                     />
             }
         </div>

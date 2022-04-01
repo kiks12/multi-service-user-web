@@ -103,7 +103,7 @@ const Bookings: NextPage = ({
                             {
                             filteredBookings.map((booking: BookingType, idx: number) => {
                                 return (
-                                    <Booking key={idx} booking={booking}/>
+                                    <Booking key={idx} booking={booking} accessToken={accessToken}/>
                                 )
                             }) 
                             }
