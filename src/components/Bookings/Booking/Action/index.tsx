@@ -9,11 +9,12 @@ import styles from './Action.module.css';
 
 interface ActionsProps {
     setOpenActionButton: React.Dispatch<React.SetStateAction<boolean>>;
+    setOpenCancelModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
 
-const Actions : React.FC<ActionsProps> = ({ setOpenActionButton }) => {
+const Actions : React.FC<ActionsProps> = ({ setOpenActionButton, setOpenCancelModal }) => {
 
     const divRef = useClickOutsideElement(() => {
         setOpenActionButton(false);
@@ -25,7 +26,11 @@ const Actions : React.FC<ActionsProps> = ({ setOpenActionButton }) => {
             ref={divRef}
             className={styles.container}
         >
-            <button>
+            <button onClick={() => {
+                setOpenCancelModal(true);
+                setOpenActionButton(false);
+            }}
+            >
                 Cancel
             </button>
         </div>

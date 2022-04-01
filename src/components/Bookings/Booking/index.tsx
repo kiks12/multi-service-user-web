@@ -23,7 +23,7 @@ interface BookingProps {
 const Booking : React.FC<BookingProps> = ({ booking }) => {
 
     const [openActionButton, setOpenActionButton] = useState<boolean>(false);    
-    const [openCancelModal, setOpenCancelButton] = useState<boolean>(true);
+    const [openCancelModal, setOpenCancelModal] = useState<boolean>(false);
 
 
     const formattedPrice = useMemo(() => {
@@ -103,12 +103,13 @@ const Booking : React.FC<BookingProps> = ({ booking }) => {
                 openActionButton && 
                     <Actions 
                         setOpenActionButton={setOpenActionButton}
+                        setOpenCancelModal={setOpenCancelModal}
                     />
             }
             {
                 openCancelModal &&
                     <CancelModal 
-                        setOpenCancelModal={setOpenCancelButton}
+                        setOpenCancelModal={setOpenCancelModal}
                     />
             }
         </div>

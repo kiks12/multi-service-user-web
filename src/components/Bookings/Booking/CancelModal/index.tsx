@@ -21,9 +21,10 @@ interface CancelModalProps {
 const CancelModal : React.FC<CancelModalProps> = ({ setOpenCancelModal  }) => {
 
 
-    const divRef = useClickOutsideElement(() => {
-        setOpenCancelModal(false);
-    })
+    const closeModal = () => setOpenCancelModal(false);
+
+
+    const divRef = useClickOutsideElement(closeModal);
 
 
     return (
@@ -41,7 +42,7 @@ const CancelModal : React.FC<CancelModalProps> = ({ setOpenCancelModal  }) => {
                     }}
                 >
                     <h2>Confirm</h2>
-                    <div>
+                    <div onClick={closeModal}>
                         <FontAwesomeIcon 
                             icon={faClose}
                         />
