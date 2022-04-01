@@ -1,6 +1,29 @@
 
 .container {
     border: 0.3px solid var(--gray);
+    position: relative;
+    cursor: pointer;
+}
+
+
+.container:hover {
+    border: 0.3px solid var(--mainPurple);
+}
+
+
+.ellipsis {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    color: var(--darkGray);
+    cursor: pointer;
+    opacity: 0;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
+}
+
+
+.container:hover > .ellipsis {
+    opacity: 1;
 }
 
 

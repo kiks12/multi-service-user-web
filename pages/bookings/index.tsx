@@ -70,22 +70,35 @@ const Bookings: NextPage = ({
                     setBookedServicesFilter={setBookedServicesFilter}
                 />
             </div>
+
+            <small style={{
+                margin: '1.5em',
+                color: 'var(--errorRed)'
+            }}>
+                <i>
+                    {"Note: Cancellation is only applicable to bookings that are currently 'To be Approved'"}
+                </i>
+            </small>
+
             {
                 accessToken && (       
                     filteredBookings.length !== 0 ? (
                         <div className={styles.containerGrid}>
 
-                            <div style={{
+                            <table style={{
                                 border: '0.3px solid var(--gray)',
                                 margin: '0 0 1em 0',
                             }}>
-                                <tr className={styles.tr}>
-                                    <td className={styles.td}>Service</td>
-                                    <td className={styles.td}>Service Price</td>
-                                    <td className={styles.td}>Quantity</td>
-                                    <td className={styles.td}>Total Price</td>
-                                </tr>
-                            </div>
+                                <thead>
+                                    <tr className={styles.tr}>
+                                        <td className={styles.td}>Service</td>
+                                        <td className={styles.td}>Date</td>
+                                        <td className={styles.td}>Service Price</td>
+                                        <td className={styles.td}>Quantity</td>
+                                        <td className={styles.td}>Total Price</td>
+                                    </tr>
+                                </thead>
+                            </table>
 
                             {
                             filteredBookings.map((booking: BookingType, idx: number) => {
