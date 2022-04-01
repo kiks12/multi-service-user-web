@@ -12,6 +12,7 @@ import { formatter } from '../../../../utils/formatter';
 import styles from './Booking.module.css';
 import Link from 'next/link';
 import Actions from './Action';
+import CancelModal from './CancelModal';
 
 
 interface BookingProps {
@@ -21,7 +22,8 @@ interface BookingProps {
 
 const Booking : React.FC<BookingProps> = ({ booking }) => {
 
-    const [openActionButton, setOpenActionButton] = useState<boolean>(true);    
+    const [openActionButton, setOpenActionButton] = useState<boolean>(false);    
+    const [openCancelModal, setOpenCancelButton] = useState<boolean>(true);
 
 
     const formattedPrice = useMemo(() => {
@@ -35,7 +37,7 @@ const Booking : React.FC<BookingProps> = ({ booking }) => {
     }, [booking.finalPrice]);
 
 
-    
+
     return (
         <div className={styles.container}>
             <table style={{width: '100%'}}>
@@ -101,6 +103,12 @@ const Booking : React.FC<BookingProps> = ({ booking }) => {
                 openActionButton && 
                     <Actions 
                         setOpenActionButton={setOpenActionButton}
+                    />
+            }
+            {
+                openCancelModal &&
+                    <CancelModal 
+                        setOpenCancelModal={setOpenCancelButton}
                     />
             }
         </div>
