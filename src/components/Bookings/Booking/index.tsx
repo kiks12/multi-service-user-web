@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faEllipsisVertical
 } from '@fortawesome/free-solid-svg-icons';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 
 
@@ -11,6 +11,7 @@ import { Booking } from '../../../../types';
 import { formatter } from '../../../../utils/formatter';
 import styles from './Booking.module.css';
 import Link from 'next/link';
+import Actions from './Action';
 
 
 interface BookingProps {
@@ -19,6 +20,9 @@ interface BookingProps {
 
 
 const Booking : React.FC<BookingProps> = ({ booking }) => {
+
+    const [openActionButton, setOpenActionButton] = useState<boolean>(true);    
+
 
     const formattedPrice = useMemo(() => {
         return formatter.format(booking.price);
@@ -31,6 +35,7 @@ const Booking : React.FC<BookingProps> = ({ booking }) => {
     }, [booking.finalPrice]);
 
 
+    
     return (
         <div className={styles.container}>
             <table style={{width: '100%'}}>
@@ -84,11 +89,20 @@ const Booking : React.FC<BookingProps> = ({ booking }) => {
                     </tr> 
                 </tbody>
             </table>
-            <div className={styles.ellipsis}>
+            <div 
+                className={styles.ellipsis}
+                onClick={() => setOpenActionButton(true)}
+            >
                 <FontAwesomeIcon 
                     icon={faEllipsisVertical}
                 />
             </div>
+            {
+                openActionButton && 
+                    <Actions 
+                        setOpenActionButton={setOpenActionButton}
+                    />
+            }
         </div>
     )
 }
