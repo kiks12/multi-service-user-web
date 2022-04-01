@@ -16,20 +16,6 @@
 
 
 
-.menuUl {
-    display: flex;
-    list-style: none;
-    width: 100%;
-}
-
-
-
-.menuUl > * + * {
-    margin-left: 1em;
-}
-
-
-
 .controlsContainer {
     width: 20em;
     display: flex;

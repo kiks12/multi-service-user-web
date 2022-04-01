@@ -43,7 +43,7 @@ const MenuBar: React.FC = () => {
             className={styles.menuContainer}
         >
             <div className={styles.menuScrollWrapper}>
-                <ul className={styles.menuUl}>
+                <ul className='menu-ul'>
                     <li className={activePart === 'Overview' ? 'menu-li-active' : 'menu-li'}>Overview</li>
                     <li className={activePart === 'Description' ? 'menu-li-active' : 'menu-li'}>Description</li>
                     <li className={activePart === 'AboutProvider' ? 'menu-li-active' : 'menu-li'}>About the Provider</li>

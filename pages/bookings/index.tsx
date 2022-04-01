@@ -64,10 +64,12 @@ const Bookings: NextPage = ({
 
     return (
         <Layout accessToken={accessToken}>
-            <BookingsMenu 
-                bookedServicesFilter={bookedServicesFilter}
-                setBookedServicesFilter={setBookedServicesFilter}
-            />
+            <div>
+                <BookingsMenu 
+                    bookedServicesFilter={bookedServicesFilter}
+                    setBookedServicesFilter={setBookedServicesFilter}
+                />
+            </div>
             {
                 accessToken && (       
                     filteredBookings.length !== 0 ? (

@@ -41,7 +41,7 @@ const BookingsMenu: React.FC<ProviderBookedServiceMenuProps> = ({
 
 
     return (
-        <div>
+        // <div className='menu-wrapper'>
             <ul className='menu-ul'>
                 <li 
                     className={bookedServicesFilter === 'To be Approved' ? 'menu-li-active' : 'menu-li'}
@@ -80,7 +80,7 @@ const BookingsMenu: React.FC<ProviderBookedServiceMenuProps> = ({
                     All 
                 </li>
             </ul>
-        </div>
+        // </div>
     )
 }
 
