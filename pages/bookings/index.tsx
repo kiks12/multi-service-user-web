@@ -84,7 +84,7 @@ const Bookings: NextPage = ({
                         </div>
                         )
                         : 
-                        <p>No {bookedServicesFilter} Bookings Found!</p>
+                        <p className={styles.message}>No {bookedServicesFilter} Bookings Found!</p>
                 )
             }
 
