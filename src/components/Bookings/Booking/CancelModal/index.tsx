@@ -6,15 +6,31 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 
+
 import React from 'react';
+
+
+
 import Modal from '../../../Modals/Modal';
+
+
+
 import useClickOutsideElement from '../../../../custom-hooks/useClickOutsideElement';
+
+
+
+import { Booking as BookingType } from '../../../../../types';
 import authorizedFetch from '../../../../../utils/authorizedFetch';
 import { __backend__ } from '../../../../constants';
 
 
 
 interface CancelModalProps {
+    setCancellationResponse: React.Dispatch<React.SetStateAction<{
+        msg: string;
+        status: number;
+        booking: BookingType;
+    }>>;
     setOpenCancelModal: React.Dispatch<React.SetStateAction<boolean>>;
     setMessage: React.Dispatch<React.SetStateAction<string>>;
     setOpenMessageModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,7 +41,13 @@ interface CancelModalProps {
 
 
 const CancelModal : React.FC<CancelModalProps> = ({ 
-    setOpenCancelModal, bookId, accessToken, setMessage, setOpenMessageModal }) => {
+    setOpenCancelModal, 
+    bookId, 
+    accessToken, 
+    setMessage, 
+    setOpenMessageModal, 
+    setCancellationResponse
+}) => {
 
 
     const closeModal = () => setOpenCancelModal(false);
@@ -41,6 +63,7 @@ const CancelModal : React.FC<CancelModalProps> = ({
             method: 'PATCH'
         });
 
+        setCancellationResponse(cancellationRes);
         setMessage(cancellationRes.msg);
         setOpenCancelModal(false);
         setOpenMessageModal(true);

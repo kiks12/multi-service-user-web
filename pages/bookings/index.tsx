@@ -43,22 +43,45 @@ const Bookings: NextPage = ({
     user, accessToken, bookings }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { setSession } = useAuthentication();
+    const [bookingsState, setBookingsState] = useState<BookingType[]>([]);
     const [bookedServicesFilter, setBookedServicesFilter] = useState<BookedServicesFilter>('To be Approved');
 
+
+
+    const updateBookingsState = (cancellationRes: 
+        {msg: string, status: number, booking: BookingType}) => {
+        setBookingsState(prev => prev.map((booking: BookingType, idx: number) => {
+            if (cancellationRes.booking.bookId === booking.bookId) {
+                return cancellationRes.booking;
+            }
+            return booking;
+        }));
+    }
+
+
+    useEffect(() => {
+        setBookingsState(bookings);
+
+        return () => setBookingsState([]);
+    }, [bookings]);
+
+
+    
+    useEffect(() => {
+        if (typeof setSession === 'function') setSession(user);
+
+        return () => {
+            if (typeof setSession === 'function') setSession(null);
+        }
+    }, [setSession, user]);
 
 
 
     const filteredBookings = useMemo(() => {
         if (bookedServicesFilter === 'All') return bookings;
 
-        return bookings.filter((booking: BookingType) => booking.status.toLocaleLowerCase() === bookedServicesFilter.toLocaleLowerCase());
-    }, [bookings, bookedServicesFilter]);
-
-
-    
-    useEffect(() => {
-        if (typeof setSession === 'function') setSession(user);
-    }, [setSession, user])
+        return bookingsState.filter((booking: BookingType) => booking.status.toLocaleLowerCase() === bookedServicesFilter.toLocaleLowerCase());
+    }, [bookedServicesFilter, bookings, bookingsState]);
 
 
 
@@ -103,7 +126,12 @@ const Bookings: NextPage = ({
                             {
                             filteredBookings.map((booking: BookingType, idx: number) => {
                                 return (
-                                    <Booking key={idx} booking={booking} accessToken={accessToken}/>
+                                    <Booking 
+                                        updateBookingState={updateBookingsState}
+                                        key={idx}
+                                        booking={booking}
+                                        accessToken={accessToken}
+                                    />
                                 )
                             }) 
                             }

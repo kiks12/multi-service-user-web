@@ -2,20 +2,50 @@
 
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
+
 import React from 'react';
+
+
+
 import useClickOutsideElement from '../../../../custom-hooks/useClickOutsideElement';
+
+
+
 import Modal from '../../../Modals/Modal';
+
+
+
+import { Booking } from '../../../../../types';
+
+
 
 
 interface MessageModalProps {
     message: string;
     setOpenMessageModal: React.Dispatch<React.SetStateAction<boolean>>;
+    cancellationResponse: {
+        msg: string;
+        status: number;
+        booking: Booking;
+    };
+    updateBookingState: (cancellationRes: {msg: string, status: number, booking: Booking}) => void;
 }
 
 
-const MessageModal : React.FC<MessageModalProps> = ({ message, setOpenMessageModal }) => {
+const MessageModal : React.FC<MessageModalProps> = ({ 
+    message, 
+    setOpenMessageModal,
+    updateBookingState,
+    cancellationResponse
+}) => {
 
-    const closeModal = () => setOpenMessageModal(false);
+    
+    const closeModal = () => {
+        updateBookingState(cancellationResponse);
+        setOpenMessageModal(false);
+    };
 
 
     const divRef = useClickOutsideElement(closeModal);

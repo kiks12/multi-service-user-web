@@ -18,6 +18,7 @@ import MessageModal from './MessageModal';
 
 
 interface BookingProps {
+    updateBookingState: (cancellationRes: {msg: string, status: number, booking: Booking}) => void;
     booking: Booking;
     accessToken: string;
 }
@@ -31,11 +32,16 @@ const CANCELLED = '0.3em solid var(--errorRed)';
 
 
 
-const Booking : React.FC<BookingProps> = ({ booking, accessToken }) => {
+const Booking : React.FC<BookingProps> = ({ booking, accessToken, updateBookingState }) => {
 
     const [openActionButton, setOpenActionButton] = useState<boolean>(false);    
     const [openCancelModal, setOpenCancelModal] = useState<boolean>(false);
     const [openMessageModal, setOpenMessageModal] = useState<boolean>(false);
+    const [cancellationResponse, setCancellationResponse] = useState<{
+        msg: string,
+        status: number,
+        booking: Booking,
+    }>({msg: '', status: 400, booking});
     const [message, setMessage] = useState<string>('');
 
 
@@ -128,6 +134,7 @@ const Booking : React.FC<BookingProps> = ({ booking, accessToken }) => {
             {
                 openCancelModal &&
                     <CancelModal 
+                        setCancellationResponse={setCancellationResponse}
                         setMessage={setMessage}
                         setOpenMessageModal={setOpenMessageModal}
                         setOpenCancelModal={setOpenCancelModal}
@@ -138,6 +145,8 @@ const Booking : React.FC<BookingProps> = ({ booking, accessToken }) => {
             {
                 openMessageModal &&
                     <MessageModal 
+                        updateBookingState={updateBookingState}
+                        cancellationResponse={cancellationResponse}
                         message={message}
                         setOpenMessageModal={setOpenMessageModal}
                     />
