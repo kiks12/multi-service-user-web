@@ -5,10 +5,13 @@
 
 Multi Service Platform - Book Service Page for users
 Created: Mar. 02, 2022
-Last Updated: Mar. 03, 2022
+Last Updated: Apr. 05, 2022
 Author: Tolentino, Francis James S.
 
 */
+
+
+import styles from './Book.module.css';
 
 
 
@@ -20,8 +23,9 @@ import type {
 
 
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAuthentication } from "../../../../src/custom-hooks/useAuthentication";
+import useSplitArray from "../../../../src/custom-hooks/useSplitArray";
 
 
 
@@ -31,11 +35,15 @@ import { __backend__ } from "../../../../src/constants";
 
 
 import Layout from "../../../../src/components/layout/Layout";
-import { formatStartingAndLastPrice } from "../../../../utils/formatter";
-import authorizedFetch from "../../../../utils/authorizedFetch";
 import Calendar from "react-calendar";
-import useSplitArray from "../../../../src/custom-hooks/useSplitArray";
+
+
+
+import { formatStartingAndLastPrice, formatter } from "../../../../utils/formatter";
+import authorizedFetch from "../../../../utils/authorizedFetch";
 import { formatDateToString } from "../../../../utils/formatDate";
+import Link from 'next/link';
+import Image from 'next/image';
 
 
 
@@ -78,7 +86,11 @@ const BookService : NextPage = ({
         stringToSplit: service.unavailableDates,
         splitter: ' | '
     })
+    
 
+    const totalPrice = useMemo(() => {
+        return formatter.format(parseInt(pax) * service.priceInitial);
+    }, [pax, service.priceInitial]);
 
 
     const handlePaxButtonClick = (operation: 'addition' | 'subtraction') => {
@@ -126,81 +138,132 @@ const BookService : NextPage = ({
 
 
     return (
-        <Layout accessToken={accessToken}>
-            {/* <pre>{JSON.stringify(service, null, 2)}</pre> */}
-            <h2>Book Service</h2>
-
-            <h2>{service.title}</h2>
-
-
-            <div>
-                <p>Price Type: </p>
-                <p>{service.priceType}</p>
-            </div>
-
-
-            <div className="">
-                <p>Starting Price: </p>
-                <p>{startingPrice}</p>
-            </div>
-
-
-            <div className="">
-                <p>Last Price: </p>
-                <p>{lastPrice}</p>
-            </div>
-
-
-            <div>
-                <form onSubmit={bookService}>
-                    <div>
-                        <label>Pax / Service</label>
-                        <div>
-                            <button 
-                                type="button" 
-                                onClick={() => handlePaxButtonClick('subtraction')}
-                                disabled={pax === '1'}
-                            >
-                                -
-                            </button>
-                            <input type='number' value={pax} onChange={(e) => setPax(e.target.value)}/>
-                            <button 
-                                type="button"
-                                onClick={() => handlePaxButtonClick('addition')}
-                            >
-                                +
+        <>
+            <Layout accessToken={accessToken}>
+                {/* <pre>{JSON.stringify(service, null, 2)}</pre> */}
+                <div className={styles.header}>
+                    <h2>Book Service</h2>
+                    <Link href={`/service/${service.serviceId}/`} passHref={true}>
+                        <div style={{width: 'min(90%, 10em)'}}>
+                            <button>
+                                Go Back
                             </button>
                         </div>
+                    </Link>
+                </div>
+                
+                <div className={styles.layout}>
+                    <div>
+                        
+                        <h3>{service.title}</h3>
+
+                        <div className={styles.image}>
+                            Image
+                            {/* <Image /> */}
+                        </div>
+
+                        <table className={styles.table}>
+                            <tbody>
+                                <tr>
+                                    <td>Price Type: </td>
+                                    <td>{service.priceType}</td>
+                                </tr>
+                                <tr>
+                                    <td>Price SubType: </td>
+                                    <td>{service.priceSubType}</td>
+                                </tr>
+                                <tr>
+                                    <td>Starting Price: </td>
+                                    <td>{startingPrice}</td>
+                                </tr>
+                                <tr>
+                                    <td>Last Price: </td>
+                                    <td>{lastPrice}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        <form onSubmit={bookService}>
+                            <div className='split'>
+                                <label>Pax / Service</label>
+                                <div className={styles.paxInputContainer}>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => handlePaxButtonClick('subtraction')}
+                                        disabled={pax === '1'}
+                                    >
+                                        -
+                                    </button>
+                                    <input 
+                                        className={styles.paxInput}
+                                        type='number' 
+                                        value={pax} 
+                                        onChange={(e) => setPax(e.target.value)}
+                                    />
+                                    <button 
+                                        type="button"
+                                        onClick={() => handlePaxButtonClick('addition')}
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                            <div className='split'>
+                                <label>Payment Method: </label>
+                                <select className='form-control'>
+                                    <option>Cash on Delivery</option>
+                                    <option>Wallet</option>
+                                    <option>GCash</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <Calendar 
+                                    calendarType="US"
+                                    value={date}
+                                    onChange={setDate}
+                                    tileDisabled={({date}) => {
+                                        const _date = formatDateToString(date);
+                                        return unavailableDates.includes(_date);
+                                    }}
+                                />
+                            </div>
+
+
+                            {/* <button className="main-button" onClick={bookService}>
+                                Continue
+                            </button> */}
+                        </form>
+                    </div>
+                </div>
+            </Layout>
+            
+            <div className={styles.floatingInformation}>
+                <div className='container'>
+                    <div>
+                        <p>Date: </p>
+                        <p>{`${date.toDateString()}`}</p>
                     </div>
                     <div>
-                        <label>Payment Method: </label>
-                        <select>
-                            <option>Cash on Delivery</option>
-                            <option>Wallet</option>
-                            <option>GCash</option>
-                        </select>
+                        <p>Unit Price: </p>
+                        <p>{service.priceType === 'Flat Rate' ? startingPrice : `${startingPrice}-${lastPrice}`}</p>
                     </div>
-
                     <div>
-                        <Calendar 
-                            calendarType="US"
-                            value={date}
-                            onChange={setDate}
-                            tileDisabled={({date}) => {
-                                const _date = formatDateToString(date);
-                                return unavailableDates.includes(_date);
-                            }}
-                        />
+                        <p>Pax/Units: </p>
+                        <p>{pax}</p>
                     </div>
-
-
-                    <button className="main-button" onClick={bookService}>
-                        Continue
-                    </button>
-                </form>
+                    <div>
+                        <p>Total Price: </p>
+                        <p>{totalPrice}</p>
+                    </div>
+                    <div style={{ width: '25%' }}>
+                        <button className='main-button'>Book Service</button>
+                    </div>
+                </div>
             </div>
-
-        </Layout>
+        </>
     )
 }
 
