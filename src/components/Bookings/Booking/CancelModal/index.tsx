@@ -93,7 +93,7 @@ const CancelModal : React.FC<CancelModalProps> = ({
                 </div>
                 <p>Are you sure you want to cancel this booking?</p>
                 <div className='split' style={{margin: '2em 0 0 0'}}>
-                    <button>Cancel</button>
+                    <button onClick={closeModal}>Cancel</button>
                     <button 
                         className='main-button'
                         onClick={confirmCancellation}
