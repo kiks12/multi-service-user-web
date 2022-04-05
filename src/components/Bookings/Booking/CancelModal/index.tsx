@@ -60,7 +60,7 @@ const CancelModal : React.FC<CancelModalProps> = ({
 
 
 
-    
+
     // this function will be called in the onclick event of confirm button
     // this will create an authorized fetch - PATCH API in the server endpoint 
     // /user/bookings/cancel-booking?bookID={}, and passes cancellationReason state
@@ -91,10 +91,7 @@ const CancelModal : React.FC<CancelModalProps> = ({
         <Modal>
             <div 
                 ref={divRef}
-                className='card'
-                style={{
-                    width: '40%'
-                }}
+                className={styles.card}
             >
                 <div style={{
                         display: 'flex',
