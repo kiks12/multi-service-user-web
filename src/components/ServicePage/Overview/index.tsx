@@ -48,13 +48,16 @@ const Overview : React.FC<OverviewProps> = ({ service }) => {
                         zIndex: '-20'
                     }}
                 >
-                    <Image 
-                        src={service?.Users?.image as string}
-                        alt={service?.Users?.shopName as string}
-                        width={70}
-                        height={70}
-                        objectFit='fill'
-                    />
+                    {
+                        service.Users?.image &&
+                            <Image 
+                                src={service.Users.image as string}
+                                alt={service?.Users?.shopName as string}
+                                width={70}
+                                height={70}
+                                objectFit='fill'
+                            />
+                    }
                 </div>
                 <div style={{
                     display: 'flex',
