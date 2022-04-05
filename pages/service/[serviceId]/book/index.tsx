@@ -44,6 +44,11 @@ import authorizedFetch from "../../../../utils/authorizedFetch";
 import { formatDateToString } from "../../../../utils/formatDate";
 import Link from 'next/link';
 import Image from 'next/image';
+import Modal from '../../../../src/components/Modals/Modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import useClickOutsideElement from '../../../../src/custom-hooks/useClickOutsideElement';
+import { useRouter } from 'next/router';
 
 
 
@@ -58,7 +63,7 @@ const BookService : NextPage = ({
     service
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
-
+    const router = useRouter();
     const { setSession } = useAuthentication();
 
     const { startingPrice, lastPrice } = formatStartingAndLastPrice(service);
@@ -67,6 +72,11 @@ const BookService : NextPage = ({
     const [pax, setPax] = useState<string>('1');
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethods>('Cash on Delivery');
     const [date, setDate] = useState<Date>(new Date());
+    const [message, setMessage] = useState<string>('');
+    const [openMessageModal, setOpenMessageModal] = useState<boolean>(false);
+
+
+    const messageModalRef = useClickOutsideElement(() => setOpenMessageModal(false));
 
 
 
@@ -111,7 +121,7 @@ const BookService : NextPage = ({
     const bookService = async (e: any) => {
         e.preventDefault();
         try {
-            await authorizedFetch({
+            const bookingResponse = await authorizedFetch({
                 accessToken: accessToken,
                 method: 'POST',
                 url: `${__backend__}/user/bookings/book-a-service`,
@@ -128,7 +138,10 @@ const BookService : NextPage = ({
                     paymentMethod: paymentMethod,
                     paid: paymentMethod !== 'Cash on Delivery'
                 })
-            })
+            });
+
+            setMessage(bookingResponse.msg);
+            setOpenMessageModal(true);
         } catch (e) {   
             console.error(e);
         }
@@ -259,10 +272,42 @@ const BookService : NextPage = ({
                         <p>{totalPrice}</p>
                     </div>
                     <div style={{ width: '25%' }}>
-                        <button className='main-button'>Book Service</button>
+                        <button 
+                            className='main-button'
+                            onClick={bookService}
+                        >
+                            Book Service
+                        </button>
                     </div>
                 </div>
             </div>
+
+            {
+                openMessageModal && (
+                    <Modal>
+                        <div className='card' ref={messageModalRef}>
+                            <div 
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <h2>Message</h2>
+                                <FontAwesomeIcon 
+                                    icon={faClose}
+                                    onClick={() => setOpenMessageModal(false)}
+                                />
+                            </div>
+                            <p>{message}</p>
+                            <button onClick={() => {
+                                setOpenMessageModal(false);
+                                router.push('/bookings');
+                            }}>Okay</button>
+                        </div>
+                    </Modal>
+                )
+            }
         </>
     )
 }
