@@ -41,6 +41,7 @@ interface CancelModalProps {
 
 
 
+
 const CancelModal : React.FC<CancelModalProps> = ({ 
     setOpenCancelModal, 
     bookId, 
@@ -58,14 +59,22 @@ const CancelModal : React.FC<CancelModalProps> = ({
     const [cancellationReason, setCancellationReason] = useState<string>('');
 
 
+
+    
+    // this function will be called in the onclick event of confirm button
+    // this will create an authorized fetch - PATCH API in the server endpoint 
+    // /user/bookings/cancel-booking?bookID={}, and passes cancellationReason state
+    // as a body for the request.
     const confirmCancellation = async () => {
-        console.log(JSON.stringify({cancellationReason}));
         const cancellationRes = await authorizedFetch({
             url: `${__backend__}/user/bookings/cancel-booking?bookId=${bookId}`,
             accessToken: accessToken,
             body: JSON.stringify({
-                cancellationReason: cancellationReason
+                cancellationReason
             }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
             method: 'PATCH',
         });
 
@@ -74,6 +83,8 @@ const CancelModal : React.FC<CancelModalProps> = ({
         setOpenCancelModal(false);
         setOpenMessageModal(true);
     }
+
+
 
 
     return (
