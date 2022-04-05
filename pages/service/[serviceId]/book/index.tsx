@@ -99,7 +99,7 @@ const BookService : NextPage = ({
     const bookService = async (e: any) => {
         e.preventDefault();
         try {
-            authorizedFetch({
+            await authorizedFetch({
                 accessToken: accessToken,
                 method: 'POST',
                 url: `${__backend__}/user/bookings/book-a-service`,

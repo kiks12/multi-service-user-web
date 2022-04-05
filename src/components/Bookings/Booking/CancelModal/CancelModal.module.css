@@ -1,0 +1,14 @@
+
+.textareaContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 1em 0;
+}
+
+
+.textarea {
+    resize: none;
+    border: 0.3px solid var(--gray);
+    padding: 0.5em;
+    height: 10em;
+}

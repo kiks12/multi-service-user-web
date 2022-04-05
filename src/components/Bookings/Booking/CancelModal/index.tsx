@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faClose
 } from '@fortawesome/free-solid-svg-icons';
+import styles from './CancelModal.module.css';
 
 
 
-import React from 'react';
+import React, { useState } from 'react';
 
 
 
@@ -54,13 +55,18 @@ const CancelModal : React.FC<CancelModalProps> = ({
 
 
     const divRef = useClickOutsideElement(closeModal);
+    const [cancellationReason, setCancellationReason] = useState<string>('');
 
 
     const confirmCancellation = async () => {
+        console.log(JSON.stringify({cancellationReason}));
         const cancellationRes = await authorizedFetch({
             url: `${__backend__}/user/bookings/cancel-booking?bookId=${bookId}`,
             accessToken: accessToken,
-            method: 'PATCH'
+            body: JSON.stringify({
+                cancellationReason: cancellationReason
+            }),
+            method: 'PATCH',
         });
 
         setCancellationResponse(cancellationRes);
@@ -92,6 +98,16 @@ const CancelModal : React.FC<CancelModalProps> = ({
                     </div>
                 </div>
                 <p>Are you sure you want to cancel this booking?</p>
+
+                <div className={styles.textareaContainer}>
+                    <small>Please leave your reason for cancellation: </small>
+                    <textarea 
+                        value={cancellationReason}
+                        className={styles.textarea}
+                        onChange={(e) => setCancellationReason(e.target.value)}   
+                    />
+                </div>
+
                 <div className='split' style={{margin: '2em 0 0 0'}}>
                     <button onClick={closeModal}>Cancel</button>
                     <button 
