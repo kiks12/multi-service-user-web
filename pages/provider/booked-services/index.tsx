@@ -4,7 +4,7 @@
 
 Multi Service Platform - Provider Booked Services Page
 Created: Mar. 02, 2022
-Last Updated: Mar. 03, 2022
+Last Updated: Apr. 9, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -36,7 +36,8 @@ import ProviderBookedService from "../../../src/components/Provider/BookedServic
 
 
 
-import { Booking, BookedServicesFilter} from "../../../types";
+import { Booking as BookingType, BookedServicesFilter} from "../../../types";
+import Booking from "../../../src/components/Bookings/Booking";
 
 
 
@@ -52,7 +53,7 @@ const BookedServices: NextPage = ({
 
     const { setSession } = useAuthentication();
 
-    const [bookedServices, setBookedServices] = useState<Booking[]>([]);
+    const [bookedServices, setBookedServices] = useState<BookingType[]>([]);
     const [bookedServicesFilter, setBookedServicesFilter] = useState<BookedServicesFilter>('To be Approved');
 
 
@@ -67,7 +68,7 @@ const BookedServices: NextPage = ({
 
         if (bookedServicesFilter === 'All') return bookedServices;
 
-        return bookedServices.filter((booking: Booking) => booking.status.toLocaleLowerCase() === bookedServicesFilter.toLocaleLowerCase());
+        return bookedServices.filter((booking: BookingType) => booking.status.toLocaleLowerCase() === bookedServicesFilter.toLocaleLowerCase());
     }, [bookedServices, bookedServicesFilter]);
 
 
@@ -81,6 +82,81 @@ const BookedServices: NextPage = ({
             if (typeof setSession === 'function') setSession(null);
         }
     }, [setSession, user]);
+
+
+
+
+    const acceptBooking = async (booking: BookingType) => {
+        const res = await authorizedFetch({
+            url: `${__backend__}/provider/bookings/accept-booking?bookId=${booking.bookId}`,
+            accessToken: accessToken,
+            method: 'PATCH',
+        });
+
+
+        if (res.status === 200) {
+            setBookedServices(prev => {
+                return prev.map((_booking: BookingType) => {
+                    if (_booking.bookId === booking.bookId) {
+                        return res.booking;
+                    }
+
+                    return _booking;
+                })
+            })
+
+            return;
+        } 
+
+
+        alert(res.msg);
+    }
+
+
+
+    const serviceRendered = async (booking: BookingType) => {
+        const res = await authorizedFetch({
+            url: `${__backend__}/provider/bookings/service-rendered?bookId=${booking.bookId}`,
+            accessToken: accessToken,
+            method: 'PATCH',
+        });
+
+        console.log(serviceRendered);
+
+        if (res.status === 200) {
+            setBookedServices(prev => {
+                return prev.map((_booking: BookingType) => {
+                    return _booking.bookId === booking.bookId ? res.booking : _booking;
+                })
+            })
+        }
+
+    }
+
+
+
+    const buttonLogic = (booking: BookingType) => {
+        return () => {
+            if (bookedServicesFilter === 'To be Approved') {
+                acceptBooking(booking);
+            }
+
+            if (bookedServicesFilter === 'To be Rendered') {
+                serviceRendered(booking);
+            }
+        }
+    }
+
+
+    const buttonValue = useMemo(() => {
+        if (bookedServicesFilter === 'To be Approved') {
+            return 'Accept';
+        }
+
+        if (bookedServicesFilter === 'To be Rendered') {
+            return 'Rendered';
+        }
+    }, [bookedServicesFilter]);
 
 
 
@@ -101,12 +177,14 @@ const BookedServices: NextPage = ({
                 margin: '1em 0'
             }}>
                 {
-                    filteredBookedServices.length !== 0 ? filteredBookedServices.map((booking: Booking, idx: number) => {
-                        return <ProviderBookedService
-                                    setBookedServices={setBookedServices}
-                                    booking={booking} 
+                    filteredBookedServices.length !== 0 ? filteredBookedServices.map((booking: BookingType, idx: number) => {
+                        return <Booking 
                                     key={idx}
                                     accessToken={accessToken}
+                                    booking={booking}
+                                    perspective={(bookedServicesFilter === 'To be Approved' || bookedServicesFilter === 'To be Rendered') ? 'Provider' : 'User'}
+                                    buttonValue={buttonValue}
+                                    buttonOnClick={buttonLogic(booking)}
                                 />
                     }) : <p>No {bookedServicesFilter} bookings yet.</p>
                 }

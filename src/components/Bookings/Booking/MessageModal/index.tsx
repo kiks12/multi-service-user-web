@@ -30,7 +30,7 @@ interface MessageModalProps {
         status: number;
         booking: Booking;
     };
-    updateBookingState: (cancellationRes: {msg: string, status: number, booking: Booking}) => void;
+    updateBookingState?: (cancellationRes: {msg: string, status: number, booking: Booking}) => void;
 }
 
 
@@ -43,7 +43,7 @@ const MessageModal : React.FC<MessageModalProps> = ({
 
     
     const closeModal = () => {
-        updateBookingState(cancellationResponse);
+        if (typeof updateBookingState === 'function') updateBookingState(cancellationResponse);
         setOpenMessageModal(false);
     };
 
