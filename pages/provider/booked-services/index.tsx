@@ -32,7 +32,6 @@ import Layout from "../../../src/components/Provider/Layout/ProviderLayout";
 import authorizedFetch from "../../../utils/authorizedFetch";
 import { __backend__ } from "../../../src/constants";
 import ProviderBookedServicesMenu from "../../../src/components/Provider/BookedServices/ProviderBookedServicesMenu";
-import ProviderBookedService from "../../../src/components/Provider/BookedServices/ProviderBookedService";
 
 
 
