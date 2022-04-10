@@ -3,7 +3,7 @@
 
 Multi Service Platform - Bookings Page
 Created: Feb. 09, 2022
-Last Updated: Mar. 30, 2022
+Last Updated: Apr. 10, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -20,7 +20,7 @@ import styles from './Bookings.module.css';
 
 
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 
 
@@ -35,6 +35,12 @@ import { __backend__ } from "../../src/constants";
 import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 import { BookedServicesFilter, Booking as BookingType } from "../../types";
 import authorizedFetch from "../../utils/authorizedFetch";
+import RateServiceModal from "../../src/components/Bookings/Booking/RateServiceModal";
+import MessageModal from "../../src/components/Bookings/Booking/MessageModal";
+import Modal from "../../src/components/Modals/Modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
+import useClickOutsideElement from "../../src/custom-hooks/useClickOutsideElement";
 
 
 
@@ -44,7 +50,14 @@ const Bookings: NextPage = ({
 
     const { setSession } = useAuthentication();
     const [bookingsState, setBookingsState] = useState<BookingType[]>([]);
+    const [currentBooking, setCurrentBooking] = useState<BookingType | null>(null);
     const [bookedServicesFilter, setBookedServicesFilter] = useState<BookedServicesFilter>('To be Approved');
+    const [openRateServiceModal, setOpenRateServiceModal] = useState<boolean>(false);
+    const [openMessageModal, setOpenMessageModal] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>('');
+
+
+    const messageModalRef = useClickOutsideElement(() => setOpenMessageModal(false));
 
 
 
@@ -85,6 +98,23 @@ const Bookings: NextPage = ({
 
 
 
+    const buttonValue = useMemo(() => {
+        if (bookedServicesFilter === 'To be Rated') {
+            return 'Rate';
+        }
+
+        return undefined;
+    }, [bookedServicesFilter]);
+
+
+    const buttonLogic = useCallback(() => {
+        if (bookedServicesFilter === 'To be Rated') {
+            setOpenRateServiceModal(true);
+        }
+    }, [bookedServicesFilter]);
+
+
+
     return (
         <Layout accessToken={accessToken}>
             <div>
@@ -119,6 +149,10 @@ const Bookings: NextPage = ({
                                         <td className={styles.td}>Service Price</td>
                                         <td className={styles.td}>Quantity</td>
                                         <td className={styles.td}>Total Price</td>
+                                        {
+                                            buttonValue === 'Rate' && 
+                                            <td className={styles.td}>Action</td>
+                                        }
                                     </tr>
                                 </thead>
                             </table>
@@ -129,8 +163,12 @@ const Bookings: NextPage = ({
                                     <Booking 
                                         updateBookingState={updateBookingsState}
                                         key={idx}
+                                        perspective='User'
                                         booking={booking}
                                         accessToken={accessToken}
+                                        buttonValue={buttonValue}
+                                        buttonOnClick={buttonLogic}
+                                        setCurrentBooking={setCurrentBooking}
                                     />
                                 )
                             }) 
@@ -140,6 +178,40 @@ const Bookings: NextPage = ({
                         : 
                         <p className={styles.message}>No {bookedServicesFilter} Bookings Found!</p>
                 )
+            }
+
+            {
+                openRateServiceModal && 
+                    <RateServiceModal 
+                        updateBookingState={updateBookingsState}
+                        setOpenRateServiceModal={setOpenRateServiceModal}     
+                        setOpenMessageModal={setOpenMessageModal}
+                        setMessage={setMessage}
+                        accessToken={accessToken}
+                        bookId={currentBooking ? currentBooking?.bookId : 0}
+                    />
+            }
+
+            {
+                openMessageModal && 
+                    <Modal>
+                        <div className="card" ref={messageModalRef}>
+                            <div className="">
+                                <h2>Message</h2>
+                                <FontAwesomeIcon
+                                    icon={faClose}
+                                    onClick={() => setOpenMessageModal(false)}
+                                />
+                            </div>
+                            <p>
+                                {message}
+                            </p>
+
+                            <button onClick={() => setOpenMessageModal(false)}>
+                                Okay
+                            </button>
+                        </div>
+                    </Modal>
             }
 
             {

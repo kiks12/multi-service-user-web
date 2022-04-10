@@ -23,7 +23,8 @@ interface BookingProps {
     updateBookingState?: (cancellationRes: {msg: string, status: number, booking: Booking}) => void;
     perspective?: "User" | "Provider";
     buttonValue?: string;
-    buttonOnClick?: () => void;
+    buttonOnClick?: any;
+    setCurrentBooking: React.Dispatch<React.SetStateAction<Booking | null>>
 }
 
 
@@ -41,7 +42,8 @@ const Booking : React.FC<BookingProps> = ({
     updateBookingState,
     perspective,
     buttonValue,
-    buttonOnClick
+    buttonOnClick,
+    setCurrentBooking
  }) => {
 
     const [openActionButton, setOpenActionButton] = useState<boolean>(false);    
@@ -124,11 +126,16 @@ const Booking : React.FC<BookingProps> = ({
                             {formattedFinalPrice}
                         </td>
                         {
-                            perspective === 'Provider' && 
+                            (perspective === 'Provider' || buttonValue) && 
                             <td>
                                 <button 
                                     className='main-button'
-                                    onClick={buttonOnClick}
+                                    onClick={() => {
+                                        buttonOnClick();
+                                        if (typeof setCurrentBooking === 'function') {
+                                            setCurrentBooking(booking);
+                                        }
+                                    }}
                                 >
                                     {buttonValue}
                                 </button>
