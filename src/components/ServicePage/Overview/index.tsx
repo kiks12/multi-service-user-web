@@ -16,6 +16,7 @@ import React from 'react';
 
 import Image from 'next/image';
 import { Service } from '../../../../types';
+import Link from 'next/link';
 
 
 
@@ -63,7 +64,9 @@ const Overview : React.FC<OverviewProps> = ({ service }) => {
                     display: 'flex',
                     alignItems: 'center'
                 }}>
-                    <h4>{service.Users?.shopName}</h4>
+                    <Link href={`/provider/page/${service.Users?.userId}`} passHref={true}>
+                        <h4>{service.Users?.shopName}</h4>
+                    </Link>
                     <p style={{margin: '0 1em'}}> | {service.ratings} ratings</p>
                 </div>
             </div>

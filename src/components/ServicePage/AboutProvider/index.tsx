@@ -3,7 +3,7 @@
 
 Multi Service Platform - Service Page About the Provider Component
 Created: Feb. 24, 2022
-Last Updated: Feb. 24, 2022
+Last Updated: Apr. 10, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -15,6 +15,7 @@ import React from 'react';
 
 
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 
 
@@ -26,6 +27,7 @@ interface AboutProviderProps {
 
 const AboutProvider: React.FC<AboutProviderProps> = ({user}) => {
 
+    const router = useRouter();
 
 
     return (
@@ -71,7 +73,10 @@ const AboutProvider: React.FC<AboutProviderProps> = ({user}) => {
                         <button className='ghost-button'>
                             Message
                         </button>
-                        <button className='ghost-button'>
+                        <button 
+                            className='ghost-button'
+                            onClick={() => router.push(`/provider/page/${user.userId}`)}
+                        >
                             View Shop
                         </button>
                     </div>
