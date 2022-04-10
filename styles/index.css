@@ -20,7 +20,7 @@
     --white: #ffffff;
     --gray: #DBDBE2;
     --lightGray: #f3f3f3;
-    --blackModalBg: rgba(24, 24, 24, 0.8);
+    --blackModalBg: rgba(24, 24, 24, 0.4);
 
 
     --boxShadow: 0px 8px 15px rgba(49, 49, 49, 0.2);
@@ -879,7 +879,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* background-color: var(--blackModalBg); */
+    background-color: var(--blackModalBg);
     z-index: 100;
 }
 
