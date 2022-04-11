@@ -1,8 +1,8 @@
 
 
 export type User = {
-    userId: number,
-    accessToken: string,
+    userId: number;
+    accessToken: string;
     username: string | null;
     email: string;
     image: string | null;
@@ -19,6 +19,42 @@ export type User = {
 
     firstLogin: boolean;
     firstProviderLogin: boolean;
+}
+
+
+export type Provider = {
+    userId: number;
+    accessToken: string;
+    username: string | null;
+    email: string | null;
+    image: string | null; 
+    cover: string | null;
+    address: string | null;
+    contact: string | null;
+
+    shopName: string | null;
+    skills: string | null;
+    description: string | null;
+    followers: number;
+    likes: number;
+
+    verifiedProvider: boolean;
+
+    firstLogin: boolean;
+    firstProviderLogin: boolean;
+
+    Services?: Service[];
+    Images: Image[];
+}
+
+
+export type Image = {
+    imageId: number;
+    type: string;
+    userId: string;
+    serviceId: number | null;
+    name: string;
+    path: string;
 }
 
 
