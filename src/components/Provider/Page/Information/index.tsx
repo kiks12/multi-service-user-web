@@ -1,4 +1,5 @@
 
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 
@@ -20,6 +21,7 @@ interface ProviderPageInformationProps {
 const ProviderPageInformation : React.FC<ProviderPageInformationProps> = ({ provider }) => {
 
     const [seeMore, setSeeMore] = useState<boolean>(false);
+    const router = useRouter();
     const skillsArray = useSplitArray({
         stringToSplit: provider.skills as string,
         splitter: '|',
@@ -49,6 +51,9 @@ const ProviderPageInformation : React.FC<ProviderPageInformationProps> = ({ prov
                                             <li 
                                                 key={idx}
                                                 className="skills-li"
+                                                onClick={() => {
+                                                    router.push(`/${skill}`)
+                                                }}
                                             >
                                                 {skill}
                                             </li>
