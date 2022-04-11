@@ -180,8 +180,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 
     const jsonRes = await res.json();
 
-    console.log(jsonRes);
-
 
     // const recommendedServices = await authorizedFetch({
     //     method: 'GET',
