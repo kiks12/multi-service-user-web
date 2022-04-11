@@ -20,6 +20,7 @@ import Layout from "../../../../src/components/layout/Layout";
 
 import fetchUserInformation from "../../../../libs/fetchUserInformation";
 import { __backend__ } from "../../../../src/constants";
+import ProviderPageHeader from "../../../../src/components/Provider/Page/Header";
 
 
 
@@ -42,7 +43,9 @@ const ProviderPage : NextPage = (
 
     return (
         <Layout accessToken={accessToken}>
-            <pre>{JSON.stringify(provider, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(provider, null, 2)}</pre> */}
+            <ProviderPageHeader provider={provider}/>
+            
         </Layout>
     )
 }
