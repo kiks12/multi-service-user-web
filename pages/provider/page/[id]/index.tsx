@@ -86,7 +86,6 @@ export const getServerSideProps: GetServerSideProps = async (
         method: 'GET',
     });
     const serviceProviderInformationJSON = await serviceProviderInformationResponse.json();
-    const serviceProviderInformation = await serviceProviderInformationJSON.provider;
 
     
     if (req.cookies.accessToken) {
@@ -97,7 +96,7 @@ export const getServerSideProps: GetServerSideProps = async (
                 props: {
                     user: userInformation.user,
                     accessToken: req.cookies.accessToken,
-                    provider: serviceProviderInformation
+                    provider: serviceProviderInformationJSON.provider
                 }
             }
         }
@@ -107,7 +106,7 @@ export const getServerSideProps: GetServerSideProps = async (
         props: {
             user: '',
             accessToken: '',
-            provider: serviceProviderInformation,
+            provider: serviceProviderInformationJSON.provider,
         }
     }
 }
