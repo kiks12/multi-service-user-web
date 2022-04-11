@@ -26,6 +26,7 @@ import fetchUserInformation from "../../../../libs/fetchUserInformation";
 import { __backend__ } from "../../../../src/constants";
 import ProviderPageHeader from "../../../../src/components/Provider/Page/Header";
 import ProviderPageInformation from "../../../../src/components/Provider/Page/Information";
+import Service from "../../../../src/components/Services/Service";
 
 
 
@@ -53,6 +54,21 @@ const ProviderPage : NextPage = (
 
             <div className={styles.container}>
                 <ProviderPageInformation provider={provider}/>
+
+                <div>
+                    <h3>Services</h3>
+                    <div className="services-grid">
+                        {
+                            provider.Services.length !== 0 ? (
+                                provider.Services.map((service: any, idx: number) => {
+                                    return <Service key={idx} service={service}/>
+                                })
+                            ) : (
+                                <p>No Services Yet</p>
+                            )
+                        }
+                    </div>
+                </div>
             </div>
         </Layout>
     )
