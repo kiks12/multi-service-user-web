@@ -15,12 +15,17 @@ import { useAuthentication } from "../../../../src/custom-hooks/useAuthenticatio
 
 
 
+import styles from '../../../../src/components/Provider/Page/Header/Header.module.css';
+
+
+
 import Layout from "../../../../src/components/layout/Layout";
 
 
 import fetchUserInformation from "../../../../libs/fetchUserInformation";
 import { __backend__ } from "../../../../src/constants";
 import ProviderPageHeader from "../../../../src/components/Provider/Page/Header";
+import ProviderPageInformation from "../../../../src/components/Provider/Page/Information";
 
 
 
@@ -45,7 +50,10 @@ const ProviderPage : NextPage = (
         <Layout accessToken={accessToken}>
             {/* <pre>{JSON.stringify(provider, null, 2)}</pre> */}
             <ProviderPageHeader provider={provider}/>
-            
+
+            <div className={styles.container}>
+                <ProviderPageInformation provider={provider}/>
+            </div>
         </Layout>
     )
 }

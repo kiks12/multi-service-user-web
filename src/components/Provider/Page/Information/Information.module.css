@@ -1,0 +1,77 @@
+
+.container, .containerSeeMore {
+    position: relative;
+    border-radius: 0.3em;
+    display: flex;
+    flex-direction: column;
+    margin: 1em 0;
+    width: 100%;
+    border: 0.3px solid var(--gray);
+}
+
+
+.containerPadding {
+    padding: 1em;
+}
+
+.containerPadding > h3 {
+    margin: 0 0 0.8em 0;
+}
+
+.containerPadding > * + * > * + * {
+    margin: 0.3em 0;
+}
+
+
+.container {
+    height: 10em;
+    overflow: hidden;
+}
+
+
+
+.containerSeeMore {
+    height: 40em;
+}
+
+
+
+.seeMoreButton {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: var(--white);
+    border: none;
+    border-top: 0.3px solid var(--gray);
+    color: var(--secondaryPurple);
+}
+
+
+.seeMoreButton::before {
+    content: ' ';
+    height: 1.7em;
+    position: absolute;
+    top: -1.55em;
+    right: 0;
+    left: 0;
+    width: 100%;
+    background: var(--white);
+    background: linear-gradient(180deg, rgba(113,109,140,0) 0%, var(--lightGray) 100%);
+}
+
+
+.shopDescription {
+    margin: 2em 0 0 0;
+}
+
+
+.shopDescription > textarea {
+    width: 100%;
+    user-select: none;
+    outline: none;
+    height: 30em;
+    resize: none;
+    border: none;
+    font-size: var(--normalFontSize);
+}
