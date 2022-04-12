@@ -1,10 +1,11 @@
 
 
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import fetchUserInformation from "../../libs/fetchUserInformation";
 import Layout from "../../src/components/layout/Layout";
 import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
+import useWebSocket from "../../src/custom-hooks/useWebSocket";
 
 
 
@@ -13,6 +14,7 @@ const Messages : NextPage = (
 ) => {
 
     const { setSession } = useAuthentication();
+    const socket = useWebSocket();
 
 
     useEffect(() => {
@@ -26,10 +28,11 @@ const Messages : NextPage = (
 
     return (
         <Layout accessToken={accessToken}>
-
+            <input onChange={(e) => socket.emit('message', e.target.value)}/>
         </Layout>
     )
 }
+
 
 
 export const getServerSideProps : GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
