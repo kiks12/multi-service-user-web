@@ -50,16 +50,16 @@ const ProviderPage : NextPage = (
     return (
         <Layout accessToken={accessToken}>
             {/* <pre>{JSON.stringify(provider, null, 2)}</pre> */}
-            <ProviderPageHeader provider={provider}/>
+            { provider && <ProviderPageHeader provider={provider}/> }
 
             <div className={styles.container}>
-                <ProviderPageInformation provider={provider}/>
+                { provider && <ProviderPageInformation provider={provider}/> }
 
                 <div>
                     <h3>Services</h3>
                     <div className="services-grid">
                         {
-                            provider.Services.length !== 0 ? (
+                            (provider && provider.Services.length !== 0) ? (
                                 provider.Services.map((service: any, idx: number) => {
                                     return <Service key={idx} service={service}/>
                                 })
@@ -96,17 +96,18 @@ export const getServerSideProps: GetServerSideProps = async (
                 props: {
                     user: userInformation.user,
                     accessToken: req.cookies.accessToken,
-                    provider: serviceProviderInformationJSON.provider
+                    provider: serviceProviderInformationJSON.provider ? serviceProviderInformationJSON.provider : null,
                 }
             }
         }
+
     }
 
     return {
         props: {
             user: '',
-            accessToken: '',
-            provider: serviceProviderInformationJSON.provider,
+            accessToken: req.cookies.accessToken,
+            provider: serviceProviderInformationJSON.provider ? serviceProviderInformationJSON.provider : null,
         }
     }
 }

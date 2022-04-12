@@ -4,7 +4,7 @@
 
 Multi Service Platform - Top Navigation Bar Component
 Created: Feb. 09, 2022
-Last Updated: Mar. 04, 2022
+Last Updated: Apr. 12, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -100,7 +100,10 @@ const TopNavbar : React.FC <TopNavbarProps> = ({ accessToken }) => {
                             />
                         </li>
                         <li className='top-navbar-li'>
-                            <FontAwesomeIcon icon={faMessage} size='lg' />
+                            <Link href='/messages' passHref={true}>
+                                {/* <FontAwesomeIcon icon={faMessage} size='lg' /> */}
+                                <p>Messages</p>
+                            </Link>
                         </li>
 
                         <Link href='/provider' passHref={true} >
