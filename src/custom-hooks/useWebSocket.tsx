@@ -21,7 +21,7 @@ import Modal from "../components/Modals/Modal";
 
 
 
-const webSocketContext = createContext<Socket<DefaultEventsMap, DefaultEventsMap> | null>(null);
+const webSocketContext = createContext<Socket<DefaultEventsMap, DefaultEventsMap>>(io());
 
 
 
@@ -33,27 +33,31 @@ export const WebSocketProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         // setSocket(io('http://localhost:4000'));
-        const ioConnection = io('http://localhost:4000');
-        if (ioConnection.connected) {
-            setSocket(ioConnection);
-        } else {
-            setSocket(io());
-        }
+        console.log('connecting....');
+        const ioConnection = io('http://localhost:4000/');
+        setSocket(ioConnection);
     }, []);
 
 
-    // if(!socket.connected){
-    //     return (
-    //         <div>
-    //             <Modal>
-    //                 <div style={{width: '33%'}} className="card">
-    //                     <h2>Server Connection Problem</h2>
-    //                     <p>The server is down, sorry for the inconvinience</p>
-    //                 </div>
-    //             </Modal>
-    //         </div>
-    //     )
-    // }
+    useEffect(() => {
+        socket.on('connect', () => {
+            console.log(socket.id);
+        });
+    }, [socket]);
+
+
+    if(!socket){
+        return (
+            <div>
+                <Modal>
+                    <div style={{width: '33%'}} className="card">
+                        <h2>Server Connection Problem</h2>
+                        <p>The server is down, sorry for the inconvenience</p>
+                    </div>
+                </Modal>
+            </div>
+        )
+    }
 
 
     return (
