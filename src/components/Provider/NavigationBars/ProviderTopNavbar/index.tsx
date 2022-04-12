@@ -39,6 +39,11 @@ const ProviderTopNavbar: React.FC = () => {
                         icon={faMagnifyingGlass}
                     />
                 </li>
+                <Link href='/provider/messages' passHref={true} >
+                    <li className='top-navbar-li'>
+                        <p>Messages</p>
+                    </li>
+                </Link>
                 <Link href='/' passHref={true} >
                     <li className='top-navbar-li'>
                         <p>Switch to buying</p>
