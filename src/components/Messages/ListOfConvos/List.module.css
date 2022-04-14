@@ -1,0 +1,12 @@
+
+.container {
+   height: 100%;
+   overflow-y: scroll; 
+}
+
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

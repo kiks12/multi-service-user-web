@@ -1,8 +1,17 @@
 
+
 import React, { useCallback, useEffect, useState } from 'react';
+import { useAuthentication } from '../../../custom-hooks/useAuthentication';
+
+
+
 import authorizedFetch from '../../../../utils/authorizedFetch';
 import { GET_LIST_OF_CONVERSATIONS_API } from '../../../constants';
-import { useAuthentication } from '../../../custom-hooks/useAuthentication';
+import styles from './List.module.css';
+
+
+
+import Convo from '../Convo';
 
 
 
@@ -73,20 +82,21 @@ const ListOfConvos : React.FC<ListOfConvosProps> = ({accessToken}) => {
 
 
     return (
-        <div>
-            {
-                conversations ? (
-                    conversations.map((convo: any) => {
-                        return (
-                            <div key={convo.conversationId}>
-                                {convo.to}
-                            </div>
-                        )
-                    })
-                ) : (
-                    <p>No Convos</p>
-                )
-            }
+        <div className={styles.container}>
+            <h2>Messages</h2>
+            <div className={styles.grid}>
+                {
+                    conversations ? (
+                        conversations.map((convo: any) => {
+                            return (
+                                <Convo key={convo.conversationId} conversation={convo}/>
+                            )
+                        })
+                    ) : (
+                        <p>No Convos</p>
+                    )
+                }
+            </div>
         </div>
     )
 };
