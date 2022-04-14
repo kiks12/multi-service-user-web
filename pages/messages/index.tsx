@@ -4,6 +4,8 @@ import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsT
 import { useEffect, useState } from "react";
 import fetchUserInformation from "../../libs/fetchUserInformation";
 import Layout from "../../src/components/layout/Layout";
+import MessagesLayout from "../../src/components/Messages/Layout";
+import ListOfConvos from "../../src/components/Messages/ListOfConvos";
 import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 import useWebSocket from "../../src/custom-hooks/useWebSocket";
 
@@ -28,7 +30,9 @@ const Messages : NextPage = (
 
     return (
         <Layout accessToken={accessToken}>
-            <input onChange={(e) => socket.emit('message', e.target.value)}/>
+            <MessagesLayout>
+                <ListOfConvos accessToken={accessToken}/>
+            </MessagesLayout>
         </Layout>
     )
 }
