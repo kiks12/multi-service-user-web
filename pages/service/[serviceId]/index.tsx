@@ -52,7 +52,8 @@ const ServicePage : NextPage = ({
     user,
     service,
     recommendeds,
-    accessToken}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    accessToken
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { setSession } = useAuthentication();
 
@@ -146,7 +147,7 @@ const ServicePage : NextPage = ({
                     <div className={styles.leftSide}>
                         <Overview service={service}/>
                         <Description service={service} ref={descriptionRef}/>
-                        <AboutProvider user={service.Users}/>
+                        <AboutProvider user={service.Users} accessToken={accessToken}/>
                         <Reviews />
                         {/* <Recommended services={recommendeds} currentServiceID={service.serviceId}/> */}
                     </div>
