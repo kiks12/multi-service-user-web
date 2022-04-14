@@ -48,7 +48,7 @@ const AboutProvider: React.FC<AboutProviderProps> = ({ user, accessToken }) => {
         }
 
         const createdConversation = await authorizedFetch({
-            url: `${CREATE_CONVERSATION_API}?userTwo=${user.userId}`,
+            url: `${CREATE_CONVERSATION_API}?userTwo=${user.userId}&userOneRole=Client&userTwoRole=Provider`,
             method: 'POST',
             accessToken: accessToken,
         });
