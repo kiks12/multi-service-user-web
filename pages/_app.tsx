@@ -30,6 +30,7 @@ import { WebSocketProvider } from '../src/custom-hooks/useWebSocket';
 
 
 import Head from 'next/head';
+import { ConversationProvider } from '../src/custom-hooks/useConversation';
 
 
 
@@ -45,11 +46,13 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) =>
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
-            <WebSocketProvider>
-                <AuthProvider>
-                    <Component {...pageProps}/>
-                </AuthProvider>
-            </WebSocketProvider>
+            <ConversationProvider>
+                <WebSocketProvider>
+                    <AuthProvider>
+                        <Component {...pageProps}/>
+                    </AuthProvider>
+                </WebSocketProvider>
+            </ConversationProvider>
         </>
     )
 }
