@@ -1,7 +1,16 @@
 
 .grid {
-    display: grid;
-    grid-template-columns: 20% 80%;
+    display: flex;
     width: 100%;
     height: 92vh;
+}
+
+
+.grid > * {
+    flex-basis: 25%;
+}
+
+
+.grid > * + * {
+    flex-basis: 75%;
 }

@@ -12,6 +12,8 @@ import styles from './List.module.css';
 
 
 import Convo from '../Convo';
+import { useRouter } from 'next/router';
+import { useConversation } from '../../../custom-hooks/useConversation';
 
 
 
@@ -25,6 +27,8 @@ const ListOfConvos : React.FC<ListOfConvosProps> = ({accessToken}) => {
 
     const [conversations, setConversations] = useState<any[]>([]);
     const { session } = useAuthentication();
+    const { setActiveConvo } = useConversation();
+    const router = useRouter();
 
     const getListOfConversations = useCallback(async () => {
         const res = await authorizedFetch({
@@ -55,6 +59,7 @@ const ListOfConvos : React.FC<ListOfConvosProps> = ({accessToken}) => {
             }
             conversationsData.push({
                 conversationId: convo.conversationId,
+                image: convo.UserOne.userId === session?.userId ? convo.UserTwo.image : convo.UserOne.image,
                 to: to,
                 status: convo.UserOne.userId === session?.userId ? convo.userOneStatus : convo.userTwoStatus,
                 recentMessage: '',
@@ -79,6 +84,20 @@ const ListOfConvos : React.FC<ListOfConvosProps> = ({accessToken}) => {
             setConversations([]);
         }
     }, [setConversationsState]);
+
+
+    useEffect(() => {
+        if (conversations[0] && typeof setActiveConvo === 'function') {
+            setActiveConvo(conversations[0]);
+        }
+    }, [conversations, setActiveConvo]);
+
+
+    useEffect(() => {
+        if (conversations[0] && router.pathname === '/messages') {
+            router.push(`/messages/${conversations[0].conversationId}`);
+        }
+    }, [conversations, router]); 
 
 
     return (

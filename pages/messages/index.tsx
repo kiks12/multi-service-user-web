@@ -10,6 +10,9 @@ import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 import useWebSocket from "../../src/custom-hooks/useWebSocket";
 
 
+import MessagesComponent from "../../src/components/Messages";
+
+
 
 const Messages : NextPage = (
     { accessToken, user }: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -32,6 +35,7 @@ const Messages : NextPage = (
         <Layout accessToken={accessToken}>
             <MessagesLayout>
                 <ListOfConvos accessToken={accessToken}/>
+                <MessagesComponent />
             </MessagesLayout>
         </Layout>
     )

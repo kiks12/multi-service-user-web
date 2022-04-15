@@ -3,6 +3,7 @@ import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsT
 import { useEffect } from "react";
 import fetchUserInformation from "../../../libs/fetchUserInformation";
 import Layout from "../../../src/components/layout/Layout";
+import Messages from "../../../src/components/Messages";
 import MessagesLayout from "../../../src/components/Messages/Layout";
 import ListOfConvos from "../../../src/components/Messages/ListOfConvos";
 import { useAuthentication } from "../../../src/custom-hooks/useAuthentication";
@@ -28,6 +29,7 @@ const Conversations : NextPage = ({
         <Layout accessToken={accessToken}>
             <MessagesLayout>
                 <ListOfConvos accessToken={accessToken}/>
+                <Messages />
             </MessagesLayout>
         </Layout>
     )

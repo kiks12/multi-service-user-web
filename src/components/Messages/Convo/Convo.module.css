@@ -1,12 +1,9 @@
 
-.container{
+.container, .containerActive{
     background-color: var(--white);
-    border-radius: 0.3em 0 0 0.3em;
+    border-radius: 0.3em;
     height: 3.5em;
     width: 100%;
-    border-left: 0.2em solid var(--mainPurple);
-    border-bottom: 0.3px solid var(--gray);
-    border-top: 0.3px solid var(--gray);
     padding: 0.7em;
     margin: 0.2em 0 0 0;
     display: flex;
@@ -16,12 +13,31 @@
 }
 
 
-.container > div {
+.containerActive {
+    background-color: var(--lightGray);
+}
+
+
+.container > div, .containerActive > div{
     display: flex;
     flex-direction: column;
 }
 
 
-.container:hover {
+.container:hover{
     background-color: var(--lightGray);
+}
+
+
+.containerActive:hover {
+    background-color: var(--gray);
+}
+
+
+.circle {
+    border-radius: 50%;
+    overflow: hidden;
+    height: 2.5em;
+    width: 2.5em;
+    margin: 0 0.8em 0 0;
 }

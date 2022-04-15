@@ -2,6 +2,9 @@
 .container {
    height: 100%;
    overflow-y: scroll; 
+   border-left: 0.3px solid var(--gray);
+   border-right: 0.3px solid var(--gray);
+   padding: 0.5em;
 }
 
 

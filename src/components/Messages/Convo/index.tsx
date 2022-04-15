@@ -1,10 +1,16 @@
 
 import Link from 'next/link';
-import React from 'react';
+import Image from 'next/image';
+
+
+
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 
 
 
 import styles from './Convo.module.css';
+import { useConversation } from '../../../custom-hooks/useConversation';
 
 
 
@@ -13,16 +19,40 @@ interface ConvoProps {
 }
 
 
-const Convo : React.FC<ConvoProps> = ({conversation}) => {
+const Convo : React.FC<ConvoProps> = ({ conversation }) => {
+
+    const { setActiveConvo } = useConversation();
+    const router = useRouter();
+    const { id } = router.query;
+
+    
+    const containerClickHandler = () => {
+        if (typeof setActiveConvo === 'function') setActiveConvo(conversation);
+        router.push(`/messages/${conversation.conversationId}`);
+    }
+
+
     return (
-        <Link href={`/messages/${conversation.conversationId}`} passHref={true}>
-            <div className={styles.container}>
-                <div>
-                    <p>{conversation.to}</p>
-                    <small>You: {conversation.recentMessage}</small>
-                </div>
+        <div 
+            className={id === conversation.conversationId ? styles.containerActive : styles.container}
+            onClick={containerClickHandler}
+        >
+            <div className={styles.circle}>
+                {
+                    conversation.image &&
+                    <Image 
+                        src={conversation.image}
+                        alt={conversation.to}
+                        height={50}
+                        width={50}
+                    />
+                }
             </div>
-        </Link>
+            <div>
+                <p>{conversation.to}</p>
+                <small>You: {conversation.recentMessage}</small>
+            </div>
+        </div>
     )
 }
 
