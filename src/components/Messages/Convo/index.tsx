@@ -1,4 +1,5 @@
 
+import Link from 'next/link';
 import React from 'react';
 
 
@@ -14,12 +15,14 @@ interface ConvoProps {
 
 const Convo : React.FC<ConvoProps> = ({conversation}) => {
     return (
-        <div className={styles.container}>
-            <div>
-                <p>{conversation.to}</p>
-                <small>You: {conversation.recentMessage}</small>
+        <Link href={`/messages/${conversation.conversationId}`} passHref={true}>
+            <div className={styles.container}>
+                <div>
+                    <p>{conversation.to}</p>
+                    <small>You: {conversation.recentMessage}</small>
+                </div>
             </div>
-        </div>
+        </Link>
     )
 }
 
