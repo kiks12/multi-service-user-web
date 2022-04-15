@@ -2,4 +2,12 @@
 .container {
     background-color: var(--lightGray);
     position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.messagesContainer {
+    height: min(99%, 32em);
+    overflow-y: scroll;
 }

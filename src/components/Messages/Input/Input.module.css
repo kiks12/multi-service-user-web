@@ -1,0 +1,50 @@
+
+.container {
+    padding: 1em 1em;
+    background-color: var(--white);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container > * {
+    flex-basis: 5%;
+}
+
+
+.container > * + * {
+    flex-basis: 95%;
+}
+
+
+.container > form {
+    display: flex;
+}
+
+
+.container > form > textarea {
+    resize: none;
+    height: 2.5em;
+    overflow: hidden;
+    border-radius: 2em;
+    padding: 0.5em 1em;
+}
+
+
+.container > form > button {
+    padding: 0.2em 2em;
+}
+
+
+.container > form > * {
+    flex-basis: 90%;
+}
+
+.container > form > * + * {
+    flex-basis: 10%;
+    margin-left: 1em;
+}

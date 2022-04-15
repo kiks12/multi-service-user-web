@@ -61,6 +61,7 @@ const ListOfConvos : React.FC<ListOfConvosProps> = ({accessToken}) => {
                 conversationId: convo.conversationId,
                 image: convo.UserOne.userId === session?.userId ? convo.UserTwo.image : convo.UserOne.image,
                 to: to,
+                toId: convo.UserOne.userId === session?.userId ? convo.UserTwo.userId : convo.UserOne.userId,
                 status: convo.UserOne.userId === session?.userId ? convo.userOneStatus : convo.userTwoStatus,
                 recentMessage: '',
             });

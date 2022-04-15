@@ -4,7 +4,7 @@
 
 Multi Service Platform - main App file
 Created: Feb. 07, 2022
-Last Updated: Mar. 07, 2022
+Last Updated: April 15, 2022
 Author: Tolentino, Francis James S.
 
 */
@@ -31,6 +31,7 @@ import { WebSocketProvider } from '../src/custom-hooks/useWebSocket';
 
 import Head from 'next/head';
 import { ConversationProvider } from '../src/custom-hooks/useConversation';
+import { MessagesProvider } from '../src/custom-hooks/useMessages';
 
 
 
@@ -47,11 +48,13 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) =>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
             <ConversationProvider>
-                <WebSocketProvider>
-                    <AuthProvider>
-                        <Component {...pageProps}/>
-                    </AuthProvider>
-                </WebSocketProvider>
+                <MessagesProvider>
+                    <WebSocketProvider>
+                        <AuthProvider>
+                            <Component {...pageProps}/>
+                        </AuthProvider>
+                    </WebSocketProvider>
+                </MessagesProvider>
             </ConversationProvider>
         </>
     )

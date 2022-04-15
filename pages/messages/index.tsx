@@ -35,7 +35,7 @@ const Messages : NextPage = (
         <Layout accessToken={accessToken}>
             <MessagesLayout>
                 <ListOfConvos accessToken={accessToken}/>
-                <MessagesComponent />
+                <MessagesComponent accessToken={accessToken}/>
             </MessagesLayout>
         </Layout>
     )

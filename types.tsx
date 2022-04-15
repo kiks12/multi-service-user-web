@@ -1,7 +1,7 @@
 
 
 export type User = {
-    userId: number;
+    userId: string;
     accessToken: string;
     username: string | null;
     email: string;
