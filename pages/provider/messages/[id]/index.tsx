@@ -4,33 +4,30 @@ import { useEffect } from "react";
 
 
 
-import Layout from "../../../src/components/layout/Layout";
-import Messages from "../../../src/components/Messages";
-import MessagesLayout from "../../../src/components/Messages/Layout";
-import ListOfConvos from "../../../src/components/Messages/ListOfConvos";
+import Messages from "../../../../src/components/Messages";
+import MessagesLayout from "../../../../src/components/Messages/Layout";
+import ListOfConvos from "../../../../src/components/Messages/ListOfConvos";
+import Layout from "../../../../src/components/Provider/Layout/ProviderLayout";
 
 
 
-import { useAuthentication } from "../../../src/custom-hooks/useAuthentication";
-import { useConversation } from "../../../src/custom-hooks/useConversation";
-import { useMessages } from "../../../src/custom-hooks/useMessages";
+import { useAuthentication } from "../../../../src/custom-hooks/useAuthentication";
+import { useConversation } from "../../../../src/custom-hooks/useConversation";
+import { useMessages } from "../../../../src/custom-hooks/useMessages";
 
 
 
-import fetchUserInformation from "../../../libs/fetchUserInformation";
-import { GET_CONVERSATION_MESSAGES_API } from "../../../src/constants";
-import authorizedFetch from "../../../utils/authorizedFetch";
+import fetchUserInformation from "../../../../libs/fetchUserInformation";
+import { GET_CONVERSATION_MESSAGES_API } from "../../../../src/constants";
+import authorizedFetch from "../../../../utils/authorizedFetch";
 
 
 
-const Conversations : NextPage = ({
-    user, accessToken
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const ProviderMessagesId : NextPage = ({accessToken, user}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { setSession } = useAuthentication();
     const { setMessages } = useMessages();
     const { activeConvo } = useConversation();
-
 
     useEffect(() => {
         if (typeof setSession === 'function') setSession(user);
@@ -64,7 +61,7 @@ const Conversations : NextPage = ({
 
 
     return (
-        <Layout accessToken={accessToken}>
+        <Layout>
             <MessagesLayout>
                 <ListOfConvos accessToken={accessToken}/>
                 <Messages accessToken={accessToken}/>
@@ -74,8 +71,9 @@ const Conversations : NextPage = ({
 }
 
 
-export const getServerSideProps : GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
 
+export const getServerSideProps : GetServerSideProps = async ({req}: GetServerSidePropsContext) => {
+    
     if (req.cookies.accessToken) {
         const userInformation = await fetchUserInformation(req.cookies.accessToken);
 
@@ -99,4 +97,5 @@ export const getServerSideProps : GetServerSideProps = async ({req}: GetServerSi
 }
 
 
-export default Conversations;
+
+export default ProviderMessagesId;

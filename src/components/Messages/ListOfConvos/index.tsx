@@ -98,6 +98,10 @@ const ListOfConvos : React.FC<ListOfConvosProps> = ({accessToken}) => {
         if (conversations[0] && router.pathname === '/messages') {
             router.push(`/messages/${conversations[0].conversationId}`);
         }
+
+        if (conversations[0] && router.pathname === '/provider/messages') {
+            router.push(`/provider/messages/${conversations[0].conversationId}`);
+        }
     }, [conversations, router]); 
 
 
