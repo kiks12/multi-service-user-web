@@ -63,7 +63,7 @@ const ProviderMessagesId : NextPage = ({accessToken, user}: InferGetServerSidePr
     return (
         <Layout>
             <MessagesLayout>
-                <ListOfConvos accessToken={accessToken}/>
+                <ListOfConvos accessToken={accessToken} role='PROVIDER' />
                 <Messages accessToken={accessToken}/>
             </MessagesLayout>
         </Layout>

@@ -25,7 +25,7 @@ const ProviderMessages : NextPage = ({ user, accessToken }: InferGetServerSidePr
     return (
         <Layout>
             <MessagesLayout>
-                <ListOfConvos accessToken={accessToken}/>
+                <ListOfConvos accessToken={accessToken} role='PROVIDER' />
                 <Messages accessToken={accessToken}/>
             </MessagesLayout>
         </Layout>

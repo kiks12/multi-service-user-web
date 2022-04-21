@@ -28,8 +28,19 @@ const Convo : React.FC<ConvoProps> = ({ conversation }) => {
     
     const containerClickHandler = () => {
         if (typeof setActiveConvo === 'function') setActiveConvo(conversation);
-        router.push(`/messages/${conversation.conversationId}`);
+        if (router.pathname.includes('provider')) {
+            router.push(`/provider/messages/${conversation.conversationId}`);
+        } else {
+            router.push(`/messages/${conversation.conversationId}`);
+        }
     }
+
+
+    // useEffect(() => {
+    //     return () => {
+    //         if (typeof setActiveConvo === 'function') setActiveConvo(null);
+    //     }
+    // }, [setActiveConvo]);
 
 
     return (

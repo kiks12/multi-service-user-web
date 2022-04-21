@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useConversation } from '../../custom-hooks/useConversation';
 import { useMessages } from '../../custom-hooks/useMessages';
 import MessagesHeader from './Header';
 import MessagesInput from './Input';
@@ -15,22 +16,30 @@ interface MessagesProps {
 }
 
 
-const Messages : React.FC<MessagesProps> = ({accessToken}) => {
+const Messages : React.FC<MessagesProps> = ({ accessToken }) => {
 
     const { messages } = useMessages();
+    const { activeConvo } = useConversation();
 
     return (
-        <div className={styles.container}>
-            <MessagesHeader />
-            <div className={styles.messagesContainer}>
-                {
-                    messages && messages.map((message: any) => {
-                        return <Message key={message.messageId} message={message}/>
-                    })
-                }
-            </div>
-            <MessagesInput accessToken={accessToken}/>
-        </div>
+        <>
+            {
+                !activeConvo && messages.length === 0 ? 
+                <div className={styles.container}></div>
+                :
+                <div className={styles.container}>
+                    <MessagesHeader />
+                    <div className={styles.messagesContainer}>
+                        {
+                            messages && messages.map((message: any) => {
+                                return <Message key={message.messageId} message={message}/>
+                            })
+                        }
+                    </div>
+                    <MessagesInput accessToken={accessToken}/>
+                </div>
+            }
+        </>
     )
 }
 

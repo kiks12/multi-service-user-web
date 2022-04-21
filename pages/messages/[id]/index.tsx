@@ -20,6 +20,7 @@ import { useMessages } from "../../../src/custom-hooks/useMessages";
 import fetchUserInformation from "../../../libs/fetchUserInformation";
 import { GET_CONVERSATION_MESSAGES_API } from "../../../src/constants";
 import authorizedFetch from "../../../utils/authorizedFetch";
+import { useRouter } from "next/router";
 
 
 
@@ -30,6 +31,7 @@ const Conversations : NextPage = ({
     const { setSession } = useAuthentication();
     const { setMessages } = useMessages();
     const { activeConvo } = useConversation();
+    const router = useRouter();
 
 
     useEffect(() => {
@@ -44,7 +46,7 @@ const Conversations : NextPage = ({
     useEffect(() => {
         const getMessages = async () => {
             const messagesRes = await authorizedFetch({
-                url: `${GET_CONVERSATION_MESSAGES_API}?conversationID=${activeConvo.conversationId}`,
+                url: `${GET_CONVERSATION_MESSAGES_API}?conversationID=${router.query.id}`,
                 method: 'GET',
                 accessToken: accessToken,
             });
@@ -60,13 +62,14 @@ const Conversations : NextPage = ({
         return () => {
             if (typeof setMessages === 'function') setMessages([]);
         }
-    }, [accessToken, activeConvo.conversationId, setMessages]);
+    }, [accessToken, router.query.id, setMessages]);
 
 
     return (
         <Layout accessToken={accessToken}>
             <MessagesLayout>
-                <ListOfConvos accessToken={accessToken}/>
+
+                <ListOfConvos accessToken={accessToken} role='CLIENT'/>
                 <Messages accessToken={accessToken}/>
             </MessagesLayout>
         </Layout>
