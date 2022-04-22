@@ -29,6 +29,7 @@ const ProviderMessagesId : NextPage = ({accessToken, user}: InferGetServerSidePr
     const { setMessages } = useMessages();
     const { activeConvo } = useConversation();
 
+
     useEffect(() => {
         if (typeof setSession === 'function') setSession(user);
 
@@ -51,13 +52,14 @@ const ProviderMessagesId : NextPage = ({accessToken, user}: InferGetServerSidePr
             }
         }
 
-
-        getMessages();
+        if (activeConvo) {
+            getMessages();
+        }
 
         return () => {
             if (typeof setMessages === 'function') setMessages([]);
         }
-    }, [accessToken, activeConvo.conversationId, setMessages]);
+    }, [accessToken, activeConvo, setMessages]);
 
 
     return (

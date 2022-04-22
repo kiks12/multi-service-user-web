@@ -36,11 +36,11 @@ const Convo : React.FC<ConvoProps> = ({ conversation }) => {
     }
 
 
-    // useEffect(() => {
-    //     return () => {
-    //         if (typeof setActiveConvo === 'function') setActiveConvo(null);
-    //     }
-    // }, [setActiveConvo]);
+    useEffect(() => {
+        return () => {
+            if (typeof setActiveConvo === 'function') setActiveConvo(null);
+        }
+    }, [setActiveConvo]);
 
 
     return (

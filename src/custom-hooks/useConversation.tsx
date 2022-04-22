@@ -1,5 +1,5 @@
 
-import { createContext, ReactDOM, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 
 interface ConversationContextType {
@@ -16,9 +16,10 @@ const ConversationContext = createContext<ConversationContextType>({
 
 
 
-export const ConversationProvider : React.FC = ({children}) => {
+export const ConversationProvider : React.FC = ({ children }) => {
 
     const [activeConvo, setActiveConvo] = useState<any>({});
+
 
     return (
         <ConversationContext.Provider value={{activeConvo, setActiveConvo}}>

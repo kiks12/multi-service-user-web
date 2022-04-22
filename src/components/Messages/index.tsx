@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useConversation } from '../../custom-hooks/useConversation';
 import { useMessages } from '../../custom-hooks/useMessages';
 import MessagesHeader from './Header';
@@ -21,10 +21,14 @@ const Messages : React.FC<MessagesProps> = ({ accessToken }) => {
     const { messages } = useMessages();
     const { activeConvo } = useConversation();
 
+    useEffect(() => {
+        console.log(messages, activeConvo);
+    }, [activeConvo, messages]);
+
     return (
         <>
             {
-                !activeConvo && messages.length === 0 ? 
+                !activeConvo || messages.length === 0 ? 
                 <div className={styles.container}></div>
                 :
                 <div className={styles.container}>

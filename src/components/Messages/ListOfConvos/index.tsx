@@ -131,17 +131,6 @@ const ListOfConvos : React.FC<ListOfConvosProps> = ({accessToken, role}) => {
     }, [conversations, router]); 
 
 
-    
-    // if (status === 'Ongoing') {
-    //     return (
-    //         <div className={styles.container}>
-    //             <h2>Messages</h2>
-    //             <div className={styles.grid}>
-    //                 <p>No Convos</p>
-    //             </div>
-    //         </div>
-    //     )
-    // }
 
 
     return (
