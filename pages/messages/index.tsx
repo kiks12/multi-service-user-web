@@ -32,12 +32,19 @@ const Messages : NextPage = (
 
 
     return (
-        <Layout accessToken={accessToken}>
-            <MessagesLayout>
-                <ListOfConvos accessToken={accessToken} role='CLIENT'/>
-                <MessagesComponent accessToken={accessToken}/>
-            </MessagesLayout>
-        </Layout>
+        <> 
+            <Layout accessToken={accessToken}>
+                {
+                    accessToken ? 
+                        <MessagesLayout>
+                            <ListOfConvos accessToken={accessToken} role='CLIENT'/>
+                            <MessagesComponent accessToken={accessToken}/>
+                        </MessagesLayout>
+                    : 
+                    <p>Please Login First</p>
+                }
+            </Layout>
+        </>
     )
 }
 
@@ -62,7 +69,7 @@ export const getServerSideProps : GetServerSideProps = async ({req}: GetServerSi
     return {
         props: {
             user: '',
-            accessToken: req.cookies.accessToken,
+            accessToken: '',
         }
     }
 }

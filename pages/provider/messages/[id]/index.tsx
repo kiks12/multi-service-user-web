@@ -24,12 +24,17 @@ import useWebSocket from "../../../../src/custom-hooks/useWebSocket";
 
 
 
-const ProviderMessagesId : NextPage = ({accessToken, user}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const ProviderMessagesId : NextPage = ({ accessToken, user }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { setSession } = useAuthentication();
     const { setMessages } = useMessages();
-    const { activeConvo } = useConversation();
+    const { activeConvo, setActiveConvo } = useConversation();
     const socket = useWebSocket();
+
+
+    useEffect(() => {
+        if (typeof setActiveConvo === "function") setActiveConvo({});
+    }, [setActiveConvo]);
 
 
     useEffect(() => {
