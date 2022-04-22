@@ -2,8 +2,6 @@
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import authorizedFetch from '../../../../utils/authorizedFetch';
-import { SEND_MESSAGE_API } from '../../../constants';
 import { useAuthentication } from '../../../custom-hooks/useAuthentication';
 import { useConversation } from '../../../custom-hooks/useConversation';
 import { useMessages } from '../../../custom-hooks/useMessages';
@@ -36,33 +34,13 @@ const MessagesInput : React.FC<MessagesInputProps> = ({ accessToken }) => {
 
     const sendMessage = async (e: any) => {
         e.preventDefault();
-        // const messageRes = await authorizedFetch({
-        //     url: `${SEND_MESSAGE_API}?userTwo=${activeConvo.toId}`,
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         message: message, 
-        //         conversationId: activeConvo.conversationId,
-        //     }),
-        //     method: 'POST',
-        //     accessToken: accessToken, 
-        // });
-
-        // if (messageRes.status === 200) {
         socket.emit('sendMessage', JSON.stringify({
             userOne: session?.userId,
             userTwo: activeConvo.toId,
             message,
             conversationId: activeConvo.conversationId,
         }));
-        // socket.on('messageSent', (payload) => {
-        //     console.log(payload);
-        //     if (typeof setMessages === 'function') {
-        //         setMessages(prev => [...prev, JSON.parse(payload)]);
-        //     }
-        // });
-        // }
+        setMessage('');
     }
 
 
