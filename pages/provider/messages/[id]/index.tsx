@@ -20,6 +20,7 @@ import { useMessages } from "../../../../src/custom-hooks/useMessages";
 import fetchUserInformation from "../../../../libs/fetchUserInformation";
 import { GET_CONVERSATION_MESSAGES_API } from "../../../../src/constants";
 import authorizedFetch from "../../../../utils/authorizedFetch";
+import useWebSocket from "../../../../src/custom-hooks/useWebSocket";
 
 
 
@@ -28,6 +29,15 @@ const ProviderMessagesId : NextPage = ({accessToken, user}: InferGetServerSidePr
     const { setSession } = useAuthentication();
     const { setMessages } = useMessages();
     const { activeConvo } = useConversation();
+    const socket = useWebSocket();
+
+
+    useEffect(() => {
+        if (activeConvo) {
+            socket.emit('joinConversation', activeConvo.conversationId);
+        }
+
+    }, [activeConvo, socket]);
 
 
     useEffect(() => {

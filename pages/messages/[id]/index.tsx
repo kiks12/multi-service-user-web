@@ -21,6 +21,7 @@ import fetchUserInformation from "../../../libs/fetchUserInformation";
 import { GET_CONVERSATION_MESSAGES_API } from "../../../src/constants";
 import authorizedFetch from "../../../utils/authorizedFetch";
 import { useRouter } from "next/router";
+import useWebSocket from "../../../src/custom-hooks/useWebSocket";
 
 
 
@@ -32,6 +33,14 @@ const Conversations : NextPage = ({
     const { setMessages } = useMessages();
     const { activeConvo } = useConversation();
     const router = useRouter();
+    const socket = useWebSocket();
+
+
+    useEffect(() => {
+        if (activeConvo) {
+            socket.emit('joinConversation', activeConvo.conversationId);
+        }
+    }, [activeConvo, socket]);
 
 
     useEffect(() => {

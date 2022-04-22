@@ -33,7 +33,7 @@ export const WebSocketProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         // setSocket(io('http://localhost:4000'));
-        console.log('connecting....');
+        // console.log('connecting....');
         const ioConnection = io('http://localhost:4000/');
         setSocket(ioConnection);
     }, []);
@@ -41,7 +41,7 @@ export const WebSocketProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         socket.on('connect', () => {
-            console.log(socket.id);
+            // console.log(socket.id);
         });
     }, [socket]);
 
