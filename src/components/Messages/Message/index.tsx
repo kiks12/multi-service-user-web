@@ -44,7 +44,7 @@ const Message : React.FC<MessageProps> = ({ message }) => {
     return (
         <>
             <div className={messageFromThisUser() ? styles.containerFrom : styles.containerTo}>
-                <div className={styles.circle}>
+                {/* <div className={styles.circle}>
                     {
                         message.fromImage &&
                         <Image 
@@ -54,13 +54,18 @@ const Message : React.FC<MessageProps> = ({ message }) => {
                         width={50}
                         />
                     }
-                </div>
+                </div> */}
                 <p 
                     className={message.status === 'SENT' ? styles.message : styles.unsentMessage}
                 >
                     {message.status === 'SENT' ?  message.message : 'Message Unsent'}
                 </p>
-                <div className={styles.ellipsis} onClick={() => setOpenActions(true)}>
+                <div className={styles.ellipsis} onClick={() => {
+                    if (message.status === 'DELETED') {
+                        return;
+                    }
+                    setOpenActions(true);
+                }}>
                     <FontAwesomeIcon 
                         icon={faEllipsisV}
                         style={{

@@ -42,6 +42,12 @@
     flex-direction: row;
 }
 
+
+.containerTo > .message {
+    background-color: var(--darkGray);
+}
+
+
 .circle {
     background-color: var(--gray);
     border-radius: 50%;
