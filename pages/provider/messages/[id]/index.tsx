@@ -18,9 +18,10 @@ import { useMessages } from "../../../../src/custom-hooks/useMessages";
 
 
 import fetchUserInformation from "../../../../libs/fetchUserInformation";
-import { GET_CONVERSATION_MESSAGES_API } from "../../../../src/constants";
+import { GET_CONVERSATION_DETAILS_API, GET_CONVERSATION_MESSAGES_API } from "../../../../src/constants";
 import authorizedFetch from "../../../../utils/authorizedFetch";
 import useWebSocket from "../../../../src/custom-hooks/useWebSocket";
+import { useRouter } from "next/router";
 
 
 
@@ -30,18 +31,37 @@ const ProviderMessagesId : NextPage = ({ accessToken, user }: InferGetServerSide
     const { setMessages } = useMessages();
     const { activeConvo, setActiveConvo } = useConversation();
     const socket = useWebSocket();
+    const router = useRouter();
 
 
+    
     useEffect(() => {
-        if (typeof setActiveConvo === "function") setActiveConvo({});
-    }, [setActiveConvo]);
+        const { id } = router.query;
+
+        const getConversationDetails = async () => {
+            const res = await authorizedFetch({
+                url: `${GET_CONVERSATION_DETAILS_API}?conversationId=${id}`,
+                accessToken: accessToken,
+                method: 'GET',
+            });
+
+            console.log(res);
+            if (typeof setActiveConvo === 'function') setActiveConvo(res.conversation);
+        }
+
+        if (id) {
+            getConversationDetails();
+        }
+
+    }, [accessToken, router.query, setActiveConvo]);
+
+
 
 
     useEffect(() => {
         if (activeConvo) {
             socket.emit('joinConversation', activeConvo.conversationId);
         }
-
     }, [activeConvo, socket]);
 
 

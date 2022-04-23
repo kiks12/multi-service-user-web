@@ -1,7 +1,6 @@
 
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-// import { useAuthentication } from '../../../custom-hooks/useAuthentication';
 
 
 
@@ -27,21 +26,8 @@ interface ListOfConvosProps {
 const ListOfConvos : React.FC<ListOfConvosProps> = ({accessToken, role}) => {
 
     const [conversations, setConversations] = useState<any[]>([]);
-    // const { session } = useAuthentication();
     const { setActiveConvo } = useConversation();
     const router = useRouter();
-
-
-
-    // const filteredConversations = useMemo(() => {
-    //     if (conversations.length === 0 ) return [];
-    //     const filtered = conversations.filter((convo: any, idx: number) => {
-    //         if (idx === conversations.length - 1) setStatus('Complete');
-    //         return convo.myRole !== role;
-    //     })
-
-    //     return filtered;
-    // }, [conversations, role]);
 
 
 
@@ -56,47 +42,8 @@ const ListOfConvos : React.FC<ListOfConvosProps> = ({accessToken, role}) => {
 
 
 
-    // const processConversationsData = useCallback(async (conversations: any[]) => {
-    //     let conversationsData : any[] = [];
-    //     conversations.forEach((convo: any) => {
-    //         let to = '';
-    //         let role = '';
-    //         if (convo.UserOne.userId === session?.userId) {
-    //             if (convo.userOneRole === 'Client') {
-    //                 to = convo.UserTwo.shopName;
-    //                 role = 'CLIENT';
-    //             } else {
-    //                 to = convo.UserTwo.username;
-    //                 role = 'PROVIDER';
-    //             }
-    //         } else {
-    //             if (convo.userTwoRole === 'Client') {
-    //                 to = convo.UserOne.shopName;
-    //                 role = 'PROVIDER';
-    //             } else {
-    //                 to = convo.UserOne.username;
-    //                 role = 'CLIENT';
-    //             }
-    //         }
-    //         conversationsData.push({
-    //             conversationId: convo.conversationId,
-    //             image: convo.UserOne.userId === session?.userId ? convo.UserTwo.image : convo.UserOne.image,
-    //             to: to,
-    //             toId: convo.UserOne.userId === session?.userId ? convo.UserTwo.userId : convo.UserOne.userId,
-    //             status: convo.UserOne.userId === session?.userId ? convo.userOneStatus : convo.userTwoStatus,
-    //             recentMessage: '',
-    //             myRole: role,
-    //         });
-    //     });
-
-    //     return Promise.resolve(conversationsData);
-    // }, [session?.userId]);
-
-
-
     const setConversationsState = useCallback(async () => {
         const conversationsRes = await getListOfConversations();
-        // const finalData = await processConversationsData(conversationsRes.conversations);
         setConversations(conversationsRes.conversations);
     }, [getListOfConversations]);
 
@@ -113,10 +60,10 @@ const ListOfConvos : React.FC<ListOfConvosProps> = ({accessToken, role}) => {
 
 
     useEffect(() => {
-        if (conversations.length !== 0 && typeof setActiveConvo === 'function') {
+        if (conversations.length !== 0 && (router.pathname === '/provider/messages/' || router.pathname === '/messages/') && typeof setActiveConvo === 'function') {
             setActiveConvo(conversations[0]);
         }
-    }, [conversations, setActiveConvo]);
+    }, [conversations, router.pathname, setActiveConvo]);
 
 
 

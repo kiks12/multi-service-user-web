@@ -24,9 +24,9 @@ import PopupSearchBar from './SearchBar/Popup';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faMessage,
-} from '@fortawesome/free-regular-svg-icons';
+// import {
+//     faMessage,
+// } from '@fortawesome/free-regular-svg-icons';
 import {
     faMagnifyingGlass,
     faBars
@@ -61,11 +61,12 @@ const TopNavbar : React.FC <TopNavbarProps> = ({ accessToken }) => {
 
     return (
         <>
-            <AnimatePresence>
-                {
-                    showMenu && <ModalLeftNavbar closeMenu={closeMenu}/>
-                }
-            </AnimatePresence>
+            {
+                showMenu &&
+                    <AnimatePresence>
+                        <ModalLeftNavbar closeMenu={closeMenu}/>
+                    </AnimatePresence>
+            }
             {
                 showSearchBar && <PopupSearchBar closeSearchBar={closeSearchBar}/>
             }
