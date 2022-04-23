@@ -26,13 +26,17 @@ export const ConversationProvider : React.FC = ({ children }) => {
 
 
     const getConversationDetails = async (id: string, accessToken: string) => {
-        const res = await authorizedFetch({
-            url: `${GET_CONVERSATION_DETAILS_API}?conversationId=${id}`,
-            accessToken: accessToken,
-            method: 'GET',
-        });
-
-        setActiveConvo(res.conversation);
+        try {
+            const res = await authorizedFetch({
+                url: `${GET_CONVERSATION_DETAILS_API}?conversationId=${id}`,
+                accessToken: accessToken,
+                method: 'GET',
+            });
+            
+            setActiveConvo(res.conversation);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
 
