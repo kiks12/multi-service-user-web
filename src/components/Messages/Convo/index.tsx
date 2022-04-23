@@ -36,13 +36,6 @@ const Convo : React.FC<ConvoProps> = ({ conversation }) => {
     }
 
 
-    useEffect(() => {
-        return () => {
-            if (typeof setActiveConvo === 'function') setActiveConvo(null);
-        }
-    }, [setActiveConvo]);
-
-
     return (
         <div 
             className={id === conversation.conversationId ? styles.containerActive : styles.container}

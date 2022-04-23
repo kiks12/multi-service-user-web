@@ -2,7 +2,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import authorizedFetch from "../../utils/authorizedFetch";
 import { GET_CONVERSATION_MESSAGES_API } from "../constants";
-import { useAuthentication } from "./useAuthentication";
 
 
 
@@ -27,6 +26,30 @@ export const MessagesProvider : React.FC = ({ children }) => {
 
     const [messages, setMessages] = useState<any[]>([]);
     // const { session } = useAuthentication();
+
+
+    const getSentMessage = async (id: string, accessToken: string) => {
+        try {
+            const res = await authorizedFetch({
+                url: `${GET_CONVERSATION_MESSAGES_API}?conversationID=${id}&status=SENT`,
+                accessToken: accessToken,
+                method: 'GET',
+            });
+
+            console.log(res);
+            return res.messages;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+
+    const seenMessages = async (id: string, accessToken: string) => {
+        const sentMessages = await getSentMessage(id, accessToken);
+        if (sentMessages) {
+            console.log('sent: ', sentMessages);
+        }
+    }
 
 
     const getMessages = async (id: string, accessToken: string) => {
@@ -108,7 +131,7 @@ export const MessagesProvider : React.FC = ({ children }) => {
                 messages: processedMessages, 
                 setMessages, 
                 processRawMessage,
-                getMessages,
+                getMessages: getMessages,
             }}
         >
             {children}

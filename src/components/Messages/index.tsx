@@ -21,15 +21,12 @@ const Messages : React.FC<MessagesProps> = ({ accessToken }) => {
     const { messages } = useMessages();
     const { activeConvo } = useConversation();
 
-    // useEffect(() => {
-        // console.log(messages, activeConvo);
-    // }, [activeConvo, messages]);
 
     return (
         <>
             {
                 !activeConvo && messages.length === 0 ? 
-                <div className={styles.container}></div>
+                <div className={styles.container}>Loading....</div>
                 :
                 <div className={styles.container}>
                     <MessagesHeader />

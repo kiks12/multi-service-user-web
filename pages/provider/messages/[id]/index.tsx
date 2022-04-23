@@ -34,14 +34,14 @@ const ProviderMessagesId : NextPage = ({ accessToken, user }: InferGetServerSide
 
 
     useEffect(() => {
-
-         if (id) {
-            getConversationDetails(id as string, accessToken);
-            getMessages(id as string, accessToken);
-        }
-
+         if (id) getConversationDetails(id as string, accessToken);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+    useEffect(() => {
+        if (id) getMessages(id as string, accessToken);
+    }, [accessToken, getMessages, id]);
 
 
     useEffect(() => {
