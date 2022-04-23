@@ -31,9 +31,20 @@ const Conversations : NextPage = ({
 
     const { setSession } = useAuthentication();
     const { setMessages } = useMessages();
-    const { activeConvo } = useConversation();
+    const { activeConvo, getConversationDetails } = useConversation();
     const router = useRouter();
     const socket = useWebSocket();
+
+
+    useEffect(() => {   
+        const { id } = router.query;
+
+         if (id) {
+            getConversationDetails(id as string, accessToken);
+        }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
 
     useEffect(() => {

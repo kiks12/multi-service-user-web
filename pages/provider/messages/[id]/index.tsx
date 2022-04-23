@@ -29,7 +29,7 @@ const ProviderMessagesId : NextPage = ({ accessToken, user }: InferGetServerSide
 
     const { setSession } = useAuthentication();
     const { setMessages } = useMessages();
-    const { activeConvo, setActiveConvo } = useConversation();
+    const { activeConvo, getConversationDetails } = useConversation();
     const socket = useWebSocket();
     const router = useRouter();
 
@@ -38,22 +38,12 @@ const ProviderMessagesId : NextPage = ({ accessToken, user }: InferGetServerSide
     useEffect(() => {
         const { id } = router.query;
 
-        const getConversationDetails = async () => {
-            const res = await authorizedFetch({
-                url: `${GET_CONVERSATION_DETAILS_API}?conversationId=${id}`,
-                accessToken: accessToken,
-                method: 'GET',
-            });
-
-            console.log(res);
-            if (typeof setActiveConvo === 'function') setActiveConvo(res.conversation);
+         if (id) {
+            getConversationDetails(id as string, accessToken);
         }
 
-        if (id) {
-            getConversationDetails();
-        }
-
-    }, [accessToken, router.query, setActiveConvo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
 
 
