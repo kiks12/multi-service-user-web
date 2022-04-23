@@ -1,5 +1,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import authorizedFetch from "../../utils/authorizedFetch";
+import { GET_CONVERSATION_MESSAGES_API } from "../constants";
 import { useAuthentication } from "./useAuthentication";
 
 
@@ -8,6 +10,7 @@ interface MessagesInterface {
     processRawMessage: any;
     messages: any[];
     setMessages: React.Dispatch<React.SetStateAction<any[]>> | null;
+    getMessages: (id: string, accessToken: string) => void;
 }
 
 
@@ -15,6 +18,7 @@ const MessagesContext = createContext<MessagesInterface>({
     processRawMessage: () => {},
     messages: [],
     setMessages: null,
+    getMessages: () => {},
 });
 
 
@@ -22,7 +26,25 @@ const MessagesContext = createContext<MessagesInterface>({
 export const MessagesProvider : React.FC = ({ children }) => {
 
     const [messages, setMessages] = useState<any[]>([]);
-    const { session } = useAuthentication();
+    // const { session } = useAuthentication();
+
+
+    const getMessages = async (id: string, accessToken: string) => {
+        try {
+            const res = await authorizedFetch({
+                url: `${GET_CONVERSATION_MESSAGES_API}?conversationID=${id}`,
+                method: 'GET',
+                accessToken: accessToken,
+            });
+
+            if (res.status === 200) {
+                setMessages(res.messages);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
 
     const userOneIsClientTwoIsProvider = (message: any) => {
         return message.Conversation.userOneRole === 'Client' && message.Conversation.userTwoRole === 'Provider';
@@ -80,8 +102,15 @@ export const MessagesProvider : React.FC = ({ children }) => {
     }, [messages, processRawMessage])
 
 
+
     return (
-        <MessagesContext.Provider value={{messages: processedMessages, setMessages, processRawMessage}}>
+        <MessagesContext.Provider value={{
+                messages: processedMessages, 
+                setMessages, 
+                processRawMessage,
+                getMessages,
+            }}
+        >
             {children}
         </MessagesContext.Provider>
     )

@@ -18,8 +18,6 @@ import { useMessages } from "../../../../src/custom-hooks/useMessages";
 
 
 import fetchUserInformation from "../../../../libs/fetchUserInformation";
-import { GET_CONVERSATION_DETAILS_API, GET_CONVERSATION_MESSAGES_API } from "../../../../src/constants";
-import authorizedFetch from "../../../../utils/authorizedFetch";
 import useWebSocket from "../../../../src/custom-hooks/useWebSocket";
 import { useRouter } from "next/router";
 
@@ -28,24 +26,22 @@ import { useRouter } from "next/router";
 const ProviderMessagesId : NextPage = ({ accessToken, user }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const { setSession } = useAuthentication();
-    const { setMessages } = useMessages();
+    const { getMessages } = useMessages();
     const { activeConvo, getConversationDetails } = useConversation();
     const socket = useWebSocket();
     const router = useRouter();
+    const { id } = router.query;
 
 
-    
     useEffect(() => {
-        const { id } = router.query;
 
          if (id) {
             getConversationDetails(id as string, accessToken);
+            getMessages(id as string, accessToken);
         }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-
 
 
     useEffect(() => {
@@ -62,29 +58,6 @@ const ProviderMessagesId : NextPage = ({ accessToken, user }: InferGetServerSide
             if (typeof setSession === 'function') setSession(null);
         }
     }, [setSession, user]);
-
-
-    useEffect(() => {
-        const getMessages = async () => {
-            const messagesRes = await authorizedFetch({
-                url: `${GET_CONVERSATION_MESSAGES_API}?conversationID=${activeConvo.conversationId}`,
-                method: 'GET',
-                accessToken: accessToken,
-            });
-
-            if (messagesRes.status === 200 && typeof setMessages === 'function') {
-                setMessages(messagesRes.messages);
-            }
-        }
-
-        if (activeConvo) {
-            getMessages();
-        }
-
-        return () => {
-            if (typeof setMessages === 'function') setMessages([]);
-        }
-    }, [accessToken, activeConvo, setMessages]);
 
 
     return (
