@@ -12,7 +12,7 @@ interface MessagesProps {
 }
 
 const Messages: React.FC<MessagesProps> = ({ accessToken }) => {
-    const { messages } = useMessages();
+    const { messages, getPaginatedMessages } = useMessages();
     const { activeConvo } = useConversation();
     const containerRef = useRef<HTMLDivElement>(null);
     const secondContainerRef = useRef<HTMLDivElement>(null);
@@ -20,18 +20,29 @@ const Messages: React.FC<MessagesProps> = ({ accessToken }) => {
 
     useEffect(() => {
         if (containerRef.current && secondContainerRef.current && !loading) {
-            containerRef.current.scrollTo(0, secondContainerRef.current.offsetHeight);
+            containerRef.current.scrollTo(
+                0,
+                secondContainerRef.current.offsetHeight
+            );
         }
     }, [secondContainerRef.current, containerRef.current]);
+
+    
+    const fetchPaginatedMessages = (e: any) => {
+        if (containerRef.current?.scrollTop === 0) {
+            console.log('Fetch');
+            getPaginatedMessages(activeConvo.conversationId, accessToken);
+        } 
+    }
+        
 
     if (secondContainerRef.current?.childElementCount === 0) {
         return (
             <div className={styles.container}>
                 <MessagesHeader />
-                <div className={styles.messagesContainer}>
-                </div>
+                <div className={styles.messagesContainer}></div>
             </div>
-        )
+        );
     }
 
     return (
@@ -44,6 +55,7 @@ const Messages: React.FC<MessagesProps> = ({ accessToken }) => {
                     <div
                         className={styles.messagesContainer}
                         ref={containerRef}
+                        onScroll={fetchPaginatedMessages}
                     >
                         <div ref={secondContainerRef}>
                             {messages &&
@@ -57,8 +69,7 @@ const Messages: React.FC<MessagesProps> = ({ accessToken }) => {
                                             message={message}
                                         />
                                     );
-                                })
-                            }
+                                })}
                         </div>
                     </div>
                     <MessagesInput
