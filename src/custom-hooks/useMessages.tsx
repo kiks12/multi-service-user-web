@@ -1,39 +1,39 @@
-
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import {
+    createContext,
+    useCallback,
+    useContext,
+    useMemo,
+    useState,
+} from "react";
 import authorizedFetch from "../../utils/authorizedFetch";
 import { GET_CONVERSATION_MESSAGES_API } from "../constants";
-
-
 
 interface MessagesInterface {
     processRawMessage: any;
     messages: any[];
     setMessages: React.Dispatch<React.SetStateAction<any[]>> | null;
     getMessages: (id: string, accessToken: string) => void;
+    getPaginatedMessages: (id: string, accessToken: string) => void;
 }
-
 
 const MessagesContext = createContext<MessagesInterface>({
     processRawMessage: () => {},
     messages: [],
     setMessages: null,
     getMessages: () => {},
+    getPaginatedMessages: () => {},
 });
 
-
-
-export const MessagesProvider : React.FC = ({ children }) => {
-
+export const MessagesProvider: React.FC = ({ children }) => {
     const [messages, setMessages] = useState<any[]>([]);
     // const { session } = useAuthentication();
-
 
     const getSentMessage = async (id: string, accessToken: string) => {
         try {
             const res = await authorizedFetch({
                 url: `${GET_CONVERSATION_MESSAGES_API}?conversationID=${id}&status=SENT`,
                 accessToken: accessToken,
-                method: 'GET',
+                method: "GET",
             });
 
             console.log(res);
@@ -41,22 +41,20 @@ export const MessagesProvider : React.FC = ({ children }) => {
         } catch (e) {
             console.error(e);
         }
-    }
-
+    };
 
     const seenMessages = async (id: string, accessToken: string) => {
         const sentMessages = await getSentMessage(id, accessToken);
         if (sentMessages) {
-            console.log('sent: ', sentMessages);
+            console.log("sent: ", sentMessages);
         }
-    }
-
+    };
 
     const getMessages = async (id: string, accessToken: string) => {
         try {
             const res = await authorizedFetch({
-                url: `${GET_CONVERSATION_MESSAGES_API}?conversationID=${id}`,
-                method: 'GET',
+                url: `${GET_CONVERSATION_MESSAGES_API}?conversationID=${id}&take=${20}`,
+                method: "GET",
                 accessToken: accessToken,
             });
 
@@ -66,27 +64,46 @@ export const MessagesProvider : React.FC = ({ children }) => {
         } catch (e) {
             console.error(e);
         }
-    }
+    };
 
+    const getPaginatedMessages = async (id: string, accessToken: string) => {
+        try {
+            const res = await authorizedFetch({
+                url: `${GET_CONVERSATION_MESSAGES_API}?conversationID=${id}&take=20&skip=${messages.length}`,
+                method: "GET",
+                accessToken: accessToken,
+            });
+
+            if (res.status === 200) {
+                let processed : any[] = [];
+                res.messages.forEach((msg: any) => processed.push(processRawMessage(msg)))
+                console.log('processed: ', processed);
+                console.log(messages);
+            }
+        } catch (e) {
+            // handle errors
+            console.error(e);
+        }
+    }
 
     const userOneIsClientTwoIsProvider = (message: any) => {
-        return message.Conversation.userOneRole === 'Client' && message.Conversation.userTwoRole === 'Provider';
-    }
-
+        return (
+            message.Conversation.userOneRole === "Client" &&
+            message.Conversation.userTwoRole === "Provider"
+        );
+    };
 
     const userOneIsSender = (message: any) => {
         return message.Conversation.userOne === message.from;
-    }
-
+    };
 
     const userTwoIsSender = (message: any) => {
         return message.Conversation.userTwo === message.from;
-    }
-
+    };
 
     const processRawMessage = useCallback((message: any) => {
-        let from = '';
-        let to = '';
+        let from = "";
+        let to = "";
 
         if (userOneIsClientTwoIsProvider(message) && userOneIsSender(message)) {
             from = message.From.username;
@@ -96,7 +113,7 @@ export const MessagesProvider : React.FC = ({ children }) => {
         if (userOneIsClientTwoIsProvider(message) && userTwoIsSender(message)) {
             from = message.To.username;
             to = message.From.shopName;
-        }   
+        }
 
         return {
             messageId: message.messageId,
@@ -109,38 +126,35 @@ export const MessagesProvider : React.FC = ({ children }) => {
             status: message.status,
             message: message.message,
             datetime: new Date(message.datetime).toString(),
-        }
+        };
     }, []);
 
-
     const processedMessages = useMemo(() => {
-        let messagesFinal : any[] = [];
+        let messagesFinal: any[] = [];
         messages.forEach((message: any) => {
-            const finalMessage = processRawMessage(message);            
+            const finalMessage = processRawMessage(message);
 
             messagesFinal.push(finalMessage);
-        })
+        });
 
         return messagesFinal;
-    }, [messages, processRawMessage])
-
-
+    }, [messages, processRawMessage]);
 
     return (
-        <MessagesContext.Provider value={{
-                messages: processedMessages, 
-                setMessages, 
+        <MessagesContext.Provider
+            value={{
+                messages: processedMessages,
+                setMessages,
                 processRawMessage,
                 getMessages: getMessages,
+                getPaginatedMessages,
             }}
         >
             {children}
         </MessagesContext.Provider>
-    )
-}
-
-
+    );
+};
 
 export const useMessages = () => {
     return useContext(MessagesContext);
-}
+};
