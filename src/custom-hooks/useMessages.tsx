@@ -1,15 +1,8 @@
-import {
-    createContext,
-    useCallback,
-    useContext,
-    useMemo,
-    useState,
-} from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import authorizedFetch from "../../utils/authorizedFetch";
 import { GET_CONVERSATION_MESSAGES_API } from "../constants";
 
 interface MessagesInterface {
-    processRawMessage: any;
     messages: any[];
     setMessages: React.Dispatch<React.SetStateAction<any[]>> | null;
     getMessages: (id: string, accessToken: string) => void;
@@ -17,7 +10,6 @@ interface MessagesInterface {
 }
 
 const MessagesContext = createContext<MessagesInterface>({
-    processRawMessage: () => {},
     messages: [],
     setMessages: null,
     getMessages: () => {},
@@ -75,77 +67,25 @@ export const MessagesProvider: React.FC = ({ children }) => {
             });
 
             if (res.status === 200) {
-                let processed : any[] = [];
-                res.messages.forEach((msg: any) => processed.push(processRawMessage(msg)))
-                console.log('processed: ', processed);
-                console.log(messages);
+                setMessages((prev) => {
+                    return res.messages.concat(prev);
+                });
             }
         } catch (e) {
             // handle errors
             console.error(e);
         }
-    }
-
-    const userOneIsClientTwoIsProvider = (message: any) => {
-        return (
-            message.Conversation.userOneRole === "Client" &&
-            message.Conversation.userTwoRole === "Provider"
-        );
     };
 
-    const userOneIsSender = (message: any) => {
-        return message.Conversation.userOne === message.from;
-    };
-
-    const userTwoIsSender = (message: any) => {
-        return message.Conversation.userTwo === message.from;
-    };
-
-    const processRawMessage = useCallback((message: any) => {
-        let from = "";
-        let to = "";
-
-        if (userOneIsClientTwoIsProvider(message) && userOneIsSender(message)) {
-            from = message.From.username;
-            to = message.To.shopName;
-        }
-
-        if (userOneIsClientTwoIsProvider(message) && userTwoIsSender(message)) {
-            from = message.To.username;
-            to = message.From.shopName;
-        }
-
-        return {
-            messageId: message.messageId,
-            conversationId: message.conversationId,
-            fromImage: message.From.image,
-            fromId: message.from,
-            toId: message.to,
-            from: from,
-            to: to,
-            status: message.status,
-            message: message.message,
-            datetime: new Date(message.datetime).toString(),
-        };
-    }, []);
-
-    const processedMessages = useMemo(() => {
-        let messagesFinal: any[] = [];
-        messages.forEach((message: any) => {
-            const finalMessage = processRawMessage(message);
-
-            messagesFinal.push(finalMessage);
-        });
-
-        return messagesFinal;
-    }, [messages, processRawMessage]);
+    const memoizedMessages = useMemo(() => {
+        return messages;
+    }, [messages]);
 
     return (
         <MessagesContext.Provider
             value={{
-                messages: processedMessages,
+                messages: memoizedMessages,
                 setMessages,
-                processRawMessage,
                 getMessages: getMessages,
                 getPaginatedMessages,
             }}
