@@ -6,6 +6,8 @@
 }
 
 .messagesContainer {
-    height: min(99%, 32em);
+    height: min(99%, 32.5em);
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
 }

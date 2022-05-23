@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useConversation } from "../../custom-hooks/useConversation";
 import { useMessages } from "../../custom-hooks/useMessages";
 import MessagesHeader from "./Header";
@@ -16,6 +16,23 @@ const Messages: React.FC<MessagesProps> = ({ accessToken }) => {
     const { activeConvo } = useConversation();
     const containerRef = useRef<HTMLDivElement>(null);
     const secondContainerRef = useRef<HTMLDivElement>(null);
+    const [loading, setLoading] = useState<Boolean>(true);
+
+    useEffect(() => {
+        if (containerRef.current && secondContainerRef.current && !loading) {
+            containerRef.current.scrollTo(0, secondContainerRef.current.offsetHeight);
+        }
+    }, [secondContainerRef.current, containerRef.current]);
+
+    if (secondContainerRef.current?.childElementCount === 0) {
+        return (
+            <div className={styles.container}>
+                <MessagesHeader />
+                <div className={styles.messagesContainer}>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <>
@@ -29,11 +46,13 @@ const Messages: React.FC<MessagesProps> = ({ accessToken }) => {
                         ref={containerRef}
                     >
                         <div ref={secondContainerRef}>
-                            {
-                                messages &&
-                                messages.map((message: any) => {
+                            {messages &&
+                                messages.map((message: any, idx: number) => {
                                     return (
                                         <Message
+                                            messages={messages}
+                                            index={idx}
+                                            setLoading={setLoading}
                                             key={message.messageId}
                                             message={message}
                                         />
@@ -42,8 +61,8 @@ const Messages: React.FC<MessagesProps> = ({ accessToken }) => {
                             }
                         </div>
                     </div>
-                    <MessagesInput 
-                        accessToken={accessToken}  
+                    <MessagesInput
+                        accessToken={accessToken}
                         containerRef={containerRef}
                         secondContainerRef={secondContainerRef}
                     />
