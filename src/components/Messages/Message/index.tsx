@@ -1,16 +1,13 @@
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAuthentication } from "../../../custom-hooks/useAuthentication";
 import MessageActions from "../Actions";
 
 import styles from "./Message.module.css";
 
 interface MessageProps {
-    index: number;
-    setLoading: React.Dispatch<React.SetStateAction<Boolean>>;
-    messages: any[],
     message: {
         messageId: number;
         conversationId: string;
@@ -25,7 +22,7 @@ interface MessageProps {
     };
 }
 
-const Message: React.FC<MessageProps> = ({ messages, message, index, setLoading }) => {
+const Message: React.FC<MessageProps> = ({ message }) => {
     const { session } = useAuthentication();
     const [openActions, setOpenActions] = useState<boolean>(false);
 
@@ -34,12 +31,6 @@ const Message: React.FC<MessageProps> = ({ messages, message, index, setLoading 
     };
 
     const closeActions = () => setOpenActions(false);
-
-    useEffect(() => {
-        if (index === messages.length - 1) {
-            setLoading(prev => prev = !prev);
-        }
-    }, [index, messages]);
 
     return (
         <>

@@ -19,7 +19,7 @@ const Messages: React.FC<MessagesProps> = ({ accessToken }) => {
     const [loading, setLoading] = useState<Boolean>(true);
 
     useEffect(() => {
-        if (containerRef.current && secondContainerRef.current && !loading) {
+        if (containerRef.current && secondContainerRef.current) {
             containerRef.current.scrollTo(
                 0,
                 secondContainerRef.current.offsetHeight
@@ -27,23 +27,11 @@ const Messages: React.FC<MessagesProps> = ({ accessToken }) => {
         }
     }, [secondContainerRef.current, containerRef.current]);
 
-    
-    const fetchPaginatedMessages = (e: any) => {
+    const fetchPaginatedMessages = () => {
         if (containerRef.current?.scrollTop === 0) {
-            console.log('Fetch');
             getPaginatedMessages(activeConvo.conversationId, accessToken);
-        } 
-    }
-        
-
-    if (secondContainerRef.current?.childElementCount === 0) {
-        return (
-            <div className={styles.container}>
-                <MessagesHeader />
-                <div className={styles.messagesContainer}></div>
-            </div>
-        );
-    }
+        }
+    };
 
     return (
         <>
@@ -62,9 +50,6 @@ const Messages: React.FC<MessagesProps> = ({ accessToken }) => {
                                 messages.map((message: any, idx: number) => {
                                     return (
                                         <Message
-                                            messages={messages}
-                                            index={idx}
-                                            setLoading={setLoading}
                                             key={message.messageId}
                                             message={message}
                                         />
