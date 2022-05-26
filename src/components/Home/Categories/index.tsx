@@ -1,4 +1,3 @@
-
 /*
 
 Multi Services Platform - Users Home Content Categories Component
@@ -8,26 +7,9 @@ Author: Tolentino, Francis James S.
 
 */
 
-
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faDesktop,
-    faWind,
-    faToilet,
-    faBroom,
-    faSoap,
-    faScissors,
-    faSpa,
-    faPlug,
-    faTruck
-} from '@fortawesome/free-solid-svg-icons';
-
-
-
-import React from 'react';
-import Link from 'next/link';
-
+import React from "react";
+import Link from "next/link";
+import useCategories from "../../../custom-hooks/useCategories";
 
 // Computer Servicing <FontAwesomeIcon icon="fa-solid fa-computer-classic" />
 // AC Maintanence <FontAwesomeIcon icon="fa-solid fa-air-conditioner" />
@@ -39,123 +21,52 @@ import Link from 'next/link';
 // Electrician <FontAwesomeIcon icon="fa-solid fa-plug" />
 // Moving Services <FontAwesomeIcon icon="fa-solid fa-truck" />
 
-
-
 const Categories: React.FC = () => {
-    return (
-        <div className='categories-grid-container'>
-            <h2>Categories</h2>
-            
-            <div className='categories-container'>
-                <Link href='/computer-servicing' passHref={true}>
-                    <div className='category'>
-                        <FontAwesomeIcon 
-                        icon={faDesktop}
-                        size='2x'    
-                        />
-                        <p>Computer Servicing</p> 
-                    </div>
-                </Link>
+
+    const { loading, categories } = useCategories();
 
 
-
-                <Link href='/ac-maintenance' passHref={true}>
-                    <div className='category'>
-                        <FontAwesomeIcon 
-                        icon={faWind} 
-                        size='2x'    
-                    />
-                        <p>AC Maintenance</p> 
-                    </div>
-                </Link>
-
-
-
-                <Link href='/plumbing' passHref={true}>
-                    <div className='category'>
-                        <FontAwesomeIcon 
-                        icon={faToilet} 
-                        size='2x'    
-                    />
-                        <p>Plumbing</p> 
-                    </div>
-                </Link>
-
-
-
-                <Link href='/home-cleaning' passHref={true}>
-                    <div className='category'>
-                        <FontAwesomeIcon 
-                        icon={faBroom} 
-                        size='2x'    
-                    />
-                        <p>Home Cleaning</p> 
-                    </div>
-                </Link>
-
-
-
-                <Link href='/laundry' passHref={true}>
-                    <div className='category'>
-                        <FontAwesomeIcon 
-                        icon={faSoap} 
-                        size='2x'    
-                    />
-                        <p>Laundry</p> 
-                    </div>
-                </Link>
-
-
-
-                <Link href='salons' passHref={true}>
-                    <div className='category'>
-                        <FontAwesomeIcon 
-                        icon={faScissors} 
-                        size='2x'    
-                    />
-                        <p>Salons</p> 
-                    </div>
-                </Link>
-
-
-
-                <Link href='/spa' passHref={true}>
-                    <div className='category'>
-                        <FontAwesomeIcon 
-                        icon={faSpa} 
-                        size='2x'    
-                    />
-                        <p>Spa</p> 
-                    </div>
-                </Link>
-
-
-                <Link href='/electrician' passHref={true}>
-                    <div className='category'>
-                        <FontAwesomeIcon 
-                        icon={faPlug} 
-                        size='2x'    
-                    />
-                        <p>Electrician</p> 
-                    </div>
-                </Link>
-
-
-                
-                <Link href='moving-services' passHref={true}>
-                    <div className='category'>
-                        <FontAwesomeIcon 
-                        icon={faTruck} 
-                        size='2x'    
-                    />
-                        <p>Moving Services</p> 
-                    </div>
-                </Link>
+    if (loading) {
+        return (
+            <div className="categories-grid-container">
+                <p>Loading....</p>
             </div>
+        )
+    }
+
+    return (
+        <div className="categories-grid-container">
+            <h2>Categories</h2>
+
+            {
+                categories ? 
+                (
+                    <div className="categories-container">
+                         {
+                            categories.map((category: string, idx: number) => {
+                                return (
+                                    <div key={idx} className="categories-container">
+                                        <Link href={`/${category.toLowerCase()}`} passHref={true}>
+                                            <div className="category">
+                                                <p>{category}</p>
+                                            </div>
+                                        </Link>
+                                    </div>        
+                                )
+                            }) 
+                        }
+                    </div>
+                ) : (
+                    <div style={{
+                        margin: '1em',
+                        textAlign: 'center',
+                    }}>
+                        <p>No Registered Services</p>
+                    </div>
+                )
+            }
         </div>
-    )
-}
-
-
+    );
+};
 
 export default Categories;
