@@ -28,8 +28,6 @@ import { useAuthentication } from '../../src/custom-hooks/useAuthentication';
 
 
 import BottomMenu from '../../src/components/LoginRegister/BottomMenu';
-import Logo from '../../src/components/LoginRegister/Logo';
-
 
 
 const Login : NextPage = () => {
@@ -49,7 +47,7 @@ const Login : NextPage = () => {
 
 
                 <div className='login-register-left-container'>
-                <Logo /> 
+                    <h1>On Demand Handy <br/> Service App</h1>
                 </div>
 
 
