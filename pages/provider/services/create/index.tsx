@@ -61,6 +61,7 @@ const CreateService: NextPage = ({
     const [date, setDate] = useState<Date>(new Date());
     const [unavailableDates, setUnavailableDates] = useState<string[]>([]);
 
+
     // this is the skills array that will be used in categories later
     // in the user interface.
     const [skillsArrayIndex, setSkillsArrayIndex] = useState<number>(0);
@@ -191,10 +192,10 @@ const CreateService: NextPage = ({
     return (
         <>
             <Layout>
-                <div 
+                <div
                     style={{
-                        backgroundColor: 'var(--lightGray)',
-                        padding: '1em',
+                        backgroundColor: "var(--lightGray)",
+                        padding: "1em",
                     }}
                 >
                     <div
@@ -250,7 +251,9 @@ const CreateService: NextPage = ({
                                             }}
                                             value={serviceDetails}
                                             onChange={(e) =>
-                                                setServiceDetails(e.target.value)
+                                                setServiceDetails(
+                                                    e.target.value
+                                                )
                                             }
                                             required
                                         />
@@ -276,7 +279,17 @@ const CreateService: NextPage = ({
                                                     >
                                                         <select
                                                             className="form-control"
-                                                            style={{ width: "90%" }}
+                                                            style={{
+                                                                width: "90%",
+                                                            }}
+                                                            onChange={(e) => {
+                                                                setCategory((prev) => {
+                                                                    return prev.map((cat: string, _idx: number) => {
+                                                                        if (idx === _idx) return e.target.value
+                                                                        return cat;
+                                                                    })
+                                                                });
+                                                            }}
                                                         >
                                                             {skillsArray.length !==
                                                                 0 &&
@@ -290,25 +303,16 @@ const CreateService: NextPage = ({
                                                                             ""
                                                                         )
                                                                             return (
-                                                                                <React.Fragment
-                                                                                    key={
-                                                                                        idx2
-                                                                                    }
-                                                                                >
-                                                                                    {
-                                                                                        skill
-                                                                                    }
+                                                                                <React.Fragment key={idx2}>
+                                                                                    { skill }
                                                                                 </React.Fragment>
                                                                             );
                                                                         return (
-                                                                            <option
-                                                                                key={
-                                                                                    idx2
-                                                                                }
+                                                                            <option 
+                                                                                key={idx2}
+                                                                                value={skill}
                                                                             >
-                                                                                {
-                                                                                    skill
-                                                                                }
+                                                                                { skill }
                                                                             </option>
                                                                         );
                                                                     }
@@ -318,7 +322,8 @@ const CreateService: NextPage = ({
                                                             type="button"
                                                             style={{
                                                                 width: "10%",
-                                                                marginLeft: "1em",
+                                                                marginLeft:
+                                                                    "1em",
                                                             }}
                                                             onClick={() => {
                                                                 setCategory(
@@ -410,7 +415,9 @@ const CreateService: NextPage = ({
                                                 type="number"
                                                 value={priceInitial}
                                                 onChange={(e) =>
-                                                    setPriceInitial(e.target.value)
+                                                    setPriceInitial(
+                                                        e.target.value
+                                                    )
                                                 }
                                                 required
                                             />
@@ -423,7 +430,9 @@ const CreateService: NextPage = ({
                                                     justifyContent: "center",
                                                 }}
                                             >
-                                                <h3>{formattedStartingPrice}</h3>
+                                                <h3>
+                                                    {formattedStartingPrice}
+                                                </h3>
                                             </div>
                                         </div>
                                     </div>
@@ -494,7 +503,9 @@ const CreateService: NextPage = ({
                                                 calendarType="US"
                                                 tileDisabled={({ date }) => {
                                                     const _date =
-                                                        formatDateToString(date);
+                                                        formatDateToString(
+                                                            date
+                                                        );
                                                     return unavailableDates.includes(
                                                         _date
                                                     );
@@ -510,25 +521,28 @@ const CreateService: NextPage = ({
                                             <button
                                                 type="button"
                                                 onClick={() => {
-                                                    setUnavailableDates((prev) => {
-                                                        return prev.filter(
-                                                            (_date) => {
-                                                                return (
-                                                                    _date !==
-                                                                    formatDateToString(
-                                                                        date
-                                                                    )
-                                                                );
-                                                            }
-                                                        );
-                                                    });
+                                                    setUnavailableDates(
+                                                        (prev) => {
+                                                            return prev.filter(
+                                                                (_date) => {
+                                                                    return (
+                                                                        _date !==
+                                                                        formatDateToString(
+                                                                            date
+                                                                        )
+                                                                    );
+                                                                }
+                                                            );
+                                                        }
+                                                    );
                                                     setDate(new Date());
                                                 }}
                                             >
                                                 Remove Date
                                             </button>
                                             <ul>
-                                                {unavailableDates.length !== 0 ? (
+                                                {unavailableDates.length !==
+                                                0 ? (
                                                     unavailableDates.map(
                                                         (date, idx) => {
                                                             return (
@@ -582,10 +596,12 @@ const CreateService: NextPage = ({
                                                             style={{
                                                                 height: "22.5vh",
                                                                 width: "22.5vh",
-                                                                overflow: "hidden",
+                                                                overflow:
+                                                                    "hidden",
                                                                 borderRadius:
                                                                     "0.5em",
-                                                                marginRight: "1em",
+                                                                marginRight:
+                                                                    "1em",
                                                             }}
                                                         >
                                                             <Image
@@ -608,7 +624,9 @@ const CreateService: NextPage = ({
                                             multiple={true}
                                             className="upload-images-input-button"
                                         />
-                                        <label htmlFor="files">Upload Images</label>
+                                        <label htmlFor="files">
+                                            Upload Images
+                                        </label>
                                     </div>
                                 </div>
 
