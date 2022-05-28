@@ -1,9 +1,8 @@
-
 .pricingDetailsContainer {
     width: 100%;
     position: sticky;
     top: 6em;
-    height: 70vh;
+    height: 30vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -14,14 +13,11 @@
     background-color: var(--white);
 }
 
-
 @media (max-width: 70em) {
     .pricingDetailsContainer {
         top: 9em;
     }
 }
-
-
 
 @media (max-width: 40em) {
     .pricingDetailsContainer {

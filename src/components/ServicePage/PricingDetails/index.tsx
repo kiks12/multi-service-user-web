@@ -1,6 +1,3 @@
-
-
-
 /*
 
 Multi Service Platform - Pricing Details Component for Service Page in users
@@ -10,91 +7,51 @@ Author: Tolentino, Francis James S.
 
 */
 
+import styles from "./PricingDetails.module.css";
 
+import Link from "next/link";
+import React, { useMemo } from "react";
+import type { Service as ServiceType } from "../../../../types";
 
-import styles from './PricingDetails.module.css';
+import { formatter } from "../../../../utils/formatter";
 
-
-
-import Link from 'next/link';
-import React, { useMemo } from 'react';
-
-
-
-import { formatter } from '../../../../utils/formatter';
-
-
-
-import FloatingPricingDetails from './Floating';
-
-
-
+import FloatingPricingDetails from "./Floating";
 
 interface PricingDetailsProps {
-    service: any;
+    service: ServiceType;
 }
 
-
-
-
-
-
 const PricingDetails: React.FC<PricingDetailsProps> = ({ service }) => {
-
-
-    const formattedInitial = useMemo(() => {
-        return formatter.format(parseInt(service.priceInitial, 10));
+    const formattedPrice = useMemo(() => {
+        return formatter.format(service.price);
     }, [service]);
-    
-    
-    const formattedFinal = useMemo(() => {
-        return formatter.format(parseInt(service.priceFinal, 10));
-    }, [service]);
-
-
-
     return (
         <>
-            <FloatingPricingDetails 
-                formattedFinal={formattedFinal}
-                formattedInitial={formattedInitial}
-                priceSubType={service.priceSubType}
-                priceType={service.priceType}
+            <FloatingPricingDetails
+                formattedPrice={formattedPrice}
                 serviceId={service.serviceId}
             />
             <div className={styles.pricingDetailsContainer}>
-                <h2>Pricing</h2>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Type: </td>
-                            <td>{service.priceType}</td>
-                        </tr>
-                        <tr>
-                            <td>Sub Type: </td>
-                            <td>{service.priceSubType}</td>
-                        </tr>
-                        <tr>
-                            <td>Starting Price: </td>
-                            <td>{formattedInitial}</td>
-                        </tr>
-                        <tr>
-                            <td>Last Price: </td>
-                            <td>{formattedFinal}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
+                <div 
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                    }}
+                >
+                    <h2>Price: </h2>
+                    <h2>{formattedPrice}</h2>
+                </div>
                 <div>
-                    <Link href={`/service/${service.serviceId}/book`} passHref={true}>
-                        <button className='main-button'>
-                            Book Service
-                        </button>
+                    <Link
+                        href={`/service/${service.serviceId}/book`}
+                        passHref={true}
+                    >
+                        <button className="main-button">Book Service</button>
                     </Link>
-                    <button 
-                        className='ghost-button'
+                    <button
+                        className="ghost-button"
                         style={{
-                            margin: '0.5em 0 0 0'
+                            margin: "0.5em 0 0 0",
                         }}
                     >
                         Negotiate Pricing
@@ -102,10 +59,7 @@ const PricingDetails: React.FC<PricingDetailsProps> = ({ service }) => {
                 </div>
             </div>
         </>
-    )
-}
-
-
-
+    );
+};
 
 export default PricingDetails;

@@ -143,17 +143,19 @@ const ServicePage : NextPage = ({
                 </ul>
 
 
-                <div className={styles.informationSplitter}>
-                    <div className={styles.leftSide}>
-                        <Overview service={service}/>
-                        <Description service={service} ref={descriptionRef}/>
-                        <AboutProvider user={service.Users} accessToken={accessToken}/>
-                        <Reviews />
-                        {/* <Recommended services={recommendeds} currentServiceID={service.serviceId}/> */}
-                    </div>
-                    
-                    <div className={styles.rightSide}>
-                        <PricingDetails service={service}/>
+                <div className='container'>
+                    <div className={styles.informationSplitter}>
+                        <div className={styles.leftSide}>
+                            <Overview service={service}/>
+                            <Description service={service} ref={descriptionRef}/>
+                            <AboutProvider user={service.Users} accessToken={accessToken}/>
+                            <Reviews />
+                            {/* <Recommended services={recommendeds} currentServiceID={service.serviceId}/> */}
+                        </div>
+                        
+                        <div className={styles.rightSide}>
+                            <PricingDetails service={service}/>
+                        </div>
                     </div>
                 </div>
 

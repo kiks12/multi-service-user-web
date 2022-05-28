@@ -1,17 +1,15 @@
 .informationSplitter {
-    display: flex;   
+    display: flex;
 }
-
 
 .leftSide {
     flex-basis: 65%;
 }
 
-
 .rightSide {
-    flex-basis: 35%;
+    flex-basis: 33%;
+    margin: 0 0 0 1em;
 }
-
 
 @media (max-width: 70em) {
     .leftSide {
@@ -23,10 +21,8 @@
     }
 }
 
-
 @media (max-width: 40em) {
     .informationSplitter {
         flex-direction: column;
     }
-
 }
