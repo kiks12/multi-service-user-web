@@ -1,4 +1,3 @@
-
 /*
 
 Multi Service Platform - Category Page
@@ -8,86 +7,95 @@ Author: Tolentino, Francis James S.
 
 */
 
-
-
-
-import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
-
-
+import {
+    GetServerSideProps,
+    GetServerSidePropsContext,
+    InferGetServerSidePropsType,
+    NextPage,
+} from "next";
 
 import { Key, useEffect } from "react";
 import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 
-
-
 import fetchUserInformation from "../../libs/fetchUserInformation";
-
-
 
 import Layout from "../../src/components/layout/Layout";
 import authorizedFetch from "../../utils/authorizedFetch";
 import { __backend__ } from "../../src/constants";
 import Service from "../../src/components/Services/Service";
-
-
-
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {useRouter} from "next/router";
 
 const CategoryPage: NextPage = ({
     user,
     services,
-    category, 
-    accessToken}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-
+    category,
+    accessToken,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const { setSession } = useAuthentication();
-
-
+    const router = useRouter();
 
     useEffect(() => {
-        if (typeof setSession === 'function') setSession(user);
+        if (typeof setSession === "function") setSession(user);
     }, [setSession, user]);
-
-
 
     return (
         <Layout accessToken={accessToken}>
-            <h2>{category}</h2>
-
-            <div className='services-grid'>
-                {
-                    services.length !== 0 && services.map((service: any, idx: Key | null | undefined) => {
-                        return (
-                            <Service key={idx} service={service}/>
-                        )
-                    })
-                }
+            <div 
+                className="container"
+                style={{
+                    margin: '1em auto 0 auto'
+                }}
+            >
+                <div 
+                    style={{
+                        display: 'flex'
+                    }}
+                >
+                    <button 
+                        style={{
+                            flexBasis: '5%',
+                            margin: '0 1em 0 0',
+                        }}
+                        onClick={() => router.push('/')}
+                    >
+                        <FontAwesomeIcon 
+                            icon={faArrowLeft}
+                            style={{margin: '0 1em'}}
+                        />
+                    </button>
+                    <h2 style={{flexBasis: '95%'}}>{category.toUpperCase()}</h2>
+                </div>
+                <div className="services-grid">
+                    {services.length !== 0 &&
+                        services.map(
+                            (service: any, idx: Key | null | undefined) => {
+                                return <Service key={idx} service={service} />;
+                            }
+                        )}
+                </div>
             </div>
         </Layout>
-    )    
-}
-
-
-
+    );
+};
 
 export const getServerSideProps: GetServerSideProps = async ({
-    req, 
-    query
+    req,
+    query,
 }: GetServerSidePropsContext) => {
-
-
     const category = query.category;
-
 
     const res = await authorizedFetch({
         url: `${__backend__}/services/get-services-from-category?category=${category}`,
-        method: 'GET',
+        method: "GET",
         accessToken: req.cookies.accessToken,
     });
 
-
-    
     if (req.cookies.accessToken) {
-        const userInformation = await fetchUserInformation(req.cookies?.accessToken);
-
+        const userInformation = await fetchUserInformation(
+            req.cookies?.accessToken
+        );
 
         if (!userInformation) {
             return {
@@ -95,12 +103,10 @@ export const getServerSideProps: GetServerSideProps = async ({
                     user: {},
                     services: [],
                     category: category,
-                    accessToken: '',
-                }
-            }
+                    accessToken: "",
+                },
+            };
         }
-
-
 
         return {
             props: {
@@ -108,23 +114,18 @@ export const getServerSideProps: GetServerSideProps = async ({
                 services: res.services,
                 category: category,
                 accessToken: req.cookies.accessToken,
-            }
-        }
+            },
+        };
     }
-
-
 
     return {
         props: {
             user: {},
             services: res.services,
             category: category,
-            accessToken: '',
-        }
-    }
-}
-
-
-
+            accessToken: "",
+        },
+    };
+};
 
 export default CategoryPage;

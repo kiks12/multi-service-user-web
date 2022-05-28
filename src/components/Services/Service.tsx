@@ -17,13 +17,13 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 
 
-import React, { useEffect, useMemo } from 'react';
+import React , { useMemo } from 'react';
 
 
 
 import { formatter } from '../../../utils/formatter';
 import Link from 'next/link';
-
+import type { Service as ServiceType } from '../../../types';
 
 
 // import Image from 'next/image';
@@ -31,20 +31,7 @@ import Link from 'next/link';
 
 
 interface ServiceProps {
-    service: {
-        serviceId: number;
-        title: string;
-        serviceDetails: string;
-        status: string;
-        priceType: string;
-        priceInitial: number;
-        priceFinal: number;
-        dislikes: number;
-        likes: number;
-        ratings: number;
-        Images: any[];
-        Users: any[];
-    }
+    service: ServiceType; 
 }
 
 
@@ -52,8 +39,8 @@ interface ServiceProps {
 const Service: React.FC<ServiceProps> = ({ service }) => {
 
 
-    const formattedInitial = useMemo(() => {
-        return formatter.format(service.priceInitial);
+    const formattedPrice = useMemo(() => {
+        return formatter.format(service.price);
     }, [service]);
 
 
@@ -83,8 +70,7 @@ const Service: React.FC<ServiceProps> = ({ service }) => {
                             display: 'flex',
                             color: 'var(--mainPurple)'
                         }}>
-                            <p style={{margin: '0 1em 0 0'}}>{service.priceType === 'Flat Rate' ? 'Price: ' : 'Starting at '}</p>
-                            <p>{formattedInitial}</p>
+                            <p>{formattedPrice}</p>
                         </div>
                     </div>
 
