@@ -741,7 +741,6 @@ main {
 }
 
 button {
-    width: 100%;
     padding: 0.7em 2em;
     transition: cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s;
     cursor: pointer;
