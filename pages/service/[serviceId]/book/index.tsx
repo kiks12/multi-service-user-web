@@ -56,6 +56,28 @@ const BookService: NextPage = ({
     const [message, setMessage] = useState<string>("");
     const [openMessageModal, setOpenMessageModal] = useState<boolean>(false);
 
+
+    if (!accessToken) {
+        return (
+            <Layout accessToken={accessToken}>
+                <div>
+                    <p>You are not logged in, cannot book any service without an account</p>
+                    <Link href="/login">
+                        <p>Login</p>
+                    </Link>
+
+                    <div>
+                        <p>Don't have an Account?</p>
+                        <Link href="/register">
+                            <p>Sign Up</p>
+                        </Link>
+                    </div>
+                </div>
+            </Layout> 
+        )
+    }
+
+
     useEffect(() => {
         if (typeof setSession === "function") setSession(user);
 
@@ -111,8 +133,7 @@ const BookService: NextPage = ({
                     date: formatDateToString(date),
                     time: time?.toLocaleTimeString(),
                     price: parseInt(service.price, 10),
-                    finalPrice:
-                        parseInt(service.price, 10) * parseInt(pax, 10),
+                    finalPrice: parseInt(service.price, 10) * parseInt(pax, 10),
                     paymentMethod: paymentMethod,
                     paid: paymentMethod !== "Cash on Delivery",
                 }),
@@ -128,7 +149,6 @@ const BookService: NextPage = ({
     return (
         <>
             <Layout accessToken={accessToken}>
-                {/* <pre>{JSON.stringify(service, null, 2)}</pre> */}
                 <div className={styles.header}>
                     <h2>Book Service</h2>
                     <Link
@@ -158,7 +178,7 @@ const BookService: NextPage = ({
                                 </tr>
                             </tbody>
                         </table>
-                        <div style={{margin: "1em 0"}} className="split">
+                        <div style={{ margin: "1em 0" }} className="split">
                             <label>Pax / Service</label>
                             <div className={styles.paxInputContainer}>
                                 <button
@@ -214,9 +234,7 @@ const BookService: NextPage = ({
                         <TimePicker
                             value={time}
                             onChange={(newValue) => setTime(newValue)}
-                            renderInput={(params) => (
-                                <TextField {...params} />
-                            )}
+                            renderInput={(params) => <TextField {...params} />}
                         />
                     </div>
                 </div>

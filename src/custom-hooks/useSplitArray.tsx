@@ -1,4 +1,3 @@
-
 /*
 
 Multi Service Platform - Custom hook to split array everytime the dependency change
@@ -8,29 +7,20 @@ Author: Tolentino, Francis James S.
 
 */
 
-
-
-import { useMemo } from "react"
-
-
+import { useMemo } from "react";
 
 interface ArraySplitProps {
-    stringToSplit: string,
-    splitter: string,
-    dependencies?: any[],
+    stringToSplit: string;
+    splitter: string;
+    dependencies?: any[];
 }
 
-
-const useSplitArray = ({ stringToSplit, splitter, dependencies }: ArraySplitProps) => {
-        
+const useSplitArray = ({ stringToSplit, splitter }: ArraySplitProps) => {
     const splittedArray = useMemo(() => {
-        return (stringToSplit.split(splitter)).map(string => string.trim());
+        return stringToSplit.split(splitter).map((string) => string.trim());
     }, [splitter, stringToSplit]);
 
-
-    return splittedArray.filter(value => value !== '');
-}
-
-
+    return splittedArray.filter((value) => value !== "");
+};
 
 export default useSplitArray;
