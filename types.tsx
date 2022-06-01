@@ -89,6 +89,7 @@ export type Booking = {
     paymentMethod: "Cash on Delivery" | "E-Wallet" | "GCash";
     paid: boolean;
     date: string;
+    time: string;
     status: BookedServicesFilter;
     cancelReason?: string;
     Users: User;

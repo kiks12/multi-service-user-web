@@ -71,7 +71,6 @@ tr > * {
 }
 
 td {
-    border-left: 0.3px solid var(--gray);
     padding: 0.35em 0 0.35em 2em;
 }
 
@@ -334,12 +333,7 @@ grid template
 /* left part of the main container grid */
 .login-register-left-container {
     background: var(--mainPurple);
-    background: linear-gradient(
-        144deg,
-        var(--secondaryPurple) -100%,
-        var(--mainPurple) 50%,
-        var(--mainBlue) 130%
-    );
+    background: linear-gradient(144deg, var(--secondaryPurple) -100%, var(--mainPurple) 50%, var(--mainBlue) 130%);
     height: 100%;
     width: 100%;
     display: flex;
@@ -751,12 +745,7 @@ button {
 
 .main-button {
     /* background-color: var(--mainPurple); */
-    background: linear-gradient(
-        144deg,
-        var(--secondaryPurple) -100%,
-        var(--mainPurple) 50%,
-        var(--mainBlue) 130%
-    );
+    background: linear-gradient(144deg, var(--secondaryPurple) -100%, var(--mainPurple) 50%, var(--mainBlue) 130%);
     border: 0.3px solid var(--mainPurple);
     color: var(--white);
 }
