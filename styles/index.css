@@ -498,6 +498,7 @@ main {
     padding: 0.6em 0.6em 0.6em 2em;
     cursor: pointer;
     display: flex;
+    align-items: center;
 }
 
 .left-navbar-li > *,

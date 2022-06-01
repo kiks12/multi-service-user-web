@@ -51,19 +51,19 @@ const LeftNavbar : React.FC = () => {
                 <ul>
                     <Link href='/' passHref={true}>
                         <li className={activePage === 'Home' ? ACTIVE_PAGE : INACTIVE_PAGE}>
-                            <FontAwesomeIcon icon={faHouse} size='lg'/>
+                            <FontAwesomeIcon icon={faHouse} size='1x'/>
                             <p className='left-navbar-li-text'>Home</p>
                         </li>
                     </Link>
                     <Link href='/explore' passHref={true}>
                         <li className={activePage === 'Explore' ? ACTIVE_PAGE : INACTIVE_PAGE}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} size='lg'/>
+                            <FontAwesomeIcon icon={faMagnifyingGlass} size='1x'/>
                             <p className='left-navbar-li-text'>Explore</p>
                         </li>
                     </Link>
                     <Link href='/bookings' passHref={true}>
                         <li className={activePage === 'Bookings' ? ACTIVE_PAGE : INACTIVE_PAGE}>
-                            <FontAwesomeIcon icon={faCalendar} size='lg'/>
+                            <FontAwesomeIcon icon={faCalendar} size='1x'/>
                             <p className='left-navbar-li-text'>Bookings</p>
                         </li>
                     </Link>
@@ -73,18 +73,18 @@ const LeftNavbar : React.FC = () => {
             <div
                 style={{
                     margin: '3em 0 0 0',
-                    borderTop: '0.3px solid var(--secondaryPurple)'
+                    borderTop: '0.3px solid var(--gray)'
                 }}
             >
                 <ul>
                     <Link href='/bookmarks' passHref={true}>
                         <li className={activePage === 'Bookmarks' ? ACTIVE_PAGE : INACTIVE_PAGE}>
-                            <FontAwesomeIcon icon={faBookmark} size='lg'/>
+                            <FontAwesomeIcon icon={faBookmark} size='1x'/>
                             <p className='left-navbar-li-text'>Bookmarks</p>
                         </li>
                     </Link>
                     <li className='left-navbar-li'>
-                        <FontAwesomeIcon icon={faThumbsUp} size='lg'/>
+                        <FontAwesomeIcon icon={faThumbsUp} size='1x'/>
                         <p className='left-navbar-li-text'>Liked Services</p>
                     </li>
                 </ul>
@@ -95,7 +95,7 @@ const LeftNavbar : React.FC = () => {
             <div
                 style={{
                     margin: '3em 0 0 0',
-                    borderTop: '0.3px solid var(--secondaryPurple)'
+                    borderTop: '0.3px solid var(--gray)'
                 }}
             >
                 <div
