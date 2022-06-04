@@ -1,11 +1,19 @@
-
 .containerGrid {
-    display: flex;
-    flex-direction: column;
-    padding: 1em;
+    width: 98%;
+    margin: 0 auto;
+    overflow: scroll;
+    padding: 1em 0;
 }
 
+.containerGrid > * {
+    width: 140%;
+}
 
+@media (max-width: 70em) {
+    .containerGrid > * {
+        width: 160%;
+    }
+}
 
 .message {
     position: absolute;
@@ -13,23 +21,13 @@
     left: 50%;
 }
 
-
 .tr {
     display: flex;
     align-items: center;
 }
 
-
 .td {
     display: flex;
     justify-content: center;
     border: none;
-}
-
-
-
-@media (max-width: 40em) {
-    .containerGrid {
-        grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
-    }
 }

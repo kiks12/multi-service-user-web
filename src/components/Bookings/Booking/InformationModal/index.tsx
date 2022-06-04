@@ -1,20 +1,20 @@
-import React, {useMemo} from "react";
+import React, { useMemo } from "react";
 
 import Modal from "../../../Modals/Modal";
 
 import type { Booking } from "../../../../../types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faClose} from "@fortawesome/free-solid-svg-icons";
-import {formatter} from "../../../../../utils/formatter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { formatter } from "../../../../../utils/formatter";
 import useClickOutsideElement from "../../../../custom-hooks/useClickOutsideElement";
 
 interface props {
   booking: Booking;
   setOpenInformationModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenCancelModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const BookingInformationModal: React.FC<props> = ({ booking, setOpenInformationModal }) => {
-
+const BookingInformationModal: React.FC<props> = ({ booking, setOpenInformationModal, setOpenCancelModal }) => {
   const modalRef = useClickOutsideElement(() => setOpenInformationModal(false));
 
   const formattedPrice = useMemo(() => {
@@ -25,15 +25,19 @@ const BookingInformationModal: React.FC<props> = ({ booking, setOpenInformationM
     return formatter.format(booking.finalPrice);
   }, [booking]);
 
+  const openCancelModal = () => {
+    setOpenCancelModal(true);
+    setOpenInformationModal(false);
+  }
 
   return (
     <Modal>
       <div className="card" ref={modalRef}>
-        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-          <h2>Booking Information</h2> 
-          <FontAwesomeIcon icon={faClose} onClick={() => setOpenInformationModal(false)}/>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h2>Booking Information</h2>
+          <FontAwesomeIcon icon={faClose} onClick={() => setOpenInformationModal(false)} />
         </div>
-        <table style={{width: '100%', margin: '1em 0 0 0'}}>
+        <table style={{ width: "100%", margin: "1em 0 0 0" }}>
           <tbody>
             <tr>
               <td>Service: </td>
@@ -71,10 +75,8 @@ const BookingInformationModal: React.FC<props> = ({ booking, setOpenInformationM
               <td>Payment Status: </td>
               <td>
                 <div>
-                  <input type='checkbox' checked={booking.paid} readOnly/>
-                  <label>
-                    {booking.paid ? 'Paid' : 'Not Yet Paid'}
-                  </label>
+                  <input type="checkbox" checked={booking.paid} readOnly />
+                  <label>{booking.paid ? "Paid" : "Not Yet Paid"}</label>
                 </div>
               </td>
             </tr>
@@ -86,7 +88,12 @@ const BookingInformationModal: React.FC<props> = ({ booking, setOpenInformationM
         </table>
 
         <div>
-          <button disabled={booking.status !== "To be Approved"}>Cancel</button>
+          <button 
+            disabled={booking.status !== "To be Approved"}
+            onClick={openCancelModal}
+          >
+            Cancel Booking
+          </button>
           <button onClick={() => setOpenInformationModal(false)}>Okay</button>
         </div>
       </div>

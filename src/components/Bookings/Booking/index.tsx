@@ -1,15 +1,14 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 
 import { Booking } from "../../../../types";
 import { formatter } from "../../../../utils/formatter";
 import styles from "./Booking.module.css";
 import Link from "next/link";
-import Actions from "./Action";
+import Image from "next/image";
 import CancelModal from "./CancelModal";
 import MessageModal from "./MessageModal";
 import InformationModal from "./InformationModal";
+import {__backend__} from "../../../constants";
 
 interface BookingProps {
     booking: Booking;
@@ -36,7 +35,6 @@ const Booking: React.FC<BookingProps> = ({
     buttonOnClick,
     setCurrentBooking,
 }) => {
-    const [openActionButton, setOpenActionButton] = useState<boolean>(false);
     const [openCancelModal, setOpenCancelModal] = useState<boolean>(false);
     const [openMessageModal, setOpenMessageModal] = useState<boolean>(false);
     const [openInformationModal, setOpenInformationModal] = useState<boolean>(false);
@@ -57,8 +55,8 @@ const Booking: React.FC<BookingProps> = ({
 
     return (
         <>
-            <div
-                className={styles.container}
+            <tr 
+                className={styles.tr}
                 style={{
                     borderLeft:
                         booking.status === "To be Approved"
@@ -73,90 +71,92 @@ const Booking: React.FC<BookingProps> = ({
                 }}
                 onClick={() => setOpenInformationModal(true)}
             >
-                <table style={{ width: "100%" }}>
-                    <tbody>
-                        <tr className={styles.tr}>
-                            <td
-                                className={styles.td}
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                }}
-                            >
-                                <div
+                <td
+                    className={styles.td}
+                >
+                    <div
+                        style={{
+                            backgroundColor: "var(--gray)",
+                            height: "5em",
+                            width: "5em",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        {
+                            booking.Service.Images.length > 0 ? 
+                                <div 
                                     style={{
-                                        backgroundColor: "var(--gray)",
-                                        height: "5em",
-                                        width: "5em",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
+                                        width: '100%',
+                                        height: '100%',
+                                        overflow: 'hidden',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
                                     }}
                                 >
-                                    image
-                                    {/* <Image /> */}
+                                    <Image 
+                                        src={`${__backend__}/public/${booking.Service.Images[0].path}`}
+                                        height={100}
+                                        width={150}
+                                        layout='fixed'
+                                    />
                                 </div>
-                                <Link href={`/service/${booking.serviceId}`} passHref={true}>
-                                    <p style={{ margin: "0 0.5em" }}>{booking.Service.title}</p>
-                                </Link>
-                            </td>
-                            <td className={styles.td}>{booking.date}</td>
-                            <td className={styles.td}>{booking.time}</td>
-                            <td className={styles.td}>{formattedPrice}</td>
-                            <td className={styles.td}>{booking.pax}</td>
-                            <td className={styles.td}>{formattedFinalPrice}</td>
-                            {(perspective === "Provider" || buttonValue) && (
-                                <td>
-                                    <button
-                                        className="main-button"
-                                        onClick={() => {
-                                            buttonOnClick();
-                                            if (typeof setCurrentBooking === "function") {
-                                                setCurrentBooking(booking);
-                                            }
-                                        }}
-                                    >
-                                        {buttonValue}
-                                    </button>
-                                </td>
-                            )}
-                        </tr>
-                    </tbody>
-                </table>
-                <div className={styles.ellipsis} onClick={() => setOpenActionButton(true)}>
-                    <FontAwesomeIcon icon={faEllipsisVertical} />
-                </div>
-                {openActionButton && (
-                    <Actions setOpenActionButton={setOpenActionButton} setOpenCancelModal={setOpenCancelModal} />
+                                : <p></p>
+                        } 
+                    </div>
+                    <Link href={`/service/${booking.serviceId}`} passHref={true}>
+                        <p style={{ margin: "0 0.5em" }}>{booking.Service.title}</p>
+                    </Link>
+                </td>
+                <td className={styles.td}>{booking.date}</td>
+                <td className={styles.td}>{booking.time}</td>
+                <td className={styles.td}>{formattedPrice}</td>
+                <td className={styles.td}>{booking.pax}</td>
+                <td className={styles.td}>{formattedFinalPrice}</td>
+                {(perspective === "Provider" || buttonValue) && (
+                    <td>
+                        <button
+                            className="main-button"
+                            onClick={() => {
+                                buttonOnClick();
+                                if (typeof setCurrentBooking === "function") {
+                                    setCurrentBooking(booking);
+                                }
+                            }}
+                        >
+                            {buttonValue}
+                        </button>
+                    </td>
                 )}
-                {openCancelModal && (
-                    <CancelModal
-                        setCancellationResponse={setCancellationResponse}
-                        setMessage={setMessage}
-                        setOpenMessageModal={setOpenMessageModal}
-                        setOpenCancelModal={setOpenCancelModal}
-                        accessToken={accessToken}
-                        bookId={booking.bookId}
-                    />
-                )}
-                {openMessageModal && (
-                    <MessageModal
-                        updateBookingState={updateBookingState}
-                        cancellationResponse={cancellationResponse}
-                        message={message}
-                        setOpenMessageModal={setOpenMessageModal}
-                    />
-                )}
-                
-            </div>
-            {
-                openInformationModal && (
-                    <InformationModal
-                        setOpenInformationModal={setOpenInformationModal}
-                        booking={booking}
-                    />
-                )
-            }
+            </tr>
+
+            {openCancelModal && (
+                <CancelModal
+                    setCancellationResponse={setCancellationResponse}
+                    setMessage={setMessage}
+                    setOpenMessageModal={setOpenMessageModal}
+                    setOpenCancelModal={setOpenCancelModal}
+                    accessToken={accessToken}
+                    bookId={booking.bookId}
+                />
+            )}
+            {openMessageModal && (
+                <MessageModal
+                    updateBookingState={updateBookingState}
+                    cancellationResponse={cancellationResponse}
+                    message={message}
+                    setOpenMessageModal={setOpenMessageModal}
+                />
+            )}
+            {openInformationModal && (
+                <InformationModal
+                    setOpenInformationModal={setOpenInformationModal}
+                    booking={booking}
+                    setOpenCancelModal={setOpenCancelModal}
+                />
+            )}
         </>
     );
 };

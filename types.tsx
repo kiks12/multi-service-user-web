@@ -68,6 +68,7 @@ export type Service = {
     ratings: number;
     category: string;
     Users?: User;
+    Images: Image[];
 };
 
 export type BookedServicesFilter =

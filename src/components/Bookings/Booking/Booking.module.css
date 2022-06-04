@@ -1,44 +1,30 @@
-
 .container {
-    border: 0.3px solid var(--gray);
-    margin: 0.5em 0;
+    margin: 0.25em 0;
     position: relative;
     cursor: pointer;
+    padding: 0.2em 0;
 }
-
 
 .container:hover {
-    border: 0.3px solid var(--mainPurple);
+    box-shadow: var(--boxShadow);
 }
-
-
-.ellipsis {
-    position: absolute;
-    top: 0.5em;
-    right: 0.5em;
-    color: var(--darkGray);
-    cursor: pointer;
-    opacity: 0;
-    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
-}
-
-
-.container:hover > .ellipsis {
-    opacity: 1;
-}
-
 
 .image {
     height: 10vh;
     background-color: var(--lightGray);
 }
 
-
 .tr {
     display: flex;
     align-items: center;
+    cursor: pointer;
+    margin: 0.5em 0;
+    padding: 0 0.5em
 }
 
+.tr:hover {
+    box-shadow: var(--boxShadow);
+}
 
 .td {
     border: none;
@@ -48,7 +34,18 @@
     padding: 0.5em;
 }
 
+.td:first-child {
+    align-items: center;
+    justify-content: start;
+}
+
+.td:first-child > p {
+    width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
 
 .td:last-child {
-    color: var(--mainPurple)
+    color: var(--mainPurple);
 }

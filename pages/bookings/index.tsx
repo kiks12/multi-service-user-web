@@ -105,12 +105,10 @@ const Bookings: NextPage = ({
 
     return (
         <Layout accessToken={accessToken}>
-            <div>
-                <BookingsMenu
-                    bookedServicesFilter={bookedServicesFilter}
-                    setBookedServicesFilter={setBookedServicesFilter}
-                />
-            </div>
+            <BookingsMenu
+                bookedServicesFilter={bookedServicesFilter}
+                setBookedServicesFilter={setBookedServicesFilter}
+            />
 
             <small
                 style={{
@@ -124,14 +122,15 @@ const Bookings: NextPage = ({
             {accessToken &&
                 (filteredBookings.length !== 0 ? (
                     <div className={styles.containerGrid}>
-                        <table
-                            style={{
-                                border: "0.3px solid var(--gray)",
-                                margin: "0 0 1em 0",
-                            }}
-                        >
+                        <table>
                             <thead>
-                                <tr className={styles.tr}>
+                                <tr 
+                                    className={styles.tr}
+                                    style={{
+                                        border: "0.3px solid var(--gray)",
+                                        margin: "0 0 1em 0",
+                                    }}
+                                >
                                     <td className={styles.td}>Service</td>
                                     <td className={styles.td}>Date</td>
                                     <td className={styles.td}>Time</td>
@@ -141,22 +140,24 @@ const Bookings: NextPage = ({
                                     {buttonValue === "Rate" && <td className={styles.td}>Action</td>}
                                 </tr>
                             </thead>
-                        </table>
 
-                        {filteredBookings.map((booking: BookingType, idx: number) => {
-                            return (
-                                <Booking
-                                    updateBookingState={updateBookingsState}
-                                    key={idx}
-                                    perspective="User"
-                                    booking={booking}
-                                    accessToken={accessToken}
-                                    buttonValue={buttonValue}
-                                    buttonOnClick={buttonLogic}
-                                    setCurrentBooking={setCurrentBooking}
-                                />
-                            );
-                        })}
+                            <tbody>
+                                {filteredBookings.map((booking: BookingType, idx: number) => {
+                                    return (
+                                        <Booking
+                                            updateBookingState={updateBookingsState}
+                                            key={idx}
+                                            perspective="User"
+                                            booking={booking}
+                                            accessToken={accessToken}
+                                            buttonValue={buttonValue}
+                                            buttonOnClick={buttonLogic}
+                                            setCurrentBooking={setCurrentBooking}
+                                        />
+                                    );
+                                })}
+                            </tbody>
+                        </table>
                     </div>
                 ) : (
                     <p className={styles.message}>No {bookedServicesFilter} Bookings Found!</p>
@@ -186,6 +187,7 @@ const Bookings: NextPage = ({
                     </div>
                 </Modal>
             )}
+
         </Layout>
     );
 };
