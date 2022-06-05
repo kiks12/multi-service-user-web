@@ -67,14 +67,20 @@ const CategoryPage: NextPage = ({
                     </button>
                     <h2 style={{flexBasis: '95%'}}>{category.toUpperCase()}</h2>
                 </div>
-                <div className="services-grid">
-                    {services.length !== 0 &&
-                        services.map(
-                            (service: any, idx: Key | null | undefined) => {
-                                return <Service key={idx} service={service} />;
+                {
+                    services.length > 0 ? 
+                        <div className="services-grid">
+                            {
+                                services.map(
+                                    (service: any, idx: Key | null | undefined) => {
+                                        return <Service key={idx} service={service} />;
+                                    }
+                                )
                             }
-                        )}
-                </div>
+                        </div>
+                        : 
+                        <p>The services registered may be owned by you, so you may not see any services for this category.</p>
+                }
             </div>
         </Layout>
     );
