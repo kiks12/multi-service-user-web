@@ -14,25 +14,31 @@ import { useEffect } from "react";
 import fetchUserInformation from "../../libs/fetchUserInformation";
 
 import ProviderLayout from "../../src/components/Provider/Layout/ProviderLayout";
+import { useAccessToken } from "../../src/custom-hooks/useAccessToken";
 
 import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
 
 const Provider: NextPage = ({ user, accessToken }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const { setSession } = useAuthentication();
+    const { setAccessToken } = useAccessToken();
 
     useEffect(() => {
         if (typeof setSession === "function") setSession(user);
 
         return () => {
             if (typeof setSession === "function") setSession(null);
-        }
+        };
     }, [setSession, user]);
+
+    useEffect(() => {
+        setAccessToken(accessToken);
+
+        return () => setAccessToken("");
+    }, [setAccessToken, accessToken]);
 
     return (
         <>
-            <ProviderLayout accessToken={accessToken}>
-                asdfasfsdf
-            </ProviderLayout>
+            <ProviderLayout accessToken=''>asdfasfsdf</ProviderLayout>
         </>
     );
 };

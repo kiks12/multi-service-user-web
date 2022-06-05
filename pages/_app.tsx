@@ -25,32 +25,29 @@ import { ConversationProvider } from "../src/custom-hooks/useConversation";
 import { MessagesProvider } from "../src/custom-hooks/useMessages";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { AccessTokenProvider } from "../src/custom-hooks/useAccessToken";
 
 React.useLayoutEffect = React.useEffect;
 
-const MyApp = ({
-    Component,
-    pageProps: { session, ...pageProps },
-}: AppProps) => {
+const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
     return (
         <>
             <Head>
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1.0"
-                />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <ConversationProvider>
-                    <MessagesProvider>
-                        <WebSocketProvider>
-                            <AuthProvider>
-                                <Component {...pageProps} />
-                            </AuthProvider>
-                        </WebSocketProvider>
-                    </MessagesProvider>
-                </ConversationProvider>
-            </LocalizationProvider>
+            <AccessTokenProvider>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <ConversationProvider>
+                        <MessagesProvider>
+                            <WebSocketProvider>
+                                <AuthProvider>
+                                    <Component {...pageProps} />
+                                </AuthProvider>
+                            </WebSocketProvider>
+                        </MessagesProvider>
+                    </ConversationProvider>
+                </LocalizationProvider>
+            </AccessTokenProvider>
         </>
     );
 };
