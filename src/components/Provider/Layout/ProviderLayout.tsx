@@ -1,4 +1,3 @@
-
 /*
 
 Multi Service Platform - Provider Layout Component
@@ -8,30 +7,25 @@ Author: Tolentino, Francis James S.
 
 */
 
+import React from "react";
+import MainGrid from "../../layout/MainGrid";
+import TopNavbar from "../../NavigationBars/TopNavbar";
 
+import ProviderLeftNavbar from "../NavigationBars/ProviderLeftNavbar";
 
-import React from 'react';
-import MainGrid from '../../layout/MainGrid';
+interface props {
+    accessToken: string;
+}
 
-
-
-import ProviderLeftNavbar from '../NavigationBars/ProviderLeftNavbar';
-import ProviderTopNavbar from '../NavigationBars/ProviderTopNavbar';
-
-
-
-
-const Layout: React.FC = ({ children }) => {
+const Layout: React.FC<props> = ({ children, accessToken }) => {
     return (
         <MainGrid 
-            topNavbar={<ProviderTopNavbar />}
+            topNavbar={<TopNavbar accessToken={accessToken}/>} 
             leftNavbar={<ProviderLeftNavbar />}
         >
             {children}
         </MainGrid>
-    )
-}
-
-
+    );
+};
 
 export default Layout;

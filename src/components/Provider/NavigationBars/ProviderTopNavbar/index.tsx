@@ -26,7 +26,7 @@ import AccountButton from '../../../NavigationBars/AccountButton';
 
 const ProviderTopNavbar: React.FC = () => {
 
-
+    const [showPopup, setShowPopup] = useState
 
     return (
         <div className='top-navbar'>
