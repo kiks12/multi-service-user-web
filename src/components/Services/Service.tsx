@@ -26,7 +26,8 @@ import Link from 'next/link';
 import type { Service as ServiceType } from '../../../types';
 
 
-// import Image from 'next/image';
+import Image from 'next/image';
+import {__backend__} from '../../constants';
 
 
 
@@ -53,8 +54,14 @@ const Service: React.FC<ServiceProps> = ({ service }) => {
         >
             <div className='default-service-container'>
                 <div className='default-service-image'>
-                    {/* Image */}
-                    image
+                    {
+                        service.Images.length > 0 ?
+                        <Image 
+                            src={`${__backend__}/public/${service.Images[0].path}`}
+                            height={350}
+                            width={350}
+                        /> : <p>No Image</p>
+                    }
                 </div>
 
                 <div style={{
