@@ -182,9 +182,27 @@ td:first-child {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18em, 1fr));
+    grid-template-columns: repeat(auto-fit, 25%);
     grid-gap: 1em;
     padding: 2em 0;
+}
+
+@media (max-width: 70em) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, 32%);
+    }
+}
+
+@media (max-width: 50em) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, 48%);
+    }
+}
+
+@media (max-width: 40em) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, 100%);
+    }
 }
 
 .default-service-container {
@@ -193,15 +211,12 @@ td:first-child {
     padding-bottom: 1em;
 }
 
-.default-service-container:hover {
-    box-shadow: var(--boxShadow);
-}
-
 .default-service-image {
     background-color: var(--gray);
     height: min(25vh, 30vh);
     display: flex;
     align-items: center;
+    overflow: hidden;
     justify-content: center;
 }
 
