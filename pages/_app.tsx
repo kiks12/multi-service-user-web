@@ -26,6 +26,7 @@ import { MessagesProvider } from "../src/custom-hooks/useMessages";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { AccessTokenProvider } from "../src/custom-hooks/useAccessToken";
+import { ProviderBookingProvider } from "../src/custom-hooks/useProviderBookings";
 
 React.useLayoutEffect = React.useEffect;
 
@@ -36,17 +37,19 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps) =>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             </Head>
             <AccessTokenProvider>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <ConversationProvider>
-                        <MessagesProvider>
-                            <WebSocketProvider>
-                                <AuthProvider>
-                                    <Component {...pageProps} />
-                                </AuthProvider>
-                            </WebSocketProvider>
-                        </MessagesProvider>
-                    </ConversationProvider>
-                </LocalizationProvider>
+                <ProviderBookingProvider>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <ConversationProvider>
+                            <MessagesProvider>
+                                <WebSocketProvider>
+                                    <AuthProvider>
+                                        <Component {...pageProps} />
+                                    </AuthProvider>
+                                </WebSocketProvider>
+                            </MessagesProvider>
+                        </ConversationProvider>
+                    </LocalizationProvider>
+                </ProviderBookingProvider>
             </AccessTokenProvider>
         </>
     );

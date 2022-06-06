@@ -9,14 +9,15 @@ import CancelModal from "./CancelModal";
 import MessageModal from "./MessageModal";
 import InformationModal from "./InformationModal";
 import { __backend__ } from "../../../constants";
+import {useProviderBookings} from "../../../custom-hooks/useProviderBookings";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleInfo} from "@fortawesome/free-solid-svg-icons";
 
 interface BookingProps {
     booking: Booking;
     accessToken: string;
     updateBookingState?: (cancellationRes: { msg: string; status: number; booking: Booking }) => void;
     perspective?: "User" | "Provider";
-    buttonValue?: string;
-    buttonOnClick?: any;
     setCurrentBooking: React.Dispatch<React.SetStateAction<Booking | null>>;
 }
 
@@ -31,19 +32,19 @@ const Booking: React.FC<BookingProps> = ({
     accessToken,
     updateBookingState,
     perspective,
-    buttonValue,
-    buttonOnClick,
-    setCurrentBooking,
 }) => {
     const [openCancelModal, setOpenCancelModal] = useState<boolean>(false);
     const [openMessageModal, setOpenMessageModal] = useState<boolean>(false);
     const [openInformationModal, setOpenInformationModal] = useState<boolean>(false);
+    const { acceptBookingInServer, setServiceToRenderedInServer } = useProviderBookings();
+
     const [cancellationResponse, setCancellationResponse] = useState<{
         msg: string;
         status: number;
         booking: Booking;
     }>({ msg: "", status: 400, booking });
     const [message, setMessage] = useState<string>("");
+
 
     const formattedPrice = useMemo(() => {
         return formatter.format(booking.price);
@@ -69,7 +70,6 @@ const Booking: React.FC<BookingProps> = ({
                             ? CANCELLED
                             : COMPLETED,
                 }}
-                onClick={() => setOpenInformationModal(true)}
             >
                 <td className={styles.td}>
                     <div
@@ -113,7 +113,27 @@ const Booking: React.FC<BookingProps> = ({
                 <td className={styles.td}>{formattedPrice}</td>
                 <td className={styles.td}>{booking.pax}</td>
                 <td className={styles.td}>{formattedFinalPrice}</td>
-                {(perspective === "Provider" || buttonValue) && (
+                {
+                    (perspective === "Provider" && booking.status === "To be Approved") &&                   
+                    (
+                        <td className={styles.td}>
+                            <button onClick={async () => acceptBookingInServer(booking)}>
+                                Accept
+                            </button>
+                        </td>
+                    )
+                }
+                {
+                    (perspective === "Provider" && booking.status === "To be Rendered") && 
+                    (
+                        <td className={styles.td}>
+                            <button onClick={async () => setServiceToRenderedInServer(booking)}>
+                                Rendered
+                            </button>
+                        </td>
+                    )
+                }
+                {/* (perspective === "Provider" || buttonValue) && (
                     <td>
                         <button
                             className="main-button"
@@ -127,7 +147,13 @@ const Booking: React.FC<BookingProps> = ({
                             {buttonValue}
                         </button>
                     </td>
-                )}
+                ) */}
+                <td
+                    style={{display: 'flex', justifyContent: 'flex-end', padding: '0 0.5em'}}
+                    onClick={() => setOpenInformationModal(true)}
+                >
+                    <FontAwesomeIcon icon={faCircleInfo} />
+                </td>
             </tr>
 
             {openCancelModal && (

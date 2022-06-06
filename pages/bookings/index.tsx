@@ -156,8 +156,6 @@ const Bookings: NextPage = ({
                                             perspective="User"
                                             booking={booking}
                                             accessToken={accessToken}
-                                            buttonValue={buttonValue}
-                                            buttonOnClick={buttonLogic}
                                             setCurrentBooking={setCurrentBooking}
                                         />
                                     );
