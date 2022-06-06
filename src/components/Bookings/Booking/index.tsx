@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 
 import { Booking } from "../../../../types";
 import { formatter } from "../../../../utils/formatter";
@@ -8,7 +8,7 @@ import Image from "next/image";
 import CancelModal from "./CancelModal";
 import MessageModal from "./MessageModal";
 import InformationModal from "./InformationModal";
-import {__backend__} from "../../../constants";
+import { __backend__ } from "../../../constants";
 
 interface BookingProps {
     booking: Booking;
@@ -55,7 +55,7 @@ const Booking: React.FC<BookingProps> = ({
 
     return (
         <>
-            <tr 
+            <tr
                 className={styles.tr}
                 style={{
                     borderLeft:
@@ -71,9 +71,7 @@ const Booking: React.FC<BookingProps> = ({
                 }}
                 onClick={() => setOpenInformationModal(true)}
             >
-                <td
-                    className={styles.td}
-                >
+                <td className={styles.td}>
                     <div
                         style={{
                             backgroundColor: "var(--gray)",
@@ -84,27 +82,27 @@ const Booking: React.FC<BookingProps> = ({
                             justifyContent: "center",
                         }}
                     >
-                        {
-                            booking.Service.Images.length > 0 ? 
-                                <div 
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        overflow: 'hidden',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}
-                                >
-                                    <Image 
-                                        src={`${__backend__}/public/${booking.Service.Images[0].path}`}
-                                        height={100}
-                                        width={150}
-                                        layout='fixed'
-                                    />
-                                </div>
-                                : <p></p>
-                        } 
+                        {booking.Service.Images && booking.Service.Images.length > 0 ? (
+                            <div
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    overflow: "hidden",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Image
+                                    src={`${__backend__}/public/${booking.Service.Images[0].path}`}
+                                    height={100}
+                                    width={150}
+                                    layout="fixed"
+                                />
+                            </div>
+                        ) : (
+                            <p></p>
+                        )}
                     </div>
                     <Link href={`/service/${booking.serviceId}`} passHref={true}>
                         <p style={{ margin: "0 0.5em" }}>{booking.Service.title}</p>

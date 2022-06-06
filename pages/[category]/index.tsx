@@ -7,12 +7,7 @@ Author: Tolentino, Francis James S.
 
 */
 
-import {
-    GetServerSideProps,
-    GetServerSidePropsContext,
-    InferGetServerSidePropsType,
-    NextPage,
-} from "next";
+import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
 
 import { Key, useEffect } from "react";
 import { useAuthentication } from "../../src/custom-hooks/useAuthentication";
@@ -23,9 +18,10 @@ import Layout from "../../src/components/layout/Layout";
 import authorizedFetch from "../../utils/authorizedFetch";
 import { __backend__ } from "../../src/constants";
 import Service from "../../src/components/Services/Service";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
-import {useRouter} from "next/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
+import { useAccessToken } from "../../src/custom-hooks/useAccessToken";
 
 const CategoryPage: NextPage = ({
     user,
@@ -34,62 +30,58 @@ const CategoryPage: NextPage = ({
     accessToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const { setSession } = useAuthentication();
+    const { setAccessToken } = useAccessToken();
     const router = useRouter();
 
     useEffect(() => {
         if (typeof setSession === "function") setSession(user);
     }, [setSession, user]);
 
+    useEffect(() => {
+        setAccessToken(accessToken);
+    }, [setAccessToken, accessToken]);
+
     return (
         <Layout accessToken={accessToken}>
-            <div 
+            <div
                 className="container"
                 style={{
-                    margin: '1em auto 0 auto'
+                    margin: "1em auto 0 auto",
                 }}
             >
-                <div 
+                <div
                     style={{
-                        display: 'flex'
+                        display: "flex",
                     }}
                 >
-                    <button 
+                    <button
                         style={{
-                            flexBasis: '5%',
-                            margin: '0 1em 0 0',
+                            flexBasis: "5%",
+                            margin: "0 1em 0 0",
                         }}
-                        onClick={() => router.push('/')}
+                        onClick={() => router.push("/")}
                     >
-                        <FontAwesomeIcon 
-                            icon={faArrowLeft}
-                            style={{margin: '0 1em'}}
-                        />
+                        <FontAwesomeIcon icon={faArrowLeft} style={{ margin: "0 1em" }} />
                     </button>
-                    <h2 style={{flexBasis: '95%'}}>{category.toUpperCase()}</h2>
+                    <h2 style={{ flexBasis: "95%" }}>{category.toUpperCase()}</h2>
                 </div>
-                {
-                    services.length > 0 ? 
-                        <div className="services-grid">
-                            {
-                                services.map(
-                                    (service: any, idx: Key | null | undefined) => {
-                                        return <Service key={idx} service={service} />;
-                                    }
-                                )
-                            }
-                        </div>
-                        : 
-                        <p>The services registered may be owned by you, so you may not see any services for this category.</p>
-                }
+                {services.length > 0 ? (
+                    <div className="services-grid">
+                        {services.map((service: any, idx: Key | null | undefined) => {
+                            return <Service key={idx} service={service} />;
+                        })}
+                    </div>
+                ) : (
+                    <p>
+                        The services registered may be owned by you, so you may not see any services for this category.
+                    </p>
+                )}
             </div>
         </Layout>
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-    req,
-    query,
-}: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, query }: GetServerSidePropsContext) => {
     const category = query.category;
 
     const res = await authorizedFetch({
@@ -99,9 +91,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     });
 
     if (req.cookies.accessToken) {
-        const userInformation = await fetchUserInformation(
-            req.cookies?.accessToken
-        );
+        const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
         if (!userInformation) {
             return {

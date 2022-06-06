@@ -28,6 +28,7 @@ import Modal from "../../src/components/Modals/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import useClickOutsideElement from "../../src/custom-hooks/useClickOutsideElement";
+import { useAccessToken } from "../../src/custom-hooks/useAccessToken";
 
 const Bookings: NextPage = ({
     user,
@@ -35,6 +36,7 @@ const Bookings: NextPage = ({
     bookings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const { setSession } = useAuthentication();
+    const { setAccessToken } = useAccessToken();
     const [bookingsState, setBookingsState] = useState<BookingType[]>([]);
     const [currentBooking, setCurrentBooking] = useState<BookingType | null>(null);
     const [bookedServicesFilter, setBookedServicesFilter] = useState<BookedServicesFilter>("To be Approved");
@@ -68,6 +70,10 @@ const Bookings: NextPage = ({
             if (typeof setSession === "function") setSession(null);
         };
     }, [setSession, user]);
+
+    useEffect(() => {
+        setAccessToken(accessToken);
+    }, [setAccessToken, accessToken]);
 
     const filteredBookings = useMemo(() => {
         if (bookedServicesFilter === "All") return bookings;
@@ -124,7 +130,7 @@ const Bookings: NextPage = ({
                     <div className={styles.containerGrid}>
                         <table>
                             <thead>
-                                <tr 
+                                <tr
                                     className={styles.tr}
                                     style={{
                                         border: "0.3px solid var(--gray)",
@@ -187,7 +193,6 @@ const Bookings: NextPage = ({
                     </div>
                 </Modal>
             )}
-
         </Layout>
     );
 };

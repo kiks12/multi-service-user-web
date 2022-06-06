@@ -1,26 +1,12 @@
+import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
 
-
-import { 
-    GetServerSideProps, 
-    GetServerSidePropsContext, 
-    InferGetServerSidePropsType, 
-    NextPage 
-} from "next";
-
-
-
-import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useAuthentication } from "../../../../src/custom-hooks/useAuthentication";
+import { useAccessToken } from "../../../../src/custom-hooks/useAccessToken";
 
-
-
-import styles from '../../../../src/components/Provider/Page/Header/Header.module.css';
-
-
+import styles from "../../../../src/components/Provider/Page/Header/Header.module.css";
 
 import Layout from "../../../../src/components/layout/Layout";
-
 
 import fetchUserInformation from "../../../../libs/fetchUserInformation";
 import { __backend__ } from "../../../../src/constants";
@@ -28,66 +14,62 @@ import ProviderPageHeader from "../../../../src/components/Provider/Page/Header"
 import ProviderPageInformation from "../../../../src/components/Provider/Page/Information";
 import Service from "../../../../src/components/Services/Service";
 
-
-
-
-const ProviderPage : NextPage = (
-    { user, accessToken, provider }: InferGetServerSidePropsType<typeof getServerSideProps>
-) => {
-
+const ProviderPage: NextPage = ({
+    user,
+    accessToken,
+    provider,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const { setSession } = useAuthentication();
+    const { setAccessToken } = useAccessToken();
 
- 
     useEffect(() => {
-        if (typeof setSession === 'function') setSession(user);
+        if (typeof setSession === "function") setSession(user);
 
         return () => {
-            if (typeof setSession === 'function') setSession(null);
-        }
+            if (typeof setSession === "function") setSession(null);
+        };
     }, [setSession, user]);
 
+    useEffect(() => {
+        setAccessToken(accessToken);
+    }, [setAccessToken, accessToken]);
 
     return (
         <Layout accessToken={accessToken}>
             {/* <pre>{JSON.stringify(provider, null, 2)}</pre> */}
-            { provider && <ProviderPageHeader provider={provider}/> }
+            {provider && <ProviderPageHeader provider={provider} />}
 
             <div className={styles.container}>
-                { provider && <ProviderPageInformation provider={provider}/> }
+                {provider && <ProviderPageInformation provider={provider} />}
 
                 <div>
                     <h3>Services</h3>
                     <div className="services-grid">
-                        {
-                            (provider && provider.Services.length !== 0) ? (
-                                provider.Services.map((service: any, idx: number) => {
-                                    return <Service key={idx} service={service}/>
-                                })
-                            ) : (
-                                <p>No Services Yet</p>
-                            )
-                        }
+                        {provider && provider.Services.length !== 0 ? (
+                            provider.Services.map((service: any, idx: number) => {
+                                return <Service key={idx} service={service} />;
+                            })
+                        ) : (
+                            <p>No Services Yet</p>
+                        )}
                     </div>
                 </div>
             </div>
         </Layout>
-    )
-}
+    );
+};
 
-
-
-export const getServerSideProps: GetServerSideProps = async (
-    {req, query}: GetServerSidePropsContext) => {
-
+export const getServerSideProps: GetServerSideProps = async ({ req, query }: GetServerSidePropsContext) => {
     const { id } = query;
 
-
-    const serviceProviderInformationResponse = await fetch(`${__backend__}/unauthorized/provider-information?serviceProviderId=${id}`, {
-        method: 'GET',
-    });
+    const serviceProviderInformationResponse = await fetch(
+        `${__backend__}/unauthorized/provider-information?serviceProviderId=${id}`,
+        {
+            method: "GET",
+        }
+    );
     const serviceProviderInformationJSON = await serviceProviderInformationResponse.json();
 
-    
     if (req.cookies.accessToken) {
         const userInformation = await fetchUserInformation(req.cookies.accessToken);
 
@@ -97,21 +79,18 @@ export const getServerSideProps: GetServerSideProps = async (
                     user: userInformation.user,
                     accessToken: req.cookies.accessToken,
                     provider: serviceProviderInformationJSON.provider ? serviceProviderInformationJSON.provider : null,
-                }
-            }
+                },
+            };
         }
-
     }
 
     return {
         props: {
-            user: '',
+            user: "",
             accessToken: req.cookies.accessToken,
             provider: serviceProviderInformationJSON.provider ? serviceProviderInformationJSON.provider : null,
-        }
-    }
-}
-
-
+        },
+    };
+};
 
 export default ProviderPage;

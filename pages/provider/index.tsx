@@ -32,13 +32,11 @@ const Provider: NextPage = ({ user, accessToken }: InferGetServerSidePropsType<t
 
     useEffect(() => {
         setAccessToken(accessToken);
-
-        return () => setAccessToken("");
     }, [setAccessToken, accessToken]);
 
     return (
         <>
-            <ProviderLayout accessToken=''>asdfasfsdf</ProviderLayout>
+            <ProviderLayout accessToken="">asdfasfsdf</ProviderLayout>
         </>
     );
 };

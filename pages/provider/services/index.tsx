@@ -9,12 +9,7 @@ Author: Tolentino, Francis James S.
 
 import styles from "./Services.module.css";
 
-import type {
-    GetServerSideProps,
-    GetServerSidePropsContext,
-    InferGetServerSidePropsType,
-    NextPage,
-} from "next";
+import type { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
 
 import { useEffect, useMemo, useState } from "react";
 import { useAuthentication } from "../../../src/custom-hooks/useAuthentication";
@@ -29,6 +24,7 @@ import Service from "../../../src/components/Provider/Services/Service";
 import CreateNewServiceComponent from "../../../src/components/Provider/Services/CreateNewServiceButton";
 import type { Service as _services } from "../../../types";
 import CategoryFilter from "../../../src/components/Provider/Services/CategoryFilter";
+import { useAccessToken } from "../../../src/custom-hooks/useAccessToken";
 
 type Prompts = "active" | "inactive" | "all";
 
@@ -38,19 +34,24 @@ const ProviderServices: NextPage = ({
     accessToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const { setSession } = useAuthentication();
+    const { setAccessToken } = useAccessToken();
     const [activePrompt, setActivePrompt] = useState<Prompts>("active");
     const [myServices, setMyServices] = useState<_services[]>(() => services);
-    const [activeCategory, setActiveCategory] = useState<string>("all")
+    const [activeCategory, setActiveCategory] = useState<string>("all");
 
     useEffect(() => {
         if (typeof setSession === "function") setSession(user);
     }, [setSession, user]);
 
+    useEffect(() => {
+        setAccessToken(accessToken);
+    }, [setAccessToken, accessToken]);
+
     // this useMemo function handles the filtering of the service based on
     // status, i.e. active, inactive, or all
     const filteredServices = useMemo(() => {
         if (activePrompt === "active") {
-            if (activeCategory === 'all') {
+            if (activeCategory === "all") {
                 // if active prompt from menu is active then filter to services that are active
                 return myServices.filter((service) => service.status === "active");
             }
@@ -61,7 +62,7 @@ const ProviderServices: NextPage = ({
         }
 
         if (activePrompt === "inactive") {
-            if (activeCategory === 'all') {
+            if (activeCategory === "all") {
                 // if active prompt from menu is active then filter to services that are active
                 return myServices.filter((service) => service.status === "inactive");
             }
@@ -71,8 +72,8 @@ const ProviderServices: NextPage = ({
             });
         }
 
-        if (activeCategory === 'all') {
-            return myServices
+        if (activeCategory === "all") {
+            return myServices;
         }
 
         // otherwise return unfiltered services
@@ -81,7 +82,7 @@ const ProviderServices: NextPage = ({
 
     return (
         <>
-            <Layout>
+            <Layout accessToken={accessToken}>
                 <ServicesMenu
                     activePrompt={activePrompt}
                     onClick={(value: Prompts) => {
@@ -89,8 +90,8 @@ const ProviderServices: NextPage = ({
                     }}
                 />
 
-                <div className='container'>
-                    <CategoryFilter 
+                <div className="container">
+                    <CategoryFilter
                         activeCategory={activeCategory}
                         accessToken={accessToken}
                         setActiveCategory={setActiveCategory}
@@ -109,9 +110,7 @@ const ProviderServices: NextPage = ({
                                 );
                             })}
 
-                        {(activePrompt === "active" || activePrompt === "all") && (
-                            <CreateNewServiceComponent />
-                        )}
+                        {(activePrompt === "active" || activePrompt === "all") && <CreateNewServiceComponent />}
                     </div>
                 </div>
             </Layout>
@@ -119,9 +118,7 @@ const ProviderServices: NextPage = ({
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-    req,
-}: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }: GetServerSidePropsContext) => {
     // server side fetch the services from the external server
     // using authorized fetch utility function
     const servicesFetchResults = await authorizedFetch({
@@ -132,9 +129,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
     if (req.cookies.accessToken) {
         // fetch user information if accesstoken is not null/undefined
-        const userInformation = await fetchUserInformation(
-            req.cookies?.accessToken
-        );
+        const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
         if (!userInformation.user) {
             // if user information not fetched properly

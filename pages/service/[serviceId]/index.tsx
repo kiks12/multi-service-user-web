@@ -9,12 +9,7 @@ Author: Tolentino, Francis James S.
 
 import styles from "./ServiceId.module.css";
 
-import {
-    GetServerSideProps,
-    GetServerSidePropsContext,
-    InferGetServerSidePropsType,
-    NextPage,
-} from "next";
+import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType, NextPage } from "next";
 
 import fetchUserInformation from "../../../libs/fetchUserInformation";
 import { __backend__ } from "../../../src/constants";
@@ -33,6 +28,7 @@ import Reviews from "../../../src/components/ServicePage/Reviews";
 //import Recommended from "../../../src/components/ServicePage/Recommended";
 //import authorizedFetch from "../../../utils/authorizedFetch";
 import PricingDetails from "../../../src/components/ServicePage/PricingDetails";
+import { useAccessToken } from "../../../src/custom-hooks/useAccessToken";
 
 const ServicePage: NextPage = ({
     user,
@@ -41,6 +37,7 @@ const ServicePage: NextPage = ({
     accessToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const { setSession } = useAuthentication();
+    const { setAccessToken } = useAccessToken();
 
     const descriptionRef = useRef<HTMLDivElement>(null);
     // const layoutRef = useRef<HTMLElement>(null);
@@ -59,6 +56,10 @@ const ServicePage: NextPage = ({
             if (typeof setSession === "function") setSession(null);
         };
     }, [service, setSession, user]);
+
+    useEffect(() => {
+        setAccessToken(accessToken);
+    }, [setAccessToken, accessToken]);
 
     // useEffect(() => {
     //     const scrollHandler = () => {
@@ -93,11 +94,7 @@ const ServicePage: NextPage = ({
                     {categories &&
                         categories.map((category, idx) => {
                             return (
-                                <Link
-                                    href={`/${category.toLocaleLowerCase()}`}
-                                    passHref={true}
-                                    key={idx}
-                                >
+                                <Link href={`/${category.toLocaleLowerCase()}`} passHref={true} key={idx}>
                                     <li
                                         key={idx}
                                         className="main-purple-link"
@@ -116,14 +113,8 @@ const ServicePage: NextPage = ({
                     <div className={styles.informationSplitter}>
                         <div className={styles.leftSide}>
                             <Overview service={service} />
-                            <Description
-                                service={service}
-                                ref={descriptionRef}
-                            />
-                            <AboutProvider
-                                user={service.Users}
-                                accessToken={accessToken}
-                            />
+                            <Description service={service} ref={descriptionRef} />
+                            <AboutProvider user={service.Users} accessToken={accessToken} />
                             <Reviews />
                             {/* <Recommended services={recommendeds} currentServiceID={service.serviceId}/> */}
                         </div>
@@ -138,18 +129,12 @@ const ServicePage: NextPage = ({
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-    req,
-    query,
-}: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, query }: GetServerSidePropsContext) => {
     const { serviceId } = query;
 
-    const res = await fetch(
-        `${__backend__}/services/get-service-information?serviceId=${serviceId}`,
-        {
-            method: "GET",
-        }
-    );
+    const res = await fetch(`${__backend__}/services/get-service-information?serviceId=${serviceId}`, {
+        method: "GET",
+    });
 
     const jsonRes = await res.json();
 
@@ -160,9 +145,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     // })
 
     if (typeof req.cookies.accessToken !== "undefined") {
-        const userInformation = await fetchUserInformation(
-            req.cookies?.accessToken
-        );
+        const userInformation = await fetchUserInformation(req.cookies?.accessToken);
 
         if (!userInformation) {
             return {

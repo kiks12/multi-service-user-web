@@ -37,6 +37,7 @@ import ProviderBookedServicesMenu from "../../../src/components/Provider/BookedS
 
 import { Booking as BookingType, BookedServicesFilter} from "../../../types";
 import Booking from "../../../src/components/Bookings/Booking";
+import {useAccessToken} from "../../../src/custom-hooks/useAccessToken";
 
 
 
@@ -49,18 +50,28 @@ const BookedServices: NextPage = ({
     accessToken
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
-
     const { setSession } = useAuthentication();
+    const { setAccessToken } = useAccessToken();
 
     const [bookedServices, setBookedServices] = useState<BookingType[]>([]);
     const [bookedServicesFilter, setBookedServicesFilter] = useState<BookedServicesFilter>('To be Approved');
-
 
 
     useEffect(() => {
         setBookedServices(serverSideBookedServices);
     }, [serverSideBookedServices])
 
+    useEffect(() => {
+        if (typeof setSession === 'function') setSession(user);
+
+        return () => {
+            if (typeof setSession === 'function') setSession(null);
+        }
+    }, [setSession, user]);
+
+    useEffect(() => {
+        setAccessToken(accessToken);
+    }, [setAccessToken, accessToken]);
 
 
     const filteredBookedServices = useMemo(() => {
@@ -69,20 +80,6 @@ const BookedServices: NextPage = ({
 
         return bookedServices.filter((booking: BookingType) => booking.status.toLocaleLowerCase() === bookedServicesFilter.toLocaleLowerCase());
     }, [bookedServices, bookedServicesFilter]);
-
-
-
-
-    useEffect(() => {
-        if (typeof setSession === 'function') setSession(user);
-
-
-        return () => {
-            if (typeof setSession === 'function') setSession(null);
-        }
-    }, [setSession, user]);
-
-
 
 
     const acceptBooking = async (booking: BookingType) => {
@@ -112,15 +109,12 @@ const BookedServices: NextPage = ({
     }
 
 
-
     const serviceRendered = async (booking: BookingType) => {
         const res = await authorizedFetch({
             url: `${__backend__}/provider/bookings/service-rendered?bookId=${booking.bookId}`,
             accessToken: accessToken,
             method: 'PATCH',
         });
-
-        console.log(serviceRendered);
 
         if (res.status === 200) {
             setBookedServices(prev => {
@@ -131,7 +125,6 @@ const BookedServices: NextPage = ({
         }
 
     }
-
 
 
     const buttonLogic = (booking: BookingType) => {
@@ -161,7 +154,7 @@ const BookedServices: NextPage = ({
 
 
     return (
-        <Layout>
+        <Layout accessToken={accessToken}>
             {/* <pre>{JSON.stringify(bookedServices, null, 2)}</pre> */}
             <ProviderBookedServicesMenu
                 bookedServicesFilter={bookedServicesFilter}
